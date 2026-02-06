@@ -43,9 +43,11 @@
         usesData=usesData}}
         {{/if}}
 
+        {{#if item.system.equipped}}
         <div class="card-resource roll-damage" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.GENERAL.rollDamage">
             {{{damage}}}
         </div>
+        {{/if}}
       </div>
 
       <div class="card-controls">

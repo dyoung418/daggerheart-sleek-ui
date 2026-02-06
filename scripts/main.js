@@ -53,7 +53,6 @@ Hooks.once("ready", () => {
     openCards = new Set();
     hoveredCompactCard = null;
 
-    // Track items being dragged for cross-sheet transfers
     static draggedItem = null;
 
     static DEFAULT_OPTIONS = foundry.utils.mergeObject(
@@ -70,7 +69,9 @@ Hooks.once("ready", () => {
           useAction: this._onUseAction,
           navigateToCard: this._onNavigateToCard,
         },
-        dragDrop: [{ dragSelector: "[data-item-uuid]", dropSelector: null }],
+        dragDrop: [
+          { dragSelector: "[data-item-uuid]", dropSelector: ".card-wrapper" },
+        ],
       },
       { inplace: false },
     );
@@ -374,12 +375,20 @@ Hooks.once("ready", () => {
         return { item, tags, hopeCost, usesData, enrichedDescription };
       };
 
+      // Sort the loadout and vault arrays by sort property
+      const sortedLoadout = (domainCards?.loadout || []).sort(
+        (a, b) => a.sort - b.sort,
+      );
+      const sortedVault = (domainCards?.vault || []).sort(
+        (a, b) => a.sort - b.sort,
+      );
+
       context.loadoutCards = await Promise.all(
-        (domainCards?.loadout || []).map((item) => createDomainData(item)),
+        sortedLoadout.map((item) => createDomainData(item)),
       );
 
       context.vaultCards = await Promise.all(
-        (domainCards?.vault || []).map((item) => createDomainData(item)),
+        sortedVault.map((item) => createDomainData(item)),
       );
     }
 
@@ -557,12 +566,18 @@ Hooks.once("ready", () => {
         };
       };
 
-      const weapons = this.actor.items.filter((i) => i.type === "weapon");
-      const armors = this.actor.items.filter((i) => i.type === "armor");
-      const consumables = this.actor.items.filter(
-        (i) => i.type === "consumable",
-      );
-      const loots = this.actor.items.filter((i) => i.type === "loot");
+      const weapons = this.actor.items
+        .filter((i) => i.type === "weapon")
+        .sort((a, b) => a.sort - b.sort);
+      const armors = this.actor.items
+        .filter((i) => i.type === "armor")
+        .sort((a, b) => a.sort - b.sort);
+      const consumables = this.actor.items
+        .filter((i) => i.type === "consumable")
+        .sort((a, b) => a.sort - b.sort);
+      const loots = this.actor.items
+        .filter((i) => i.type === "loot")
+        .sort((a, b) => a.sort - b.sort);
 
       context.weapons = await Promise.all(
         weapons.map((item) =>
@@ -579,20 +594,16 @@ Hooks.once("ready", () => {
         loots.map((item) => createLootData(item)),
       );
 
-      // Prepare unarmed attack if it exists
       if (this.actor.system.usedUnarmed) {
         const unarmed = this.actor.system.usedUnarmed;
 
-        // Calculate damage for unarmed attack
         const proficiency = this.actor.system.proficiency;
         let unarmedDamage = "";
         if (unarmed.damage?.parts && unarmed.damage.parts.length > 0) {
           unarmedDamage = unarmed.damage.parts
             .map((part) => {
-              // Check if there's a custom formula (like @profd4 for unarmed)
               let dice = "";
               if (part.value?.custom?.enabled && part.value?.custom?.formula) {
-                // Extract dice from custom formula (e.g., "@profd4" -> "d4")
                 const formula = part.value.custom.formula;
                 const diceMatch = formula.match(/@prof(d\d+)/);
                 if (diceMatch) {
@@ -616,7 +627,6 @@ Hooks.once("ready", () => {
             .join(", ");
         }
 
-        // usedUnarmed is a DHAttackAction, not an Item, so we create minimal data
         context.unarmedAttack = {
           item: {
             name: game.i18n.localize(
@@ -1093,16 +1103,12 @@ Hooks.once("ready", () => {
 
             const itemUuid =
               diceValue.closest("[data-item-uuid]")?.dataset.itemUuid;
-            console.log("itemUuid:", itemUuid);
 
             const item = await fromUuid(itemUuid);
-            console.log("item:", item?.name);
 
             const diceIndex = diceValue.dataset.dice;
-            console.log("diceIndex:", diceIndex);
 
             const currentState = item.system.resource.diceStates[diceIndex];
-            console.log("currentState:", currentState);
 
             if (!currentState) return;
 
@@ -1110,7 +1116,6 @@ Hooks.once("ready", () => {
               [`system.resource.diceStates.${diceIndex}.used`]:
                 !currentState.used,
             });
-            console.log("update completed");
           });
         });
       });
@@ -1363,10 +1368,6 @@ Hooks.once("ready", () => {
       const actionId = target.dataset.actionId;
 
       if (!itemUuid || !actionId) {
-        console.warn("useAction called without itemUuid or actionId", {
-          itemUuid,
-          actionId,
-        });
         return;
       }
 
@@ -1428,11 +1429,52 @@ Hooks.once("ready", () => {
       const item = await fromUuid(data.uuid);
       if (!item) return;
 
+      // Check if it's a reorder (same actor)
       if (item.parent === this.actor) {
-        SleekCharacterSheet.draggedItem = null;
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Find the target card
+        const dropTarget = event.target.closest(".card-wrapper");
+        if (!dropTarget) {
+          return;
+        }
+
+        const targetUuid = dropTarget.dataset.itemUuid;
+        const targetItem = await fromUuid(targetUuid);
+        if (!targetItem || targetItem === item) {
+          return;
+        }
+
+        // Only allow reordering within the same item type
+        if (item.type !== targetItem.type) {
+          return;
+        }
+
+        // Get all siblings of the same type, sorted by current sort value
+        const siblings = this.actor.items
+          .filter((i) => i.type === item.type)
+          .sort((a, b) => a.sort - b.sort);
+
+        // Find current positions
+        const draggedIndex = siblings.indexOf(item);
+        const targetIndex = siblings.indexOf(targetItem);
+
+        siblings.splice(draggedIndex, 1);
+        siblings.splice(targetIndex, 0, item);
+
+        // Rebuild sort values for all items
+        const updateData = siblings.map((sibling, index) => ({
+          _id: sibling.id,
+          sort: (index + 1) * 100000,
+        }));
+
+        await this.actor.updateEmbeddedDocuments("Item", updateData);
+
         return false;
       }
 
+      // Handle transfers from other actors
       if (item.parent && item.parent.type === "character") {
         event.preventDefault();
         event.stopPropagation();
@@ -1595,18 +1637,8 @@ Hooks.once("ready", () => {
 
   // Hook to handle item transfers from SleekCharacterSheet to other sheets
   Hooks.on("preCreateItem", async (item, data, options, userId) => {
-    console.log("preCreateItem fired", {
-      draggedItem: SleekCharacterSheet.draggedItem,
-      itemParent: item.parent?.id,
-      itemName: item.name,
-      userId: userId,
-      gameUserId: game.user.id,
-    });
-
-    // Only handle if there's a tracked dragged item
     if (!SleekCharacterSheet.draggedItem) return;
 
-    // Only process on the user's own client
     if (userId !== game.user.id) return;
 
     const dragData = SleekCharacterSheet.draggedItem;
@@ -1616,15 +1648,12 @@ Hooks.once("ready", () => {
       item.parent?.type === "character" &&
       item.parent?.id !== dragData.actorId
     ) {
-      console.log("Transfer detected, will delete source item");
-
       // Schedule deletion after the creation completes
       setTimeout(async () => {
         const sourceActor = game.actors.get(dragData.actorId);
         if (sourceActor) {
           const sourceItem = sourceActor.items.get(dragData.itemId);
           if (sourceItem) {
-            console.log("Deleting source item:", sourceItem.name);
             await sourceActor.deleteEmbeddedDocuments("Item", [
               dragData.itemId,
             ]);

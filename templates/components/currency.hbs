@@ -1,5 +1,34 @@
 {{! CURRENCY }}
-<div class="currency-wrapper">
+
+{{#if this.inventory.hasCurrency}}
+  <div class="currency-wrapper">
+    {{#each this.inventory.currencies as |currency key|}}
+      {{#if currency.enabled}}
+        <div
+          class="currency-container"
+          data-currency="{{key}}"
+          data-tooltip="{{localize currency.label}}"
+        >
+          <div class="icon">
+            <i class="{{currency.icon}}"></i>
+          </div>
+
+          <input
+            type="text"
+            name="{{currency.field.fieldPath}}"
+            data-allow-delta
+            value="{{currency.value}}"
+            data-dtype="Number"
+            min="0"
+            step="1"
+          />
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
+{{/if}}
+
+{{!-- <div class="currency-wrapper">
 
   <div
     class="currency-container"
@@ -80,4 +109,4 @@
       }}
     </div>
   </div>
-</div>
+</div> --}}
