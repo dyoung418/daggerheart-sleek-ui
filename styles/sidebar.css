@@ -1,0 +1,122 @@
+/* ==================== 
+   PORTRAIT
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .portrait {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: top;
+  mask-image: var(--gradient-mask-portrait);
+  position: relative;
+}
+
+.daggerheart.sheet.actor.sleek-ui .portrait img {
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.daggerheart.sheet.actor.sleek-ui .portrait:hover img {
+  transform: scale(1.02);
+}
+
+.daggerheart.sheet.actor.sleek-ui .portrait.deathroll img {
+  filter: grayscale(1) brightness(0.5);
+}
+
+.daggerheart.sheet.actor.sleek-ui .deathroll-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+.daggerheart.sheet.actor.sleek-ui .deathroll-btn i {
+  scale: 6;
+  color: var(--color-primary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .deathroll-btn:hover {
+  text-shadow: 0 0 16px red;
+}
+
+/* ==================== 
+   SETTINGS BUTTON
+   ==================== */
+.daggerheart.sheet.actor.sleek-ui .settings-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  z-index: 5;
+  border-radius: var(--border-radius);
+  background: var(--color-background-secondary);
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .settings-button:hover {
+  background: var(--color-background-dark);
+  color: var(--color-tertiary);
+}
+
+/* ==================== 
+   FAVORITES
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .favorites {
+  width: 100%;
+  height: fit-content;
+  margin-top: -28px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  z-index: 1;
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-tiny);
+  padding: var(--spacing-sm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-tiny);
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gradient-line-left);
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gradient-line-right);
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-tiny);
+}

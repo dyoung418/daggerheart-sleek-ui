@@ -1,0 +1,83 @@
+{{! CURRENCY }}
+<div class="currency-wrapper">
+
+  <div
+    class="currency-container"
+    data-currency="coins"
+    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.coins'}}"
+  >
+    <div class="icon">
+      <i class="fa-solid fa-coin-front"></i>
+    </div>
+    <div>
+      {{formInput
+        systemFields.gold.fields.coins
+        value=source.system.gold.coins
+        localize=true
+        toggled=true
+        class="currency-input"
+        min=0
+      }}
+    </div>
+  </div>
+
+  <div
+    class="currency-container"
+    data-currency="handfuls"
+    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.handfuls'}}"
+  >
+    <div class="icon">
+      <i class="fa-solid fa-coins"></i>
+    </div>
+    <div>
+      {{formInput
+        systemFields.gold.fields.handfuls
+        value=source.system.gold.handfuls
+        localize=true
+        toggled=true
+        class="currency-input"
+        min=0
+      }}
+    </div>
+  </div>
+
+  <div
+    class="currency-container"
+    data-currency="bags"
+    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.bags'}}"
+  >
+    <div class="icon">
+      <i class="fa-solid fa-sack"></i>
+    </div>
+    <div>
+      {{formInput
+        systemFields.gold.fields.bags
+        value=source.system.gold.bags
+        localize=true
+        toggled=true
+        class="currency-input"
+        min=0
+      }}
+    </div>
+  </div>
+
+  <div
+    class="currency-container"
+    data-currency="chests"
+    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.chests'}}"
+  >
+    <div class="icon">
+      <i class="fa-solid fa-treasure-chest"></i>
+    </div>
+    <div>
+      {{formInput
+        systemFields.gold.fields.chests
+        value=source.system.gold.chests
+        localize=true
+        toggled=true
+        class="currency-input"
+        min=0
+      }}
+    </div>
+  </div>
+</div>

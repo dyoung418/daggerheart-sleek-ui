@@ -1,0 +1,30 @@
+  {{#if tabs.features.active}}
+    <div class="tab-pane active" data-tab="features">
+      {{> "modules/daggerheart-sleek-ui/templates/tabs/features.hbs"}}
+    </div>
+  {{/if}}
+  
+  {{#if tabs.loadout.active}}
+    <div class="tab-pane active" data-tab="loadout">
+      {{> "modules/daggerheart-sleek-ui/templates/tabs/loadout.hbs"}}
+    </div>
+  {{/if}}
+  
+  {{#if tabs.inventory.active}}
+    {{> "modules/daggerheart-sleek-ui/templates/components/currency.hbs"}}
+    <div class="tab-pane active" data-tab="inventory">
+      {{> "modules/daggerheart-sleek-ui/templates/tabs/inventory.hbs"}}
+    </div>
+  {{/if}}
+  
+  {{#if tabs.effects.active}}
+    <div class="tab-pane active" data-tab="effects">
+      {{> "modules/daggerheart-sleek-ui/templates/tabs/effects.hbs"}}
+    </div>
+  {{/if}}
+  
+  {{#if tabs.biography.active}}
+    <div class="tab-pane active" data-tab="biography">
+      {{> "modules/daggerheart-sleek-ui/templates/tabs/biography.hbs"}}
+    </div>
+  {{/if}}

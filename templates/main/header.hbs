@@ -1,0 +1,237 @@
+  <div class="character-information">
+    <div class="character-details">
+      {{!-- NAME --}}
+      <h1 class="actor-name" contenteditable="plaintext-only" data-property="name"
+        placeholder="{{localize 'DAGGERHEART.GENERAL.actorName'}}">{{source.name}}</h1>
+      {{!-- TAGS --}}
+      <div class="character-tags">
+        <span class="tag tag-green">
+          {{#if document.system.class.value}}
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.class.value.uuid}}">{{document.system.class.value.name}}</span>
+          {{else}}
+          <span class="missing-header-feature" data-action="openPack" data-key="classes">{{localize
+            "TYPES.Item.class"}}</span>
+          {{/if}}
+        </span>
+
+        <span class="tag tag-green">
+          {{#if document.system.class.subclass}}
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.class.subclass.uuid}}">{{document.system.class.subclass.name}}</span>
+          {{else}}
+          <span class="missing-header-feature" data-action="openPack" data-key="subclasses">{{localize
+            "TYPES.Item.subclass"}}</span>
+          {{/if}}
+        </span>
+        
+        {{!-- {{#if document.system.multiclass.value}}
+        <span class="separator"></span>
+        {{/if}} --}}
+        
+        {{#if document.system.multiclass.value}}
+        <span class="tag tag-blue">
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.multiclass.value.uuid}}">{{document.system.multiclass.value.name}}</span>
+        </span>
+        {{/if}}
+
+        {{#if document.system.multiclass.subclass}}
+        <span class="tag tag-blue">
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.multiclass.subclass.uuid}}">{{document.system.multiclass.subclass.name}}</span>
+        </span>
+        {{/if}}
+
+        {{!-- <span class="separator"></span> --}}
+
+        <span class="tag tag-orange">
+          {{#if document.system.community}}
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.community.uuid}}">{{document.system.community.name}}</span>
+          {{else}}
+          <span class="missing-header-feature" data-action="openPack" data-key="communities">{{localize
+            "TYPES.Item.community"}}</span>
+          {{/if}}
+        </span>
+
+        <span class="tag tag-purple">
+          {{#if document.system.ancestry}}
+          <span data-action="editDoc"
+            data-item-uuid="{{document.system.ancestry.uuid}}">{{document.system.ancestry.name}}</span>
+          {{else}}
+          <span class="missing-header-feature" data-action="openPack" data-key="ancestries">{{localize
+            "TYPES.Item.ancestry"}}</span>
+          {{/if}}
+        </span>
+      </div>
+    </div>
+    {{!-- LEVEL --}}
+    {{#if (or document.system.needsCharacterSetup document.system.levelData.canLevelUp)}}
+    <button type="button" class="level-button"
+      data-tooltip="{{#if document.system.needsCharacterSetup}}{{localize 'DAGGERHEART.APPLICATIONS.CharacterCreation.buttonTitle'}}{{else}}{{localize 'DAGGERHEART.ACTORS.Character.levelUp'}}{{/if}}"
+      data-action="levelManagement">
+      <i class="fa-solid fa-angles-up"></i>
+    </button>
+    {{/if}}
+
+    <div class="character-level">
+      <h3>{{localize 'DAGGERHEART.GENERAL.level'}}</h3>
+      <input type="number" data-dtype="Number" class="level-number" min="0" max="10"
+        value={{document.system.levelData.level.changed}} {{#if document.system.needsCharacterSetup}}disabled{{/if}}>
+    </div>
+  </div>
+
+  <div class="header-details">
+    <div class="hope-domains-rest-row">
+      {{!-- HOPE --}}
+      <div class="hope-container">
+        <h3>{{localize "DAGGERHEART.GENERAL.hope"}}</h3>
+        <span class="hope-bar">
+          {{#times document.system.resources.hope.max}}
+          <span class='hope-value' data-action='toggleHope' data-value="{{add this 1}}">
+            {{#if (gte ../document.system.resources.hope.value (add this 1))}}
+            <div class="hope-icon-full"></div>
+            {{else}}
+            <div class="hope-icon-empty"></div>
+            {{/if}}
+          </span>
+          {{/times}}
+        </span>
+      </div>
+      <span class="separator"></span>
+      {{!-- DOMAINS --}}
+      {{#if document.system.class.value}}
+      <div class="domains-container">
+        {{#each document.system.domainData as |data|}}
+        <div class="domain">
+          <img src="{{data.src}}" alt="" data-tooltip="{{data.label}}" />
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+      {{!-- REST --}}
+      <div class="rest-container">
+        <button class="rest-btn" type="button" data-action="useDowntime" data-type="shortRest" data-tooltip="{{localize "DAGGERHEART.APPLICATIONS.Downtime.shortRest.title"}}">
+          <i class="fa-solid fa-utensils"></i>
+        </button>
+        <button class="rest-btn" type="button" data-action="useDowntime" data-type="longRest" data-tooltip="{{localize "DAGGERHEART.APPLICATIONS.Downtime.longRest.title"}}">
+          <i class="fa-solid fa-bed"></i>
+        </button>
+      </div>
+      
+    </div>
+
+
+    <div class="values-row">
+      {{!-- EVASION --}}
+      <div class="values-container evasion">
+        <h3>{{localize "DAGGERHEART.GENERAL.evasion"}}</h3>
+        <span class="value-number">{{document.system.evasion}}</span>
+      </div>
+     {{!-- THRESHOLDS --}}
+      <div class="values-container thresholds">
+        <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+          data-amount="1">{{localize "DAGGERHEART.GENERAL.DamageThresholds.minor"}}</h3>
+        <span class="value-number">{{document.system.damageThresholds.major}}</span>
+
+        <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+          data-amount="2">{{localize "DAGGERHEART.GENERAL.DamageThresholds.major"}}</h3>
+        <span class="value-number">{{document.system.damageThresholds.severe}}</span>
+
+        <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+          data-amount="3">{{localize "DAGGERHEART.GENERAL.DamageThresholds.severe"}}</h3>
+      </div>
+     {{!-- PROFICIENCY --}}
+      <div class="values-container proficiency">
+        <h3>{{localize "DAGGERHEART.GENERAL.proficiency"}}</h3>
+        <span class="value-number">{{document.system.proficiency}}</span>
+      </div>
+    </div>
+
+
+    <div class="resources-row">
+      {{#if document.system.resources.hitPoints.max}}
+      {{!-- HIT POINTS --}}
+      <div class="resource-container">
+        <div class="resource-header" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+          data-amount="1">
+          <h3>{{localize "DAGGERHEART.GENERAL.HitPoints.plural"}}</h3>
+          <span class="resource-number">{{document.system.resources.hitPoints.value}} /
+            {{document.system.resources.hitPoints.max}}</span>
+        </div>
+        <div class="resource-bar">
+          {{#times document.system.resources.hitPoints.max}}
+          <div
+            class="resource-pip pip-hitpoints {{#if (lt this @root.document.system.resources.hitPoints.value)}}filled{{else}}empty{{/if}}"
+            data-action="toggleResource" data-resource="system.resources.hitPoints.value" data-value="{{add this 1}}">
+          </div>
+          {{/times}}
+        </div>
+      </div>
+      {{/if}}
+      {{!-- STRESS --}}
+      {{#if document.system.resources.stress.max}}
+      <div class="resource-container">
+        <div class="resource-header" data-action="modifyResource" data-resource="system.resources.stress.value"
+          data-amount="1">
+          <h3>{{localize "DAGGERHEART.GENERAL.stress"}}</h3>
+          <span class="resource-number">{{document.system.resources.stress.value}} /
+            {{document.system.resources.stress.max}}</span>
+        </div>
+        <div class="resource-bar">
+          {{#times document.system.resources.stress.max}}
+          <div
+            class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+            data-action="toggleResource" data-resource="system.resources.stress.value" data-value="{{add this 1}}">
+          </div>
+          {{/times}}
+        </div>
+      </div>
+      {{/if}}
+      {{!-- ARMOR --}}
+      {{#if document.system.armor.system.marks}}
+      <div class="resource-container">
+        <div class="resource-header" data-action="modifyResource" data-resource="system.armor.system.marks.value"
+          data-amount="1">
+          <h3>{{localize "DAGGERHEART.GENERAL.armorSlots"}}</h3>
+          <span class="resource-number">{{document.system.armor.system.marks.value}} /
+            {{document.system.armorScore}}</span>
+        </div>
+        <div class="resource-bar">
+          {{#times document.system.armorScore}}
+          <div
+            class="resource-pip pip-armor {{#if (lt this @root.document.system.armor.system.marks.value)}}filled{{else}}empty{{/if}}"
+            data-action="toggleResource" data-resource="system.armor.system.marks.value" data-value="{{add this 1}}">
+          </div>
+          {{/times}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+
+    {{!-- TRAITS --}}
+    <div class="traits-row">
+      {{#each this.attributes as |attribute key|}}
+      <div
+        class="trait-container {{#if (eq key @root.document.system.class.subclass.system.spellcastingTrait)}}spellcast-trait{{/if}}"
+        data-tooltip="{{#if (eq key @root.document.system.class.subclass.system.spellcastingTrait)}}<b>{{localize "DAGGERHEART.ITEMS.Subclass.spellcastingTrait"}}</b><br><br>{{/if}}<b>{{localize (concat 'DAGGERHEART.CONFIG.Traits.' key '.name') }}:</b><br>{{#each attribute.verbs}}{{this}}<br>{{/each}}"
+        data-action="rollAttribute" data-attribute="{{key}}" data-value="{{attribute.value}}">
+        <span class="trait-number">
+          {{#if (gt attribute.value 0)}}
+          <span>+{{attribute.value}}</span>
+          {{else}}
+          <span>{{attribute.value}}</span>
+          {{/if}}
+        </span>
+        <span class="trait-name">{{localize (concat 'DAGGERHEART.CONFIG.Traits.' key '.name') }}</span>
+        {{#if attribute.tierMarked}}
+        <div class="trait-marked"></div>
+        {{else}}
+        <div class="trait-unmarked"></div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+
+  </div>

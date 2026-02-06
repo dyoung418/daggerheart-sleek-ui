@@ -1,0 +1,37 @@
+<div
+  class="resource simple-resource"
+  data-item-uuid="{{item.uuid}}"
+  data-max="{{rollParsed item.system.resource.max item.actor item true}}"
+>
+
+  <div class="resource-counter">
+    <span>
+      {{item.system.resource.value}}
+      /
+      {{rollParsed item.system.resource.max item.actor item true}}
+    </span>
+  </div>
+
+  {{#if (eq item.system.resource.recovery "scene")}}
+    <i
+      class="fa-solid fa-film"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.scene'}}"
+    ></i>
+  {{else if (eq item.system.resource.recovery "session")}}
+    <i
+      class="fa-solid fa-calendar"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.session'}}"
+    ></i>
+  {{else if (eq item.system.resource.recovery "shortRest")}}
+    <i
+      class="fa-solid fa-utensils"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.shortrest'}}"
+    ></i>
+  {{else if (eq item.system.resource.recovery "longRest")}}
+    <i
+      class="fa-solid fa-bed"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.longrest'}}"
+    ></i>
+  {{/if}}
+
+</div>

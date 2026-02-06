@@ -1,0 +1,11 @@
+<div class="resource hope-resource">
+    {{#times hopeCost}}
+        <span class='hope-value' data-value="{{add this 1}}">
+        {{#if (gte ../actorHope (add this 1))}}
+        <div class="hope-icon-full"></div>
+        {{else}}
+        <div class="hope-icon-empty"></div>
+        {{/if}}
+        </span>
+    {{/times}}
+</div>

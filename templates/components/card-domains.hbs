@@ -1,0 +1,102 @@
+<div class="card-wrapper domains" draggable="true" data-item-uuid="{{item.uuid}}">
+
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="domainCard">
+    {{#if item.system.inVault}}
+    <div class="card-icon" data-action="toChat"
+      data-item-uuid="{{item.uuid}}">
+      <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
+    </div>
+    {{else}}  
+    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+      data-item-uuid="{{item.uuid}}">
+      <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
+    </div>
+    {{/if}}
+
+    <div class="card-header">
+
+      <div class="card-text">
+        <span class="card-text-name">{{item.name}}</span>
+      </div>
+
+      <div class="card-resource">
+        {{#if item.system.inVault}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-recall.hbs"}}
+        {{else}}
+
+          {{#if (eq item.system.resource.type 'die')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
+          {{/if}}
+
+          {{#if (eq item.system.resource.type 'diceValue')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs"}}
+          {{/if}}
+
+          {{#if (eq item.system.resource.type 'simple')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs"}}
+          {{/if}}
+
+          {{#if usesData}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
+          usesData=usesData}}
+          {{/if}}
+
+          {{#if hopeCost}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-hope.hbs"
+          hopeCost=hopeCost
+          actorHope=@root.document.system.resources.hope.value}}
+          {{/if}}
+        
+        {{/if}}
+
+      </div>
+
+      <div class="card-controls">
+        {{#unless item.system.vaultActive}}
+        <a data-action="toggleVault"
+          data-tooltip="DAGGERHEART.UI.Tooltip.{{ifThen item.system.inVault 'sendToLoadout' 'sendToVault' }}">
+          <i class="fa-solid {{ifThen item.system.inVault 'fa-arrow-up' 'fa-arrow-down'}}"></i>
+        </a>
+        {{/unless}}
+        <a data-action="toChat" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.UI.Tooltip.sendToChat">
+          <i class="fa-regular fa-message"></i>
+        </a>
+        <a data-action="triggerContextMenu" data-tooltip="DAGGERHEART.UI.Tooltip.moreOptions">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card-container description">
+    <span class="separator-line"></span>
+    <div class="card-description">
+      {{{enrichedDescription}}}
+    </div>
+    <div class="card-bottom">
+      <div class="card-tags">
+        {{#each tags as |tag|}}
+        <span class="tag {{tag.tagClass}}" data-item-uuid="{{tag.uuid}}">{{tag.label}}</span>
+        {{/each}}
+      </div>
+      <div class="card-actions">
+        {{#if item.system.inVault}}
+        {{#each item.system.actions as |action|}}
+        <button class="card-button inactive" data-item-uuid="{{../item.uuid}}"
+          data-action-id="{{action._id}}">{{action.name}}</button>
+        {{/each}}
+        {{else}}
+        {{#each item.system.actions as |action|}}
+        <button class="card-button" data-action="useAction" data-item-uuid="{{../item.uuid}}"
+          data-action-id="{{action._id}}">{{action.name}}</button>
+        {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+</div>

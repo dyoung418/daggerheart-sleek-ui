@@ -1,0 +1,109 @@
+<div class="tabs biography-tab">
+
+  {{!-- BACKGROUND --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'background')}}collapsed{{/if}}" data-category-id="background">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize
+              "DAGGERHEART.ACTORS.Character.story.backgroundTitle"
+            }}</h2>      
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content textbox">
+      {{formInput
+        background.field
+        value=background.value
+        enriched=background.enriched
+        toggled=true
+      }}
+    </div>
+
+  </div>
+
+
+  {{!-- CONNECTIONS --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'connections')}}collapsed{{/if}}" data-category-id="connections">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize
+              "DAGGERHEART.ACTORS.Character.story.connectionsTitle"
+            }}</h2>      
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content textbox">
+      {{formInput
+          connections.field
+          value=connections.value
+          enriched=connections.enriched
+          toggled=true
+        }}
+    </div>
+
+  </div>  
+
+  {{!-- DESCRIPTIONS --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'descriptions')}}collapsed{{/if}}" data-category-id="descriptions">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>Character Descriptions</h2>      
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content descriptions">
+
+      <div class="description-input">
+        <span>Clothes that are:</span>
+        <input
+          type="text"
+          name="flags.daggerheart-sleek-ui.clothes"
+          value="{{document.flags.daggerheart-sleek-ui.clothes}}"
+        />
+      </div>
+
+      <div class="description-input">
+        <span>Eyes the color of:</span>
+        <input
+          type="text"
+          name="flags.daggerheart-sleek-ui.eyes"
+          value="{{document.flags.daggerheart-sleek-ui.eyes}}"
+        />
+      </div>
+
+      <div class="description-input">
+        <span>Body that's:</span>
+        <input
+          type="text"
+          name="flags.daggerheart-sleek-ui.body"
+          value="{{document.flags.daggerheart-sleek-ui.body}}"
+        />
+      </div>
+
+      <div class="description-input">
+        <span>Skin the color of:</span>
+        <input
+          type="text"
+          name="flags.daggerheart-sleek-ui.skin"
+          value="{{document.flags.daggerheart-sleek-ui.skin}}"
+        />
+      </div>
+
+      <div class="description-input">
+        <span>Attitude like:</span>
+        <input
+          type="text"
+          name="flags.daggerheart-sleek-ui.attitude"
+          value="{{document.flags.daggerheart-sleek-ui.attitude}}"
+        />
+      </div>
+
+
+    </div>
+
+  </div> 
+
+</div>

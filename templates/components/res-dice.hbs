@@ -1,0 +1,25 @@
+<div class="resource dice-resource">
+
+  <div class="dice-roll" data-action="handleResourceDice" data-tooltip="DAGGERHEART.APPLICATIONS.ResourceDice.rerollDice">
+    <img
+      class="dice-faces"
+      src="{{concat 'systems/daggerheart/assets/icons/dice/default/' item.system.resource.dieFaces '.svg'}}"
+      style="width:16px;"
+    />
+    <i class="fa-solid fa-dice dice-reroll"></i>
+  </div>
+
+  <div class="dice-value-row">
+    {{#times (rollParsed item.system.resource.max item.parent item numerical=true)}}
+      {{#with (ifThen (lookup ../item.system.resource.diceStates this) (lookup ../item.system.resource.diceStates this) this) as | state |}}
+          <div class="dice-value" data-action="toggleResourceDice" data-dice="{{#if ../../this}}{{../this}}{{else}}{{state}}{{/if}}">
+             {{ifThen state.value state.value '?'}}
+              <div class="dice-mark" style="{{#unless state.used}}display:none;{{/unless}}">
+                  <i class="fa-solid fa-slash"></i>
+              </div>
+          </div>
+      {{/with}}
+    {{/times}}
+  </div>
+
+</div>

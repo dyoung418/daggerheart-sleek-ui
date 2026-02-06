@@ -1,0 +1,13 @@
+<div class="floating-tabs-container">
+  {{#each tabs as |tab|}}
+    <button 
+      type="button"
+      class="tab-button {{#if tab.active}}active{{/if}}"
+      data-tab="{{tab.id}}"
+      data-tooltip="{{tab.label}}"
+      aria-label="{{tab.label}}"
+    >
+      <i class="{{tab.icon}}"></i>
+    </button>
+  {{/each}}
+</div>

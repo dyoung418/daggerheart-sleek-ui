@@ -1,0 +1,54 @@
+<div class="card-wrapper effects" draggable="false" data-item-uuid="{{item.uuid}}">
+
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="effect">
+
+    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+      data-item-uuid="{{item.uuid}}">
+      <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
+    </div>
+
+    <div class="card-header">
+
+      <div class="card-text">
+        <span class="card-text-name">{{item.name}}</span>
+      </div>
+
+      <div class="card-resource">
+        {{#each resourceTags as |tag|}}
+          <span class="tag {{tag.tagClass}}">{{tag.label}}</span>
+        {{/each}}
+      </div>
+
+      <div class="card-controls">
+        <a data-action="toggleEffect"
+          data-tooltip="DAGGERHEART.UI.Tooltip.{{ifThen item.disabled 'enableEffect' 'disableEffect' }}">
+          <i class="{{ifThen item.disabled 'fa-solid fa-toggle-off' 'fa-solid fa-toggle-on'}}"></i>
+        </a>
+        <a data-action="toChat" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.UI.Tooltip.sendToChat">
+          <i class="fa-regular fa-message"></i>
+        </a>
+        <a data-action="triggerContextMenu" data-tooltip="DAGGERHEART.UI.Tooltip.moreOptions">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card-container description">
+    <span class="separator-line"></span>
+    <div class="card-description">
+      {{{enrichedDescription}}}
+    </div>
+    <div class="card-bottom">
+      <div class="card-tags">
+        {{#each infoTags as |tag|}}
+          <span class="tag {{tag.tagClass}}" data-item-uuid="{{tag.uuid}}">{{tag.label}}</span>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+</div>

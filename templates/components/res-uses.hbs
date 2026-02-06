@@ -1,0 +1,31 @@
+<div class="resource uses-resource" data-action-id="{{usesData.actionId}}">
+
+  <div class="resource-counter">
+    <span>{{usesData.remaining}}</span>
+    /
+    <span>{{usesData.max}}</span>
+  </div>
+
+  {{#if (eq usesData.recovery "scene")}}
+    <i
+      class="fa-solid fa-film"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.scene'}}"
+    ></i>
+  {{else if (eq usesData.recovery "session")}}
+    <i
+      class="fa-solid fa-calendar"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.session'}}"
+    ></i>
+  {{else if (eq usesData.recovery "shortRest")}}
+    <i
+      class="fa-solid fa-utensils"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.shortrest'}}"
+    ></i>
+  {{else if (eq usesData.recovery "longRest")}}
+    <i
+      class="fa-solid fa-bed"
+      data-tooltip="{{localize 'DAGGERHEART.GENERAL.RefreshType.longrest'}}"
+    ></i>
+  {{/if}}
+
+</div>

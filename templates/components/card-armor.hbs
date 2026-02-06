@@ -1,0 +1,99 @@
+<div class="card-wrapper armor {{#if item.system.equipped}}card-equipped{{/if}}" draggable="true" data-item-uuid="{{item.uuid}}">
+
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="armor">
+
+    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+      data-item-uuid="{{item.uuid}}">
+      <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
+    </div>
+
+    <div class="card-header">
+
+      <div class="card-text">
+        <span class="card-text-name">{{item.name}}</span>
+        <span class="card-text-details">
+          <span>{{localize "DAGGERHEART.ITEMS.Armor.baseThresholds.base"}}:<span>&nbsp;&nbsp;</span>{{item.system.baseThresholds.major}}<span class="separator"></span>{{item.system.baseThresholds.severe}}</span>
+        </span>
+      </div>
+
+      <div class="card-resource">
+
+        {{#if (eq item.system.resource.type 'die')}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
+        {{/if}}
+
+        {{#if (eq item.system.resource.type 'diceValue')}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs"}}
+        {{/if}}
+
+        {{#if (eq item.system.resource.type 'simple')}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs"}}
+        {{/if}}
+
+        {{#if usesData}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
+        usesData=usesData}}
+        {{/if}}
+        
+        {{#if hopeCost}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-hope.hbs"
+        hopeCost=hopeCost
+        actorHope=@root.document.system.resources.hope.value}}
+        {{/if}}
+
+        <div class="resource-bar">
+          {{#times item.system.baseScore}}
+              <div class="resource-pip pip-armor {{#if (lt this ../item.system.marks.value)}}filled{{else}}empty{{/if}}"></div>
+          {{/times}}
+        </div>
+
+      </div>
+
+      <div class="card-controls">
+        <a class="{{#unless item.system.equipped}}unequipped{{/unless}} equip" data-action="toggleEquipItem"
+          data-tooltip="DAGGERHEART.UI.Tooltip.{{ifThen item.system.equipped 'unequip' 'equip' }}">
+          <i class="fa-solid fa-shield {{#if item.system.equipped}}equipped{{/if}}"></i>
+        </a>
+        <a data-action="toChat" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.UI.Tooltip.sendToChat">
+          <i class="fa-regular fa-message"></i>
+        </a>
+        <a data-action="triggerContextMenu" data-tooltip="DAGGERHEART.UI.Tooltip.moreOptions">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card-container description">
+    <span class="separator-line"></span>
+    
+    <div class="card-description">
+      {{{enrichedDescription}}}
+      {{#each features as |feature|}}
+      <div class="feature-box">
+        <strong>{{feature.name}}</strong>
+        <p>{{feature.description}}</p>
+      </div>
+      {{/each}}
+    </div>
+
+    
+    <div class="card-bottom">
+      <div class="card-tags">
+        {{#each tags as |tag|}}
+        <span class="tag {{tag.tagClass}}" data-item-uuid="{{tag.uuid}}">{{tag.label}}</span>
+        {{/each}}
+      </div>
+      <div class="card-actions">
+        {{#each item.system.actions as |action|}}
+        <button class="card-button" data-action="useAction" data-item-uuid="{{../item.uuid}}"
+          data-action-id="{{action._id}}">{{action.name}}</button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,52 @@
+<div class="compact card-wrapper domains" draggable="true" data-item-uuid="{{item.uuid}}">
+
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="domainCard" data-action="navigateToCard">
+
+    <div class="card-icon" data-item-uuid="{{item.uuid}}"
+      data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}">
+      <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
+    </div>
+
+    <div class="card-header">
+
+      <div class="card-text">
+        <span class="card-text-name">{{item.name}}</span>
+      </div>
+
+      <div class="card-resource">
+        {{#if hopeCost}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-hope.hbs"
+        hopeCost=hopeCost
+        actorHope=@root.document.system.resources.hope.value}}
+        {{/if}}
+      </div>
+
+      <div class="hover-area">
+
+        <div class="hover-resources">
+          {{#if (eq item.system.resource.type 'die')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
+          {{/if}}
+
+          {{#if (eq item.system.resource.type 'diceValue')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs"}}
+          {{/if}}
+
+          {{#if (eq item.system.resource.type 'simple')}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs"}}
+          {{/if}}
+
+          {{#if usesData}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
+          usesData=usesData}}
+          {{/if}}
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

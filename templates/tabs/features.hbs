@@ -1,0 +1,111 @@
+<div class="tabs features-tab">
+  {{!-- EXPERIENCES --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'experiences')}}collapsed{{/if}}"
+    data-category-id="experiences">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.experience.plural"}}</h2>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content experiences">
+      {{#each document.system.experiences as |experience id|}}
+      <div class="experience-container" data-action="sendExpToChat" data-type="experience" data-id="{{id}}">
+        <div class="experience-number">+{{experience.value}}</div>
+        <span>{{experience.name}}</span>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+
+  {{!-- HERITAGE --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'heritage')}}collapsed{{/if}}"
+    data-category-id="heritage">
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.Tabs.heritage"}}</h2>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content heritage">
+      {{#each heritageFeatures as |featureData|}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
+            item=featureData.item 
+            tags=featureData.tags}}
+      {{/each}}
+    </div>
+  </div>
+
+  {{!-- CLASS --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'class')}}collapsed{{/if}}"
+    data-category-id="class">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "TYPES.Item.class"}}</h2>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each classFeatures as |featureData|}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
+            item=featureData.item 
+            tags=featureData.tags}}
+      {{/each}}
+    </div>
+
+  </div>
+
+  {{!-- MULTICLASS --}}
+  {{#if document.system.multiclass.value}}
+
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'multiclass')}}collapsed{{/if}}"
+    data-category-id="multiclass">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.multiclass"}}</h2>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each multiclassFeatures as |featureData|}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
+            item=featureData.item 
+            tags=featureData.tags}}
+      {{/each}}
+    </div>
+
+  </div>
+
+  {{/if}}
+
+  {{!-- EXTRA FEATURES --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'extrafeatures')}}collapsed{{/if}}"
+    data-category-id="extrafeatures">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.Tabs.features"}}</h2>
+      <span class="create-btn">
+        <a data-action="createDoc" data-document-class="Item" data-type="feature" data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button" style=""></i>
+        </a>
+      </span>
+
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each extraFeatures as |featureData|}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
+            item=featureData.item 
+            tags=featureData.tags}}
+      {{/each}}
+    </div>
+
+  </div>
+
+</div>

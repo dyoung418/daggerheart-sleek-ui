@@ -1,0 +1,424 @@
+/* ==================== 
+   GOOGLE FONTS 
+   ==================== */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@400;500;600;700;800&display=swap");
+
+/* ==================== 
+   CSS VARIABLES (Sheet-specific)
+   ==================== */
+.daggerheart.sheet.actor.sleek-ui,
+.floating-tabs-nav {
+  /* Fonts */
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Rubik", sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-tiny: 8px;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 24px;
+  --font-size-name: 28px;
+
+  /* Spacing */
+  --spacing-tiny: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-xm: 18px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  --sidebar-width: 275px;
+
+  /* Border Radius */
+  --border-radius: 8px;
+  --border-radius-s: 4px;
+
+  /* Colors */
+  --color-primary: #efe6d8;
+  --color-secondary: #cbcfe2;
+  --color-tertiary: #f3c267;
+
+  --color-background-primary: rgba(26, 30, 43, 0.75);
+  --color-background-secondary: rgba(20, 24, 34, 0.75);
+  --color-background-input: #1a1e2b;
+  --color-background-dark: #141822;
+  --color-background-resourceHover: rgba(79, 89, 137, 0.3);
+
+  --color-border: #4f5989;
+  --color-border-spellcast: #68b0b5;
+  --color-border-equipped: #9d7c40;
+
+  --color-tag-text: #add0f1;
+  --color-tag-border: #4e6aa5;
+  --color-tag-background: rgba(78, 106, 165, 0.3);
+
+  --color-tag2-text: #abede7;
+  --color-tag2-border: #68b0b5;
+  --color-tag2-background: rgba(104, 176, 181, 0.3);
+
+  --color-tag3-text: #ffd6a8;
+  --color-tag3-border: #e88a47;
+  --color-tag3-background: rgba(232, 138, 71, 0.3);
+
+  --color-tag4-text: #ffbdb2;
+  --color-tag4-border: #e84747;
+  --color-tag4-background: rgba(232, 71, 71, 0.3);
+
+  --color-tag5-text: #d2bfff;
+  --color-tag5-border: #7747e8;
+  --color-tag5-background: rgba(119, 71, 232, 0.3);
+
+  --color-scrollbar: rgba(79, 89, 137, 0.8);
+
+  /* Gradients */
+  --gradient-mask-portrait: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 30%
+  );
+  --gradient-mask-icon: linear-gradient(
+    -90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 50%
+  );
+  --gradient-card: linear-gradient(
+    90deg,
+    rgba(104, 79, 89, 0.12) 0%,
+    rgba(79, 89, 137, 0.3) 100%
+  );
+  --gradient-currency: linear-gradient(
+    90deg,
+    rgb(232, 138, 71, 0.12) 0%,
+    rgb(243, 194, 103, 0.3) 100%
+  );
+  --gradient-trait: linear-gradient(
+    0deg,
+    rgba(104, 79, 89, 0.12) 0%,
+    rgba(79, 89, 137, 0.3) 100%
+  );
+  --gradient-spellcast-trait: linear-gradient(
+    0deg,
+    rgba(104, 79, 89, 0.12) 0%,
+    rgba(104, 176, 181, 0.3) 100%
+  );
+  --gradient-line-left: linear-gradient(
+    90deg,
+    rgba(79, 89, 137, 0) 0%,
+    rgba(79, 89, 137, 1) 100%
+  );
+  --gradient-line-right: linear-gradient(
+    260deg,
+    rgba(79, 89, 137, 0) 0%,
+    rgba(79, 89, 137, 1) 100%
+  );
+}
+
+/* ==================== 
+   GENERAL
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui {
+  width: fit-content;
+  min-width: 860px;
+}
+
+.daggerheart.sheet.actor.sleek-ui.minimized {
+  min-width: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .window-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-background-primary);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-md);
+  padding: 0 !important;
+}
+
+.daggerheart.sheet.actor.sleek-ui .sheet-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  gap: 0;
+}
+
+/* ==================== 
+   SCROLLBAR
+   ==================== */
+
+*::-webkit-scrollbar-track {
+  background: var(--color-background-secondary);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: var(--border-radius-s);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-secondary);
+}
+
+/* ==================== 
+   SIDEBAR
+   ==================== */
+.daggerheart.sheet.actor.sleek-ui [data-application-part="sidebar"] {
+  min-width: var(--sidebar-width);
+  max-width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--color-background-secondary);
+  border-right: 1px solid var(--color-border);
+}
+
+/* ==================== 
+   MAIN CONTENT
+   ==================== */
+.daggerheart.sheet.actor.sleek-ui [data-application-part="mainSheet"] {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.daggerheart.sheet.actor.sleek-ui .header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  padding-top: var(--spacing-xl);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daggerheart.sheet.actor.sleek-ui .tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ==================== 
+   TYPOGRAPHY
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui h1 {
+  color: var(--color-primary) !important;
+  font-family: var(--font-secondary) !important;
+  font-size: var(--font-size-name);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.daggerheart.sheet.actor.sleek-ui h2 {
+  color: var(--color-secondary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-md);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.daggerheart.sheet.actor.sleek-ui h3 {
+  color: var(--color-secondary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .trait-name {
+  color: var(--color-secondary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 -16px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .level-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-secondary) !important;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.daggerheart.sheet.actor.sleek-ui .value-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-secondary) !important;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .trait-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-secondary) !important;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--spacing-xm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .experience-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-secondary) !important;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.daggerheart.sheet.actor.sleek-ui .loadout-number {
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 3px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-text-name {
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-text-details {
+  color: var(--color-secondary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-button {
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-sm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource {
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.daggerheart.sheet.actor.sleek-ui .separator {
+  display: inline-block;
+  width: 1px;
+  height: 60%;
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui h1.window-title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  text-transform: none;
+  padding-left: var(--spacing-xs);
+}
+
+/* ==================== 
+   INPUTS
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui input {
+  border: none;
+  outline: none;
+  text-align: center;
+  width: 100%;
+  border-radius: var(--border-radius-s);
+  background: var(--color-background-input);
+  color: var(--color-primary) !important;
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.daggerheart.sheet.actor.sleek-ui input:hover {
+  background: var(--color-background-dark);
+}
+
+.daggerheart.sheet.actor.sleek-ui input:focus {
+  background: var(--color-background-dark);
+}
+
+/* ==================== 
+   TAGS 
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .character-tags {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-tiny);
+  flex-wrap: wrap;
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag [data-action] {
+  display: inline-block;
+  cursor: pointer;
+  padding: var(--spacing-tiny) var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag:not(:has([data-action])) {
+  display: inline-block;
+  padding: var(--spacing-tiny) var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag {
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  color: var(--color-tag-text);
+  border: 1px solid var(--color-tag-border);
+  background: var(--color-tag-background);
+  height: 20px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag-blue {
+  color: var(--color-tag-text);
+  border: 1px solid var(--color-tag-border);
+  background: var(--color-tag-background);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag-green {
+  color: var(--color-tag2-text);
+  border: 1px solid var(--color-tag2-border);
+  background: var(--color-tag2-background);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag-orange {
+  color: var(--color-tag3-text);
+  border: 1px solid var(--color-tag3-border);
+  background: var(--color-tag3-background);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag-red {
+  color: var(--color-tag4-text);
+  border: 1px solid var(--color-tag4-border);
+  background: var(--color-tag4-background);
+}
+
+.daggerheart.sheet.actor.sleek-ui .tag-purple {
+  color: var(--color-tag5-text);
+  border: 1px solid var(--color-tag5-border);
+  background: var(--color-tag5-background);
+}

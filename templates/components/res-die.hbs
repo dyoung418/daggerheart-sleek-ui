@@ -1,0 +1,21 @@
+<div
+  class="resource die-resource"
+  data-item-uuid="{{item.uuid}}"
+  data-die-faces="{{item.system.resource.dieFaces}}"
+>
+
+  <span class="{{#if item.system.resource.value}}die-value{{else}}die-value-0{{/if}}">
+    {{#if item.system.resource.value}}{{item.system.resource.value}}{{/if}}
+  </span>
+
+  <img
+    src="{{concat
+      'systems/daggerheart/assets/icons/dice/default/'
+      item.system.resource.dieFaces
+      '.svg'
+    }}"
+    style="width: 16px"
+    data-tooltip="{{concat item.system.resource.dieFaces}}"
+  />
+
+</div>

@@ -1,0 +1,628 @@
+/* ==================== 
+   CARD BASICS
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background: var(--gradient-card);
+  overflow: hidden;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .card-wrapper:has(.card-container.header:hover) {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+}
+
+/* ==================== 
+   CARD HEADER
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-container.header {
+  display: flex;
+  flex-direction: row;
+  max-height: 48px;
+}
+
+/* ==================== 
+   CARD DESCRIPTION
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-wrapper .card-container.description {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-container.description .separator-line {
+  width: 100%;
+  height: 1px;
+  background: var(--gradient-line-right);
+}
+
+/* ==================== 
+   ICON
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-container.header .card-icon {
+  width: 82px;
+  height: 48px;
+  mask-image: var(--gradient-mask-icon);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .card-container.header
+  .card-icon
+  .duality-dice {
+  position: absolute;
+  width: auto;
+  height: 32px;
+  top: 8px;
+  left: 32px;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-container.header .card-icon .icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .card-container.header
+  .card-icon:hover
+  .icon {
+  filter: brightness(0.2);
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .card-container.header
+  .card-icon:hover
+  .duality-dice {
+  opacity: 1;
+  transform: translateX(-12px);
+}
+
+/* ==================== 
+   CARD HEADER CONTENT
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-container.header .card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  margin-left: -8px;
+  padding: var(--spacing-xs);
+  padding-left: 0;
+}
+
+/* ==================== 
+   CARD NAME + DETAILS
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-header .card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-text .separator {
+  margin: 0 var(--spacing-tiny);
+}
+
+/* ==================== 
+   CARD CONTROLS
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-header .card-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-left: var(--spacing-lg);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-controls a {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-controls a:last-child {
+  width: 8px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-controls a:hover {
+  filter: drop-shadow(0 0 2px var(--color-primary));
+  color: var(--color-primary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .unequipped i {
+  opacity: 0.25;
+}
+
+/* ==================== 
+   CARD DESCRIPTION
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-description {
+  padding: 0 var(--spacing-sm);
+  color: var(--color-secondary);
+  line-height: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description a.content-link {
+  padding: var(--spacing-tiny) var(--spacing-xs);
+  border-radius: var(--border-radius);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description button {
+  background: var(--color-background-input);
+  color: var(--color-primary);
+  border: none;
+  transition: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description button:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description ul {
+  list-style: disc;
+  margin: 0.5rem 0 0.5rem 1.5rem;
+  padding-left: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description ol {
+  list-style: decimal;
+  margin: 0.5rem 0 0.5rem 1.5rem;
+  padding-left: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-description li {
+  display: list-item;
+  margin-bottom: 0.2rem;
+}
+
+.daggerheart.sheet.actor.sleek-ui .feature-box {
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-s);
+  border: 1px solid var(--color-border);
+  background: var(--color-background-resourceHover);
+  margin-bottom: var(--spacing-tiny);
+}
+
+.daggerheart.sheet.actor.sleek-ui .feature-box:last-child {
+  margin-bottom: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .feature-box p {
+  margin: var(--spacing-tiny) 0;
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .feature-box strong {
+  color: var(--color-primary);
+}
+
+/* ==================== 
+   CARD BOTTOM
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-tiny);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-tags {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  gap: var(--spacing-tiny);
+  flex-wrap: wrap;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  width: auto;
+  gap: var(--spacing-tiny);
+  flex-wrap: wrap;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-tiny);
+  background: var(--color-background-input);
+  border: none;
+  border-radius: var(--border-radius-s);
+  padding: var(--spacing-xs);
+  transition: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-button:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-button.inactive {
+  cursor: default;
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-bottom .card-button.inactive:hover {
+  box-shadow: none;
+  background: var(--color-background-input);
+}
+
+/* ==================== 
+   RESOURCES
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-resource {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  padding-left: var(--spacing-lg);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-tiny);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  height: 100%;
+  background: var(--color-background-input);
+  border-radius: var(--border-radius-s);
+  min-width: 36px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource i {
+  font-size: var(--font-size-sm);
+  color: var(--color-secondary);
+  margin-left: var(--spacing-tiny);
+}
+
+/* .daggerheart.sheet.actor.sleek-ui .resource-counter {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-tiny);
+  margin-right: var(--spacing-tiny);
+} */
+
+/* ==================== 
+   RESOURCE - SIMPLE
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.simple-resource {
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.simple-resource:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+/* ==================== 
+RESOURCE - USES
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.uses-resource {
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.uses-resource:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+/* ==================== 
+RESOURCE - DIE
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.die-resource {
+  gap: 0;
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.die-resource:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.die-resource .die-value {
+  padding-right: var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.die-resource .die-value-empty {
+  display: none;
+}
+
+/* ==================== 
+RESOURCE - DICE
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource {
+  gap: var(--spacing-md);
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .resource.dice-resource:has(.dice-roll:hover) {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll {
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll i {
+  display: none;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll:hover i {
+  display: block;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll:hover img {
+  display: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-value-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-tiny);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-value {
+  display: flex;
+  width: 20px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-mark {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: -4px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-mark i {
+  color: #e84747;
+  font-size: 16px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-value:hover {
+  text-shadow: 0 0 4px var(--color-tertiary);
+}
+
+/* ==================== 
+   RESOURCE - HOPE
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.hope-resource {
+  gap: var(--spacing-xs);
+  background: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource .hope-icon-full,
+.daggerheart.sheet.actor.sleek-ui .resource .hope-icon-empty {
+  width: 10px;
+  height: 10px;
+}
+
+/* ==================== 
+RESOURCE - RECALL
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .resource.recall-resource {
+  gap: var(--spacing-xs);
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.recall-resource:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+/* ==================== 
+RESOURCE - QUANTITY
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .item .card-container.header .card-header {
+  margin-left: -16px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .item .card-text {
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.quantity-resource {
+  width: 42px;
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.quantity-resource:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .resource.quantity-resource
+  .resource-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* ==================== 
+ITEM ROLL DAMAGE
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .roll-damage {
+  width: fit-content;
+  gap: var(--spacing-tiny);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-background-input);
+  border-radius: var(--border-radius-s);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .roll-damage i {
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .roll-damage:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+  background: var(--color-border);
+}
+
+/* ==================== 
+ITEM ARMOR SLOTS
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .armor .resource-bar {
+  width: 75px;
+  gap: 1px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .armor .resource-pip {
+  width: 100px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .armor .resource-pip.empty:hover {
+  background: none;
+}
+
+/* ==================== 
+ITEM EQUIPPED
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .card-wrapper.card-equipped {
+  border: 1px solid var(--color-border-equipped);
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .card-wrapper.card-equipped:has(.card-container.header:hover) {
+  box-shadow: 0px 0px 9px -1px var(--color-border-equipped);
+}
+
+.daggerheart.sheet.actor.sleek-ui .card-controls i.equipped {
+  color: var(--color-tertiary);
+}
+
+/* ==================== 
+COMPACT CARDS
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .compact.card-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact.card-wrapper .card-icon {
+  width: 56px;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact
+  .card-container.header
+  .card-icon
+  .duality-dice {
+  left: 22px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .card-header .card-text {
+  text-align: left;
+  flex: 1;
+  display: flex;
+  white-space: nowrap;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-area {
+  position: absolute;
+  right: 0;
+  width: 25%;
+  height: 100%;
+  z-index: 5;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-area .hover-resources {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  right: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(12px);
+  transition: all 0.2s ease;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact
+  .hover-area.force-hover
+  .hover-resources {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-area:hover .hover-resources {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-resources .resource {
+  width: fit-content;
+}
