@@ -32,6 +32,17 @@ async function preloadHandlebarsTemplates() {
 
 Hooks.once("init", () => {
   preloadHandlebarsTemplates();
+
+  // Show currency labels
+  game.settings.register("daggerheart-sleek-ui", "currencyLabel", {
+    name: "Show Currency Labels",
+    hint: "Shows the labels for each currency on top of their values",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
   Handlebars.registerHelper("contains", function (array, value) {
     return Array.isArray(array) && array.includes(value);
   });
@@ -59,7 +70,7 @@ Hooks.once("ready", () => {
       super.DEFAULT_OPTIONS,
       {
         classes: ["daggerheart", "sheet", "actor", "sleek-ui"],
-        window: { title: "ACTOR.TypeCharacter" },
+        window: { title: "ACTOR.TypeCharacter", controls: [] },
         position: { width: 860, height: 900 },
         actions: {
           toggleHope: this._onToggleHope,
@@ -94,6 +105,11 @@ Hooks.once("ready", () => {
       }
 
       const context = await super._prepareContext(options);
+
+      context.currencyLabel = game.settings.get(
+        "daggerheart-sleek-ui",
+        "currencyLabel",
+      );
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {

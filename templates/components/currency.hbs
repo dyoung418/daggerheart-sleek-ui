@@ -1,16 +1,24 @@
 {{! CURRENCY }}
 
 {{#if this.inventory.hasCurrency}}
-  <div class="currency-wrapper">
+  <div class="currency-wrapper {{#if @root.currencyLabel}}display-label{{/if}}">
     {{#each this.inventory.currencies as |currency key|}}
       {{#if currency.enabled}}
         <div
-          class="currency-container"
+          class="currency-container {{#if @root.currencyLabel}}display-label{{/if}}"
           data-currency="{{key}}"
           data-tooltip="{{localize currency.label}}"
         >
-          <div class="icon">
-            <i class="{{currency.icon}}"></i>
+          <div class="label">
+         
+            <div class="icon">
+              <i class="{{currency.icon}}"></i>
+            </div>
+
+            <h3 class="{{#if @root.currencyLabel}}show-label{{/if}}">
+              {{localize currency.label}}
+            </h3>
+
           </div>
 
           <input
@@ -27,86 +35,3 @@
     {{/each}}
   </div>
 {{/if}}
-
-{{!-- <div class="currency-wrapper">
-
-  <div
-    class="currency-container"
-    data-currency="coins"
-    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.coins'}}"
-  >
-    <div class="icon">
-      <i class="fa-solid fa-coin-front"></i>
-    </div>
-    <div>
-      {{formInput
-        systemFields.gold.fields.coins
-        value=source.system.gold.coins
-        localize=true
-        toggled=true
-        class="currency-input"
-        min=0
-      }}
-    </div>
-  </div>
-
-  <div
-    class="currency-container"
-    data-currency="handfuls"
-    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.handfuls'}}"
-  >
-    <div class="icon">
-      <i class="fa-solid fa-coins"></i>
-    </div>
-    <div>
-      {{formInput
-        systemFields.gold.fields.handfuls
-        value=source.system.gold.handfuls
-        localize=true
-        toggled=true
-        class="currency-input"
-        min=0
-      }}
-    </div>
-  </div>
-
-  <div
-    class="currency-container"
-    data-currency="bags"
-    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.bags'}}"
-  >
-    <div class="icon">
-      <i class="fa-solid fa-sack"></i>
-    </div>
-    <div>
-      {{formInput
-        systemFields.gold.fields.bags
-        value=source.system.gold.bags
-        localize=true
-        toggled=true
-        class="currency-input"
-        min=0
-      }}
-    </div>
-  </div>
-
-  <div
-    class="currency-container"
-    data-currency="chests"
-    data-tooltip="{{localize 'DAGGERHEART.CONFIG.Gold.chests'}}"
-  >
-    <div class="icon">
-      <i class="fa-solid fa-treasure-chest"></i>
-    </div>
-    <div>
-      {{formInput
-        systemFields.gold.fields.chests
-        value=source.system.gold.chests
-        localize=true
-        toggled=true
-        class="currency-input"
-        min=0
-      }}
-    </div>
-  </div>
-</div> --}}

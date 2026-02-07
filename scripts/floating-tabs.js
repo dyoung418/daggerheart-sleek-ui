@@ -95,6 +95,11 @@ export class FloatingTabs extends foundry.applications.api.HandlebarsApplication
     const rect = root.getBoundingClientRect();
     el.style.position = "fixed";
 
+    const parentZIndex = window.getComputedStyle(root).zIndex;
+    if (parentZIndex && parentZIndex !== "auto") {
+      el.style.zIndex = parentZIndex;
+    }
+
     if (isPopOut) {
       el.style.left = `${rect.right - 45}px`;
       el.style.top = `${rect.top + 100}px`;

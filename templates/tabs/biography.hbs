@@ -43,13 +43,45 @@
         }}
     </div>
 
-  </div>  
+  </div>
+
+  {{!-- DEFAULT CHARACTERISTICS --}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'characteristics')}}collapsed{{/if}}" data-category-id="characteristics">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize
+              "DAGGERHEART.ACTORS.Character.story.characteristics"
+            }}</h2>      
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content characteristics">
+      
+      <div class="input">
+          <span>{{localize 'DAGGERHEART.ACTORS.Character.pronouns'}}</span>
+          {{formInput systemFields.biography.fields.characteristics.fields.pronouns value=source.system.biography.characteristics.pronouns enriched=source.system.biography.characteristics.pronouns localize=true toggled=true}}
+      </div>
+
+      <div class="input">
+          <span>{{localize 'DAGGERHEART.ACTORS.Character.age'}}</span>
+          {{formInput systemFields.biography.fields.characteristics.fields.age value=source.system.biography.characteristics.age enriched=source.system.biography.characteristics.age localize=true toggled=true}}
+      </div>
+
+      <div class="input">
+          <span>{{localize 'DAGGERHEART.ACTORS.Character.faith'}}</span>
+          {{formInput systemFields.biography.fields.characteristics.fields.faith value=source.system.biography.characteristics.faith enriched=source.system.biography.characteristics.faith localize=true toggled=true}}
+      </div>
+
+    </div>
+
+  </div> 
 
   {{!-- DESCRIPTIONS --}}
   <div class="category-wrapper {{#if (contains @root.collapsedCategories 'descriptions')}}collapsed{{/if}}" data-category-id="descriptions">
 
     <div class="category-header" data-action="toggleCategory">
-      <h2>Character Descriptions</h2>      
+      <h2>Descriptions</h2>      
       <span class="line"></span>
       <i class="fa-solid fa-chevron-down"></i>
     </div>

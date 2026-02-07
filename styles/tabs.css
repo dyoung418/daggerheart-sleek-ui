@@ -144,6 +144,10 @@
   z-index: -1;
 }
 
+.daggerheart.sheet.actor.sleek-ui .currency-wrapper.display-label::after {
+  height: 100px;
+}
+
 .daggerheart.sheet.actor.sleek-ui .currency-wrapper input {
   height: 26px;
 }
@@ -157,9 +161,36 @@
   align-items: center;
   padding: var(--spacing-xs);
   border-radius: var(--border-radius);
-  border: 1px solid var(--color-tertiary);
+  border: 1px solid #c8a15b;
   background: var(--gradient-currency);
   backdrop-filter: blur(2px);
+}
+
+.daggerheart.sheet.actor.sleek-ui .currency-container.display-label {
+  flex-direction: column;
+  height: fit-content;
+}
+
+.daggerheart.sheet.actor.sleek-ui .currency-container .label {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .currency-container .label h3 {
+  display: none;
+  color: var(--color-primary) !important;
+}
+
+.daggerheart.sheet.actor.sleek-ui .currency-container .label h3.show-label {
+  display: block;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .currency-container
+  .label
+  span.currencyLabel {
+  display: block;
 }
 
 .daggerheart.sheet.actor.sleek-ui .currency-container .icon {
@@ -168,7 +199,7 @@
   align-items: center;
   flex-shrink: 0;
   min-width: 16px;
-  color: var(--color-tertiary);
+  color: #c8a15b;
   font-size: var(--font-size-sm);
 }
 
@@ -210,6 +241,7 @@
   .description-input
   span {
   white-space: nowrap;
+  color: var(--color-secondary);
 }
 
 .daggerheart.sheet.actor.sleek-ui
@@ -218,6 +250,31 @@
   .description-input
   input {
   text-align: left;
+}
+
+.daggerheart.sheet.actor.sleek-ui .biography-tab .characteristics {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+}
+
+.daggerheart.sheet.actor.sleek-ui .biography-tab .characteristics .input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-tiny);
+}
+
+.daggerheart.sheet.actor.sleek-ui .biography-tab .characteristics span {
+  padding: 0 var(--spacing-sm);
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .biography-tab .characteristics input {
+  border-radius: var(--border-radius);
+  padding: 0 var(--spacing-sm);
+  text-align: left;
+  color: var(--color-primary);
 }
 
 .daggerheart.sheet.actor.sleek-ui .biography-tab .textbox {

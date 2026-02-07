@@ -192,7 +192,7 @@
    REST
    ==================== */
 
-.daggerheart.sheet.actor.sleek-ui .rest-container {
+.daggerheart.sheet.actor.sleek-ui .btn-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -200,7 +200,7 @@
   height: 100%;
 }
 
-.daggerheart.sheet.actor.sleek-ui .rest-container .rest-btn {
+.daggerheart.sheet.actor.sleek-ui .btn-container .btn {
   width: 32px;
   height: 32px;
   display: flex;
@@ -213,7 +213,7 @@
   transition: none;
 }
 
-.daggerheart.sheet.actor.sleek-ui .rest-container .rest-btn:hover {
+.daggerheart.sheet.actor.sleek-ui .rest-container .btn:hover {
   box-shadow: 0px 0px 9px -1px var(--color-border);
 }
 
