@@ -92,7 +92,7 @@
         {{else}}
         {{#each item.system.actions as |action|}}
         <button class="card-button" data-action="useAction" data-item-uuid="{{../item.uuid}}"
-          data-action-id="{{action._id}}">{{action.name}}</button>
+          data-action-id="{{action._id}}">{{localize action.name}}</button>
         {{/each}}
         {{/if}}
       </div>

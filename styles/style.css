@@ -118,6 +118,12 @@
     rgba(79, 89, 137, 0) 0%,
     rgba(79, 89, 137, 1) 100%
   );
+  --gradient-line-middle: linear-gradient(
+    260deg,
+    rgba(79, 89, 137, 0) 0%,
+    rgba(79, 89, 137, 1) 50%,
+    rgba(79, 89, 137, 0) 100%
+  );
 }
 
 /* ==================== 
@@ -300,6 +306,9 @@
   font-family: var(--font-primary) !important;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .daggerheart.sheet.actor.sleek-ui .card-text-details {

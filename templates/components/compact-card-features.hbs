@@ -1,4 +1,4 @@
-<div class="compact card-wrapper domains {{#if item.system.inVault}}{{else}}card-equipped{{/if}} {{#if @root.quickAccess}}quick-access{{/if}}" draggable="true" data-item-uuid="{{item.uuid}}">
+<div class="compact card-wrapper features" draggable="true" data-item-uuid="{{item.uuid}}">
 
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}" data-action="navigateToCard">
 
@@ -25,10 +25,6 @@
       <div class="hover-area">
 
         <div class="hover-resources">
-        {{#if item.system.inVault}}
-          {{> "modules/daggerheart-sleek-ui/templates/components/res-recall.hbs"}}
-        {{else}}
-
           {{#if (eq item.system.resource.type 'die')}}
           {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
           {{/if}}
@@ -45,8 +41,6 @@
           {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
           usesData=usesData}}
           {{/if}}
-
-        {{/if}}
         </div>
 
       </div>

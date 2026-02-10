@@ -1,23 +1,13 @@
 <div
-  class="compact card-wrapper weapon"
-  draggable="true"
-  data-item-uuid="{{item.uuid}}"
->
+  class="compact card-wrapper weapon {{#if item.system.equipped}}card-equipped{{/if}} {{#if @root.quickAccess}}quick-access{{/if}}"
+  draggable="true" data-item-uuid="{{item.uuid}}">
 
-  <div
-    class="card-container header"
-    data-item-uuid="{{item.uuid}}"
-    data-type="weapon"
-    data-action="navigateToCard"
-  >
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}"
+    data-action="navigateToCard">
 
     <div class="card-icon" data-action="useItem" data-item-uuid="{{item.uuid}}">
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
-      <img
-        class="duality-dice"
-        src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg"
-        alt=""
-      />
+      <img class="duality-dice" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
     </div>
 
     <div class="card-header">
@@ -26,17 +16,17 @@
         <span class="card-text-name">{{item.name}}</span>
         <span class="card-text-details">
           {{localize
-            (concat
-              "DAGGERHEART.CONFIG.Traits."
-              item.system.attack.roll.trait
-              ".short"
-            )
+          (concat
+          "DAGGERHEART.CONFIG.Traits."
+          item.system.attack.roll.trait
+          ".short"
+          )
           }}
           <span class="separator"></span>
           {{localize
-            (concat
-              "DAGGERHEART.CONFIG.Range." item.system.attack.range ".short"
-            )
+          (concat
+          "DAGGERHEART.CONFIG.Range." item.system.attack.range ".short"
+          )
           }}
           <span class="separator"></span>
           {{{damage}}}
@@ -49,19 +39,31 @@
       <div class="hover-area">
 
         <div class="hover-resources">
-
-          <div
-            class="roll-damage"
-            data-item-uuid="{{item.uuid}}"
-            data-action="item.system.attack"
-            data-tooltip="DAGGERHEART.GENERAL.rollDamage"
-          >
-            <i class="fa-solid fa-dice"></i>
-          </div>
+          {{#if item.system.equipped}}
+            <div class="roll-damage" data-item-uuid="{{item.uuid}}" data-action="item.system.attack" data-tooltip="DAGGERHEART.GENERAL.rollDamage">
+              <i class="fa-solid fa-dice"></i>
+            </div>
+          {{else}}
+            <div class="equip-btn" data-item-uuid="{{item.uuid}}" data-action="toggleEquipItem" data-tooltip="DAGGERHEART.UI.Tooltip.equip">
+              {{#if (eq item.system.burden 'oneHanded')}}
+              <i class="fa-solid fa-hand"></i>
+              {{else}}
+              <i class="fa-solid fa-hands"></i>
+              {{/if}}
+            </div>
+          {{/if}}
 
         </div>
 
       </div>
+
+      {{#if @root.quickAccess}}
+      <div class="hover-area remove">
+        <div class="remove-quick-access" data-action="removeFromQuickAccess" data-item-uuid="{{item.uuid}}">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      {{/if}}
 
     </div>
 

@@ -1,6 +1,6 @@
-<div class="compact card-wrapper armor" draggable="true" data-item-uuid="{{item.uuid}}">
+<div class="compact card-wrapper armor {{#if item.system.equipped}}card-equipped{{/if}} {{#if @root.quickAccess}}quick-access{{/if}}" draggable="true" data-item-uuid="{{item.uuid}}">
 
-  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="armor" data-action="navigateToCard">
+  <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}" data-action="navigateToCard">
 
     <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
       data-item-uuid="{{item.uuid}}">
@@ -26,25 +26,41 @@
         {{/if}}
 
         <div class="hover-resources">
-          {{#if (eq item.system.resource.type 'die')}}
-          {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
-          {{/if}}
+          {{#if item.system.equipped}}
+            {{#if (eq item.system.resource.type 'die')}}
+            {{> "modules/daggerheart-sleek-ui/templates/components/res-die.hbs"}}
+            {{/if}}
 
-          {{#if (eq item.system.resource.type 'diceValue')}}
-          {{> "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs"}}
-          {{/if}}
+            {{#if (eq item.system.resource.type 'diceValue')}}
+            {{> "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs"}}
+            {{/if}}
 
-          {{#if (eq item.system.resource.type 'simple')}}
-          {{> "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs"}}
-          {{/if}}
+            {{#if (eq item.system.resource.type 'simple')}}
+            {{> "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs"}}
+            {{/if}}
 
-          {{#if usesData}}
-          {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
-          usesData=usesData}}
+            {{#if usesData}}
+            {{> "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs"
+            usesData=usesData}}
+            {{/if}}
+          {{else}}
+
+            <div class="equip-btn" data-item-uuid="{{item.uuid}}" data-action="toggleEquipItem" data-tooltip="DAGGERHEART.UI.Tooltip.equip">
+              <i class="fa-solid fa-shield"></i>
+            </div>
+
           {{/if}}
         </div>
 
       </div>
+
+      {{#if @root.quickAccess}}
+      <div class="hover-area remove">
+        <div class="remove-quick-access" data-action="removeFromQuickAccess" data-item-uuid="{{item.uuid}}">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      {{/if}}
 
     </div>
 

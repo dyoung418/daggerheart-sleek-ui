@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: row;
   max-height: 48px;
+  overflow: hidden;
 }
 
 /* ==================== 
@@ -104,6 +105,7 @@
   margin-left: -8px;
   padding: var(--spacing-xs);
   padding-left: 0;
+  overflow: hidden;
 }
 
 /* ==================== 
@@ -318,13 +320,6 @@
   margin-left: var(--spacing-tiny);
 }
 
-/* .daggerheart.sheet.actor.sleek-ui .resource-counter {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-tiny);
-  margin-right: var(--spacing-tiny);
-} */
-
 /* ==================== 
    RESOURCE - SIMPLE
    ==================== */
@@ -389,7 +384,7 @@ RESOURCE - DICE
 
 .daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll {
   cursor: pointer;
-  padding: 8px 0;
+  width: 16px;
 }
 
 .daggerheart.sheet.actor.sleek-ui .resource.dice-resource .dice-roll i {
@@ -505,7 +500,8 @@ RESOURCE - QUANTITY
 ITEM ROLL DAMAGE
 ==================== */
 
-.daggerheart.sheet.actor.sleek-ui .roll-damage {
+.daggerheart.sheet.actor.sleek-ui .roll-damage,
+.daggerheart.sheet.actor.sleek-ui .equip-btn {
   width: fit-content;
   gap: var(--spacing-tiny);
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -515,11 +511,13 @@ ITEM ROLL DAMAGE
   cursor: pointer;
 }
 
-.daggerheart.sheet.actor.sleek-ui .roll-damage i {
+.daggerheart.sheet.actor.sleek-ui .roll-damage i,
+.daggerheart.sheet.actor.sleek-ui .equip-btn i {
   color: var(--color-secondary);
 }
 
-.daggerheart.sheet.actor.sleek-ui .roll-damage:hover {
+.daggerheart.sheet.actor.sleek-ui .roll-damage:hover,
+.daggerheart.sheet.actor.sleek-ui .equip-btn:hover {
   box-shadow: 0px 0px 9px -1px var(--color-border);
   background: var(--color-border);
 }
@@ -565,10 +563,12 @@ COMPACT CARDS
 .daggerheart.sheet.actor.sleek-ui .compact.card-wrapper {
   position: relative;
   width: 100%;
+  overflow: visible;
 }
 
 .daggerheart.sheet.actor.sleek-ui .compact.card-wrapper .card-icon {
   width: 56px;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .daggerheart.sheet.actor.sleek-ui
@@ -586,26 +586,47 @@ COMPACT CARDS
   white-space: nowrap;
 }
 
+.daggerheart.sheet.actor.sleek-ui .compact .card-resource {
+  position: absolute;
+  right: 4px;
+  width: fit-content;
+  z-index: 5;
+}
+
 .daggerheart.sheet.actor.sleek-ui .compact .hover-area {
   position: absolute;
   right: 0;
-  width: 25%;
+  width: 35%;
   height: 100%;
   z-index: 5;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-area.remove {
+  width: 6%;
+  right: -4px;
 }
 
 .daggerheart.sheet.actor.sleek-ui .compact .hover-area .hover-resources {
   position: absolute;
   display: flex;
   justify-content: flex-end;
+  gap: var(--spacing-tiny);
   right: 8px;
   top: 8px;
   bottom: 8px;
-  width: 200px;
   opacity: 0;
   visibility: hidden;
   transform: translateX(12px);
   transition: all 0.2s ease;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact
+  .hover-area
+  .hover-resources
+  .resource-counter {
+  display: block;
+  white-space: nowrap;
 }
 
 .daggerheart.sheet.actor.sleek-ui
@@ -625,4 +646,126 @@ COMPACT CARDS
 
 .daggerheart.sheet.actor.sleek-ui .compact .hover-resources .resource {
   width: fit-content;
+}
+
+/* ==================== 
+QUICK ACCESS
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .compact .hover-area .remove-quick-access {
+  width: 12px;
+  height: 12px;
+  font-size: var(--font-size-tiny);
+  color: var(--color-primary);
+  background: #b83636;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  z-index: 5;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact
+  .hover-area:hover
+  .remove-quick-access {
+  display: flex;
+}
+
+.daggerheart.sheet.actor.sleek-ui .divider {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 12px;
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .divider .divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--gradient-line-middle);
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact.divider .hover-area.remove {
+  width: 25%;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact.divider
+  .hover-area
+  .remove-quick-access {
+  top: 0;
+  right: -3;
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header h3 {
+  position: relative;
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header .add-divider {
+  display: none;
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  top: 1px;
+  right: -16px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header:hover .add-divider {
+  display: flex;
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header:hover::after {
+  background: linear-gradient(
+    260deg,
+    rgba(79, 89, 137, 0) 0%,
+    rgba(79, 89, 137, 1) 82%,
+    rgba(79, 89, 137, 0) 0%
+  );
+}
+
+.daggerheart.sheet.actor.sleek-ui .favorites-header .add-divider:hover {
+  filter: drop-shadow(0 0 2px var(--color-primary));
+  color: var(--color-primary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact.weapon.quick-access::after,
+.daggerheart.sheet.actor.sleek-ui .compact.armor.quick-access::after,
+.daggerheart.sheet.actor.sleek-ui .compact.domains.quick-access::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  border-radius: var(--border-radius);
+  background: black;
+  filter: opacity(0.5);
+  pointer-events: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .compact.weapon.quick-access.card-equipped::after,
+.daggerheart.sheet.actor.sleek-ui
+  .compact.armor.quick-access.card-equipped::after,
+.daggerheart.sheet.actor.sleek-ui
+  .compact.domains.quick-access.card-equipped::after {
+  display: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .compact.domains.card-equipped,
+.daggerheart.sheet.actor.sleek-ui .compact.weapon:not(.quick-access),
+.daggerheart.sheet.actor.sleek-ui .compact.armor:not(.quick-access) {
+  border: 1px solid var(--color-border);
 }

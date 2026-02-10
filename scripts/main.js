@@ -19,6 +19,9 @@ async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/components/compact-card-weapon.hbs",
     "modules/daggerheart-sleek-ui/templates/components/compact-card-armor.hbs",
     "modules/daggerheart-sleek-ui/templates/components/compact-card-domains.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/compact-card-features.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/divider.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-die.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-hope.hbs",
@@ -33,7 +36,7 @@ async function preloadHandlebarsTemplates() {
 Hooks.once("init", () => {
   preloadHandlebarsTemplates();
 
-  // Show currency labels
+  // Show Currency Labels
   game.settings.register("daggerheart-sleek-ui", "currencyLabel", {
     name: "Show Currency Labels",
     hint: "Shows the labels for each currency on top of their values",
@@ -43,8 +46,22 @@ Hooks.once("init", () => {
     default: false,
   });
 
+  // Enable Quick Access
+  game.settings.register("daggerheart-sleek-ui", "quickAccess", {
+    name: "Enable Quick Access",
+    hint: "Switch the default equipment and loadout sidebar sections with a universal Quick Access section",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
   Handlebars.registerHelper("contains", function (array, value) {
     return Array.isArray(array) && array.includes(value);
+  });
+
+  Handlebars.registerHelper("eq", function (a, b) {
+    return a === b;
   });
 });
 
@@ -79,9 +96,15 @@ Hooks.once("ready", () => {
           toggleCategory: this._onToggleCategory,
           useAction: this._onUseAction,
           navigateToCard: this._onNavigateToCard,
+          addToQuickAccess: this._onAddToQuickAccess,
+          removeFromQuickAccess: this._onRemoveFromQuickAccess,
+          addQuickAccessDivider: this._onAddQuickAccessDivider,
         },
         dragDrop: [
-          { dragSelector: "[data-item-uuid]", dropSelector: ".card-wrapper" },
+          {
+            dragSelector: "[data-item-uuid]",
+            dropSelector: ".card-wrapper, .favorites-list",
+          },
         ],
       },
       { inplace: false },
@@ -102,6 +125,11 @@ Hooks.once("ready", () => {
         if (mainSheet) {
           this._savedScrollPosition = mainSheet.scrollTop;
         }
+
+        const sidebar = this.element.querySelector(".favorites");
+        if (sidebar) {
+          this._savedSidebarScrollPosition = sidebar.scrollTop;
+        }
       }
 
       const context = await super._prepareContext(options);
@@ -109,6 +137,11 @@ Hooks.once("ready", () => {
       context.currencyLabel = game.settings.get(
         "daggerheart-sleek-ui",
         "currencyLabel",
+      );
+
+      context.quickAccess = game.settings.get(
+        "daggerheart-sleek-ui",
+        "quickAccess",
       );
 
       if (Object.keys(this.tabs).length === 0) {
@@ -160,6 +193,7 @@ Hooks.once("ready", () => {
       await this._prepareInventoryData(context);
       await this._prepareEffectsData(context);
       await this._prepareBiographyData(context);
+      await this._prepareQuickAccessData(context);
 
       return context;
     }
@@ -474,14 +508,13 @@ Hooks.once("ready", () => {
         }
 
         // Resolve weapon features via i18n keys built from weaponFeatures[].value
-        const features = (item.system.weaponFeatures || []).map((wf) => ({
-          name: game.i18n.localize(
-            `DAGGERHEART.CONFIG.WeaponFeature.${wf.value}.name`,
-          ),
-          description: game.i18n.localize(
-            `DAGGERHEART.CONFIG.WeaponFeature.${wf.value}.description`,
-          ),
-        }));
+        const features = (item.system.weaponFeatures || []).map((wf) => {
+          const config = CONFIG.DH.ITEM.weaponFeatures[wf.value];
+          return {
+            name: game.i18n.localize(config.label),
+            description: game.i18n.localize(config.description),
+          };
+        });
 
         const tags = [
           {
@@ -529,14 +562,13 @@ Hooks.once("ready", () => {
         const base = await createBaseData(item);
 
         // Resolve armor features via i18n keys built from armorFeatures[].value
-        const features = (item.system.armorFeatures || []).map((af) => ({
-          name: game.i18n.localize(
-            `DAGGERHEART.CONFIG.ArmorFeature.${af.value}.name`,
-          ),
-          description: game.i18n.localize(
-            `DAGGERHEART.CONFIG.ArmorFeature.${af.value}.description`,
-          ),
-        }));
+        const features = (item.system.armorFeatures || []).map((af) => {
+          const config = CONFIG.DH.ITEM.armorFeatures[af.value];
+          return {
+            name: game.i18n.localize(config.label),
+            description: game.i18n.localize(config.description),
+          };
+        });
 
         const tags = [
           {
@@ -795,6 +827,58 @@ Hooks.once("ready", () => {
       }
     }
 
+    async _prepareQuickAccessData(context) {
+      const quickAccessUuids =
+        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+
+      const quickAccessItems = [];
+
+      for (const uuid of quickAccessUuids) {
+        if (uuid.startsWith("divider-")) {
+          quickAccessItems.push({
+            isDivider: true,
+            dividerUuid: uuid,
+          });
+          continue;
+        }
+
+        const item = await fromUuid(uuid);
+        if (!item) continue;
+
+        // Find the prepared data for this item from existing context
+        let itemData = null;
+
+        if (item.type === "weapon") {
+          itemData = context.weapons?.find((w) => w.item.uuid === uuid);
+        } else if (item.type === "armor") {
+          itemData = context.armors?.find((a) => a.item.uuid === uuid);
+        } else if (item.type === "domainCard") {
+          itemData =
+            context.loadoutCards?.find((c) => c.item.uuid === uuid) ||
+            context.vaultCards?.find((c) => c.item.uuid === uuid);
+        } else if (item.type === "consumable") {
+          itemData = context.consumables?.find((c) => c.item.uuid === uuid);
+        } else if (item.type === "loot") {
+          itemData = context.loots?.find((l) => l.item.uuid === uuid);
+        } else if (item.type === "feature") {
+          itemData =
+            context.heritageFeatures?.find((f) => f.item.uuid === uuid) ||
+            context.classFeatures?.find((f) => f.item.uuid === uuid) ||
+            context.multiclassFeatures?.find((f) => f.item.uuid === uuid) ||
+            context.extraFeatures?.find((f) => f.item.uuid === uuid);
+        }
+
+        if (itemData) {
+          quickAccessItems.push({
+            ...itemData,
+            itemType: item.type,
+          });
+        }
+      }
+
+      context.quickAccessItems = quickAccessItems;
+    }
+
     _onRender(context, options) {
       super._onRender(context, options);
 
@@ -813,6 +897,13 @@ Hooks.once("ready", () => {
         const mainSheet = this.element.querySelector(".tab-content");
         if (mainSheet) {
           mainSheet.scrollTop = this._savedScrollPosition;
+        }
+      }
+
+      if (this._savedSidebarScrollPosition !== undefined) {
+        const sidebar = this.element.querySelector(".favorites");
+        if (sidebar) {
+          sidebar.scrollTop = this._savedSidebarScrollPosition;
         }
       }
     }
@@ -1407,8 +1498,19 @@ Hooks.once("ready", () => {
       if (!card) return;
 
       const itemUuid = card.dataset.itemUuid;
-      const item = fromUuidSync(itemUuid);
 
+      // Check if it's a divider
+      if (itemUuid.startsWith("divider-")) {
+        const dragData = {
+          type: "Divider", // Custom type for dividers
+          uuid: itemUuid,
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        return;
+      }
+
+      // Regular item handling
+      const item = fromUuidSync(itemUuid);
       if (!item) return;
 
       // Track this item for potential cross-sheet transfer
@@ -1436,14 +1538,120 @@ Hooks.once("ready", () => {
     }
 
     async _onDrop(event) {
-      const data = TextEditor.getDragEventData(event);
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+
+      // Handle dividers
+      if (data && data.type === "Divider") {
+        const quickAccessArea = event.target.closest(".favorites-list");
+        const container = quickAccessArea?.closest(".favorites-container");
+        const isQuickAccess =
+          container
+            ?.querySelector(".favorites-header h3")
+            ?.textContent.trim() === "Quick Access";
+
+        if (quickAccessArea && isQuickAccess) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          const quickAccessItems =
+            this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+          const draggedUuid = data.uuid;
+
+          // Reorder divider
+          const dropTarget = event.target.closest(".compact.card-wrapper");
+          if (!dropTarget) return false;
+
+          const targetUuid = dropTarget.dataset.itemUuid;
+          if (!targetUuid || targetUuid === draggedUuid) return false;
+
+          const currentIndex = quickAccessItems.indexOf(draggedUuid);
+          const targetIndex = quickAccessItems.indexOf(targetUuid);
+
+          if (currentIndex === -1 || targetIndex === -1) return false;
+
+          quickAccessItems.splice(currentIndex, 1);
+          quickAccessItems.splice(targetIndex, 0, draggedUuid);
+
+          await this.actor.setFlag(
+            "daggerheart-sleek-ui",
+            "quickAccess",
+            quickAccessItems,
+          );
+          return false;
+        }
+      }
 
       if (!data || data.type !== "Item") {
         return super._onDrop?.(event);
       }
 
       const item = await fromUuid(data.uuid);
-      if (!item) return;
+      if (!item && !data.uuid?.startsWith("divider-")) return;
+
+      // Quick Access - Adding new items
+      const quickAccessArea = event.target.closest(".favorites-list");
+      const container = quickAccessArea?.closest(".favorites-container");
+      const isQuickAccess =
+        container?.querySelector(".favorites-header h3")?.textContent.trim() ===
+        "Quick Access";
+
+      if (quickAccessArea && isQuickAccess) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const quickAccessItems =
+          this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+
+        // Check if it's a reorder within Quick Access
+        const draggedUuid = item?.uuid || data.uuid; // Handle both items and divider UUIDs
+        if (quickAccessItems.includes(draggedUuid)) {
+          const dropTarget = event.target.closest(".compact.card-wrapper");
+          if (!dropTarget) return false;
+
+          const targetUuid = dropTarget.dataset.itemUuid;
+          if (!targetUuid || targetUuid === draggedUuid) return false;
+
+          const currentIndex = quickAccessItems.indexOf(draggedUuid);
+          const targetIndex = quickAccessItems.indexOf(targetUuid);
+
+          if (currentIndex === -1 || targetIndex === -1) return false;
+
+          // Reorder the array
+          quickAccessItems.splice(currentIndex, 1);
+          quickAccessItems.splice(targetIndex, 0, draggedUuid);
+
+          await this.actor.setFlag(
+            "daggerheart-sleek-ui",
+            "quickAccess",
+            quickAccessItems,
+          );
+          return false;
+        }
+        // Adding new item to Quick Access - insert at drop position
+        const dropTarget = event.target.closest(".compact.card-wrapper");
+        if (dropTarget) {
+          const targetUuid = dropTarget.dataset.itemUuid;
+          const targetIndex = quickAccessItems.indexOf(targetUuid);
+
+          if (targetIndex !== -1) {
+            // Insert before the target
+            quickAccessItems.splice(targetIndex, 0, item.uuid);
+          } else {
+            // No specific target, add to end
+            quickAccessItems.push(item.uuid);
+          }
+        } else {
+          // Dropped on empty area, add to end
+          quickAccessItems.push(item.uuid);
+        }
+
+        await this.actor.setFlag(
+          "daggerheart-sleek-ui",
+          "quickAccess",
+          quickAccessItems,
+        );
+        return false;
+      }
 
       // Check if it's a reorder (same actor)
       if (item.parent === this.actor) {
@@ -1517,7 +1725,11 @@ Hooks.once("ready", () => {
     }
 
     static async _onNavigateToCard(event, target) {
-      if (event.target.closest(".hover-resources, .hover-area")) {
+      if (
+        event.target.closest(
+          ".hover-area, .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage,  .quantity-resource",
+        )
+      ) {
         return;
       }
 
@@ -1618,15 +1830,40 @@ Hooks.once("ready", () => {
 
       if (!originalCard) return;
 
-      // Scroll to the card (which should already be open)
-      originalCard.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-
-      // Add a brief highlight effect to the whole card
+      // Get the card wrapper first
       const cardWrapper = originalCard.closest(".card-wrapper");
+
+      // Smart scroll to the card
       if (cardWrapper) {
+        const containerRect = mainSheet.getBoundingClientRect();
+        const cardRect = cardWrapper.getBoundingClientRect();
+
+        const margin = 32;
+
+        // Get the actual height of the card wrapper (includes open description)
+        const cardHeight = cardWrapper.offsetHeight;
+        const containerHeight = mainSheet.clientHeight;
+
+        // Calculate if we can fit the whole card
+        if (cardHeight + margin * 2 <= containerHeight) {
+          // Card fits - try to center it or show it fully
+          const scrollTop = cardWrapper.offsetTop - mainSheet.scrollTop;
+          const idealScrollPosition = cardWrapper.offsetTop - margin;
+
+          mainSheet.scrollTo({
+            top: idealScrollPosition,
+            behavior: "smooth",
+          });
+        } else {
+          // Card too tall - prioritize showing the top with margin
+          const scrollTop = cardWrapper.offsetTop - margin;
+          mainSheet.scrollTo({
+            top: scrollTop,
+            behavior: "smooth",
+          });
+        }
+
+        // Add a brief highlight effect to the whole card
         cardWrapper.style.transition = "background-color 0.5s ease";
         cardWrapper.style.backgroundColor = "rgba(79, 89, 137, 0.3)";
 
@@ -1634,6 +1871,51 @@ Hooks.once("ready", () => {
           cardWrapper.style.backgroundColor = "";
         }, 500);
       }
+    }
+
+    static async _onAddToQuickAccess(event, target) {
+      const itemUuid = target.dataset.itemUuid;
+      if (!itemUuid) return;
+
+      const quickAccessItems =
+        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+
+      // Don't add duplicates
+      if (quickAccessItems.includes(itemUuid)) {
+        ui.notifications.warn("Item is already in Quick Access");
+        return;
+      }
+
+      quickAccessItems.push(itemUuid);
+      await this.actor.setFlag(
+        "daggerheart-sleek-ui",
+        "quickAccess",
+        quickAccessItems,
+      );
+    }
+
+    static async _onRemoveFromQuickAccess(event, target) {
+      const itemUuid = target.dataset.itemUuid;
+      if (!itemUuid) return;
+
+      const quickAccessItems =
+        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const filtered = quickAccessItems.filter((uuid) => uuid !== itemUuid);
+
+      await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", filtered);
+    }
+
+    static async _onAddQuickAccessDivider(event, target) {
+      const quickAccessItems =
+        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const dividerUuid = `divider-${foundry.utils.randomID()}`;
+
+      quickAccessItems.unshift(dividerUuid);
+      await this.actor.setFlag(
+        "daggerheart-sleek-ui",
+        "quickAccess",
+        quickAccessItems,
+      );
     }
 
     async close(options = {}) {
