@@ -12,12 +12,12 @@ An alternative character sheet with UI/UX improvements for Foundryborne's Dagger
 - Displays hope cost availability at a glance, as well as armor slots usage for each armor in your inventory.
 - Sidebar equipment and loadout cards functioning as shortcuts to the corresponding domain card or item on the main sheet when clicked.
 - Character description questions from DH's core rulebook sheets inside the Biography tab.
+- Optional setting that changes the default sidebar's Equipment and Loadout sections with a universal Quick Access section where you can drag anything, create dividers and organize it however you want.
 
 ![](https://github.com/user-attachments/assets/8a7165b3-89fd-4fa1-ab94-6904d990fedc)
 
 # Planned features
 - Adversary Sheet with similar layout and usability
 - Toggleable sidebar to reduce the sheet's width
-- Replace the sidebar's default Equipment and Loadout sections with a global Quick Access section which you can drag any features/cards/items into to favorite them.
 
 ![](https://github.com/user-attachments/assets/e3dbcf73-d216-4437-9136-af520d9c857a)
