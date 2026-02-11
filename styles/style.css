@@ -383,13 +383,11 @@
 }
 
 .daggerheart.sheet.actor.sleek-ui .tag [data-action] {
-  display: inline-block;
   cursor: pointer;
   padding: var(--spacing-tiny) var(--spacing-xs);
 }
 
 .daggerheart.sheet.actor.sleek-ui .tag:not(:has([data-action])) {
-  display: inline-block;
   padding: var(--spacing-tiny) var(--spacing-xs);
 }
 
@@ -400,6 +398,10 @@
   border: 1px solid var(--color-tag-border);
   background: var(--color-tag-background);
   height: 20px;
+  line-height: initial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .daggerheart.sheet.actor.sleek-ui .tag-blue {
