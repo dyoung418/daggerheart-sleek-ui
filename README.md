@@ -2,6 +2,7 @@
 An alternative character sheet with UI/UX improvements for Foundryborne's Daggerheart System
 
 # Features
+
 - Clean and organized layout with usability and readability improvements
 - Interactable resources (Hope, HP, Stress, Armor, item usage, etc) with left and right click to quickly manipulate their values.
 - Easily readable resource pips for HP, Stress and Armor Slots that resizes based on value (respecting Daggerheart's ceiling of 12, but still great looking at higher values)
@@ -13,11 +14,13 @@ An alternative character sheet with UI/UX improvements for Foundryborne's Dagger
 - Sidebar equipment and loadout cards functioning as shortcuts to the corresponding domain card or item on the main sheet when clicked.
 - Character description questions from DH's core rulebook sheets inside the Biography tab.
 - Optional setting that changes the default sidebar's Equipment and Loadout sections with a universal Quick Access section where you can drag anything, create dividers and organize it however you want.
+- Adversary Sheet with similar style, layout and usability
 
 ![](https://github.com/user-attachments/assets/8a7165b3-89fd-4fa1-ab94-6904d990fedc)
 
 # Planned features
-- Adversary Sheet with similar layout and usability
+
 - Toggleable sidebar to reduce the sheet's width
+- Sheets for Companions, Environments and Party
 
 ![](https://github.com/user-attachments/assets/e3dbcf73-d216-4437-9136-af520d9c857a)

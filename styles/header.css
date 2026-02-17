@@ -5,7 +5,7 @@
 .daggerheart.sheet.actor.sleek-ui .character-information {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-xs);
   width: 100%;
   height: fit-content;
@@ -48,6 +48,7 @@
   justify-content: space-evenly;
   width: 72px;
   height: 100%;
+  max-height: fit-content;
   padding: var(--spacing-xs) var(--spacing-xs);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);

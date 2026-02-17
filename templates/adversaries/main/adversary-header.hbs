@@ -1,0 +1,94 @@
+<div class="character-information">
+  <div class="character-details adversary">
+    {{!-- NAME --}}
+    <h1 class="actor-name" contenteditable="plaintext-only" data-property="name"
+      placeholder="{{localize 'DAGGERHEART.GENERAL.actorName'}}">{{source.name}}</h1>
+    {{!-- TAGS --}}
+    <div class="character-tags">
+      <span class="tag tag-red">
+        {{localize "DAGGERHEART.ACTORS.Adversary.FIELDS.tier.label"}} {{document.system.tier}}
+      </span>
+
+      <span class="tag tag-green">
+        {{localize (concat "DAGGERHEART.CONFIG.AdversaryType." document.system.type ".label")}}
+      </span>
+
+      {{#if (eq document.system.type "horde")}}
+      <span class="tag tag-green">
+        {{document.system.hordeHp}} / {{localize 'DAGGERHEART.GENERAL.HitPoints.short'}}
+      </span>
+      {{/if}}
+
+    </div>
+  </div>
+  {{!-- DIFFICULTY --}}
+  <div class="adversary-difficulty">
+    <h3>{{localize 'DAGGERHEART.ACTORS.Adversary.FIELDS.difficulty.label'}}</h3>
+    <div class="level-number">{{document.system.difficulty}}</div>
+  </div>
+</div>
+
+<div class="header-details">
+
+  <div class="values-row">
+    {{!-- THRESHOLDS --}}
+    <div class="values-container thresholds">
+      <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+        data-amount="1">{{localize "DAGGERHEART.GENERAL.DamageThresholds.minor"}}</h3>
+      <span class="value-number">{{document.system.damageThresholds.major}}</span>
+
+      <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+        data-amount="2">{{localize "DAGGERHEART.GENERAL.DamageThresholds.major"}}</h3>
+      <span class="value-number">{{document.system.damageThresholds.severe}}</span>
+
+      <h3 class="threshold-damage" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+        data-amount="3">{{localize "DAGGERHEART.GENERAL.DamageThresholds.severe"}}</h3>
+    </div>
+    {{!-- REACTION ROLL --}}
+    <div class="values-container reaction" data-action="reactionRoll">
+      <h3>{{localize "DAGGERHEART.GENERAL.reactionRoll"}}</h3>
+    </div>
+  </div>
+
+  <div class="resources-row">
+    {{#if document.system.resources.hitPoints.max}}
+    {{!-- HIT POINTS --}}
+    <div class="resource-container">
+      <div class="resource-header" data-action="modifyResource" data-resource="system.resources.hitPoints.value"
+        data-amount="1">
+        <h3>{{localize "DAGGERHEART.GENERAL.HitPoints.plural"}}</h3>
+        <span class="resource-number">{{document.system.resources.hitPoints.value}} /
+          {{document.system.resources.hitPoints.max}}</span>
+      </div>
+      <div class="resource-bar">
+        {{#times document.system.resources.hitPoints.max}}
+        <div
+          class="resource-pip pip-hitpoints {{#if (lt this @root.document.system.resources.hitPoints.value)}}filled{{else}}empty{{/if}}"
+          data-action="toggleResource" data-resource="system.resources.hitPoints.value" data-value="{{add this 1}}">
+        </div>
+        {{/times}}
+      </div>
+    </div>
+    {{/if}}
+    {{!-- STRESS --}}
+    {{#if document.system.resources.stress.max}}
+    <div class="resource-container">
+      <div class="resource-header" data-action="modifyResource" data-resource="system.resources.stress.value"
+        data-amount="1">
+        <h3>{{localize "DAGGERHEART.GENERAL.stress"}}</h3>
+        <span class="resource-number">{{document.system.resources.stress.value}} /
+          {{document.system.resources.stress.max}}</span>
+      </div>
+      <div class="resource-bar">
+        {{#times document.system.resources.stress.max}}
+        <div
+          class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+          data-action="toggleResource" data-resource="system.resources.stress.value" data-value="{{add this 1}}">
+        </div>
+        {{/times}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+
+</div>

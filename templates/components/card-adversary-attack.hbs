@@ -1,0 +1,50 @@
+<div class="card-wrapper adversary-attack">
+
+  <div class="card-container header">
+
+    <div class="card-icon" data-action="useAdversaryAttack">
+      <img
+        class="icon"
+        src="{{document.system.attack.img}}"
+        alt="{{document.system.attack.name}}"
+      />
+      <img
+        class="dice-roll"
+        src="systems/daggerheart/assets/icons/dice/default/d20.svg"
+        alt="d20"
+      />
+    </div>
+
+    <div class="card-header">
+
+      <div class="card-text">
+        <span class="card-text-name">{{document.system.attack.name}}</span>
+        <span class="card-text-details">
+          {{localize
+            (concat
+              "DAGGERHEART.CONFIG.Range." document.system.attack.range ".name"
+            )
+          }}
+        </span>
+      </div>
+
+      <div class="card-resource">
+        <div
+          class="card-resource roll-damage adversary-attack-roll"
+          data-tooltip="DAGGERHEART.GENERAL.rollDamage"
+        >
+          {{attackDamage}}
+          &nbsp;
+          {{#if (contains attackDamageType "magical")}}
+            <i class="fa-solid fa-wand-sparkles"></i>
+          {{else}}
+            <i class="fa-solid fa-hand-fist"></i>
+          {{/if}}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -57,10 +57,7 @@
   flex-shrink: 0;
 }
 
-.daggerheart.sheet.actor.sleek-ui
-  .card-container.header
-  .card-icon
-  .duality-dice {
+.daggerheart.sheet.actor.sleek-ui .card-container.header .card-icon .dice-roll {
   position: absolute;
   width: auto;
   height: 32px;
@@ -86,7 +83,7 @@
 .daggerheart.sheet.actor.sleek-ui
   .card-container.header
   .card-icon:hover
-  .duality-dice {
+  .dice-roll {
   opacity: 1;
   transform: translateX(-12px);
 }
@@ -173,7 +170,7 @@
   gap: var(--spacing-xs);
 }
 
-.daggerheart.sheet.actor.sleek-ui .card-description a.content-link {
+.daggerheart.sheet.actor.sleek-ui a.content-link {
   padding: var(--spacing-tiny) var(--spacing-xs);
   border-radius: var(--border-radius);
 }
@@ -312,6 +309,7 @@
   background: var(--color-background-input);
   border-radius: var(--border-radius-s);
   min-width: 36px;
+  white-space: nowrap;
 }
 
 .daggerheart.sheet.actor.sleek-ui .resource i {
@@ -575,7 +573,7 @@ COMPACT CARDS
   .compact
   .card-container.header
   .card-icon
-  .duality-dice {
+  .dice-roll {
   left: 22px;
 }
 

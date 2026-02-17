@@ -1,0 +1,28 @@
+<div class="tabs adversary features-tab">
+  {{! ATTACK }}
+  <div class="values-row attack">
+    <div class="values-container attack-bonus">
+      <h3>{{localize "DAGGERHEART.ACTIONS.TYPES.attack.name"}}</h3>
+      <span class="value-number">+{{document.system.attackBonus}}</span>
+    </div>
+    {{> "modules/daggerheart-sleek-ui/templates/components/card-adversary-attack.hbs"}}
+  </div>
+
+  {{! FEATURES }}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'adv-features')}}collapsed{{/if}}"
+    data-category-id="adv-features">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.Tabs.features"}}</h2>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+    
+    <div class="category-content experiences">
+      {{#each adversaryFeatures as |featureData|}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/card-adversary-features.hbs"}}
+      {{/each}}
+    </div>
+
+  </div>
+</div>

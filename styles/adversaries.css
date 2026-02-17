@@ -1,0 +1,188 @@
+/* ==================== 
+SIDEBAR
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .adversary h1 {
+  font-size: var(--font-size-xl);
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary .dead {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  pointer-events: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary .dead i {
+  scale: 6;
+  color: var(--color-primary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+  margin-top: -32px;
+  color: var(--color-secondary);
+  line-height: 20px;
+  cursor: default;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .motivesAndTactics {
+  display: flex;
+  flex-direction: column;
+  margin: var(--spacing-sm) 0;
+}
+
+.daggerheart.sheet.actor.sleek-ui .info-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+.daggerheart.sheet.actor.sleek-ui .info-header::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gradient-line-left);
+}
+
+.daggerheart.sheet.actor.sleek-ui .info-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gradient-line-right);
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary-experiences {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-tiny);
+  justify-content: center;
+}
+
+/* ==================== 
+HEADER
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .adversary-difficulty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  max-height: fit-content;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary-difficulty .level-number {
+  transform: translateY(4px);
+}
+
+.daggerheart.sheet.actor.sleek-ui .reaction {
+  background: var(--gradient-card);
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .reaction:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+}
+
+/* ==================== 
+FEATURES
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .adversary .values-row.attack {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary .values-row.attack .attack-bonus {
+  padding: 0 var(--spacing-lg);
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .adversary-attack
+  .card-container.header
+  .card-header,
+.daggerheart.sheet.actor.sleek-ui
+  .adversary-attack
+  .card-container.header
+  .card-text,
+.daggerheart.sheet.actor.sleek-ui
+  .adversary-attack
+  .card-container.header
+  .card-resource {
+  cursor: default;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .adversary-attack
+  .card-container.header
+  .card-resource
+  .adversary-attack-roll {
+  cursor: pointer;
+}
+
+.daggerheart.sheet.actor.sleek-ui .adversary .card-container.header .card-icon {
+  width: 56px;
+}
+
+.daggerheart.sheet.actor.sleek-ui
+  .adversary
+  .card-container.header
+  .card-icon
+  .dice-roll {
+  left: 20px;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.fear-resource {
+  background: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.fear-resource .fear-icon-full i {
+  margin: 0;
+  color: #a45dff;
+  filter: drop-shadow(0 0 4px #0000ff);
+}
+
+.daggerheart.sheet.actor.sleek-ui .resource.fear-resource .fear-icon-empty i {
+  margin: 0;
+  opacity: 0.2;
+}
+
+/* ==================== 
+NOTES
+==================== */
+
+.daggerheart.sheet.actor.sleek-ui .tab-pane.active:has(.notes-tab),
+.daggerheart.sheet.actor.sleek-ui .tabs.notes-tab,
+.daggerheart.sheet.actor.sleek-ui .tabs.notes-tab .category-wrapper {
+  height: 100%;
+}
+
+.daggerheart.sheet.actor.sleek-ui .notes-tab .notes-content {
+  height: 100%;
+  background: var(--color-background-input);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+}

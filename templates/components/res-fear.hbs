@@ -1,0 +1,15 @@
+<div class="resource fear-resource">
+  {{#times fearCost}}
+    <span class="fear-value">
+      {{#if (gte ../currentFear (add this 1))}}
+        <div class="fear-icon-full">
+            <i class="fa-solid fa-skull"></i>
+        </div>
+      {{else}}
+        <div class="fear-icon-empty">
+            <i class="fa-solid fa-skull"></i>
+        </div>
+      {{/if}}
+    </span>
+  {{/times}}
+</div>

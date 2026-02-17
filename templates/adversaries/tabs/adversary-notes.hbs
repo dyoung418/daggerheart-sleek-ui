@@ -1,0 +1,28 @@
+<div class="tabs notes-tab">
+
+  <div class="category-wrapper">
+
+    <div class="category-header" style="cursor: default;">
+      <h2>{{localize "DAGGERHEART.GENERAL.Tabs.notes"}}</h2>
+      <span class="line"></span>
+    </div>
+
+    <div class="notes-content">
+      {{formInput
+        notes.field
+        value=notes.value
+        enriched=notes.enriched
+        toggled=true
+      }}
+    </div>
+
+    {{#if (and showAttribution document.system.attribution.artist)}}
+      <label class="artist-attribution">{{localize
+          "DAGGERHEART.GENERAL.artistAttribution"
+          artist=document.system.attribution.artist
+        }}</label>
+    {{/if}}
+
+  </div>
+
+</div>

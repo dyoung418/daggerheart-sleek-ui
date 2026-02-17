@@ -135,6 +135,10 @@
   min-width: 860px;
 }
 
+.daggerheart.sheet.actor.adversary.sleek-ui {
+  min-width: 750px;
+}
+
 .daggerheart.sheet.actor.sleek-ui.minimized {
   min-width: 0;
 }

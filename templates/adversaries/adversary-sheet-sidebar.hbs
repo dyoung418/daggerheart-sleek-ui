@@ -1,0 +1,67 @@
+<div class="sidebar-content adversary">
+
+  <div class="portrait {{#if (and source.system.resources.hitPoints.max (gte source.system.resources.hitPoints.value source.system.resources.hitPoints.max))}}deathroll{{/if}}">
+    <img
+      src="{{document.img}}"
+      alt="{{document.name}}"
+      data-action="editImage"
+      data-edit="img"
+    />
+    {{#if (and source.system.resources.hitPoints.max (gte source.system.resources.hitPoints.value source.system.resources.hitPoints.max))}}
+    <div class="dead"><i class="fa-solid fa-skull"></i></div>
+    {{/if}}
+  </div>
+
+  <div class="adversary-info divider">
+    {{#if document.system.description}}
+      <div class="divider-line"> </div>
+    {{else if document.system.motivesAndTactics}}
+      <div class="divider-line"> </div>
+    {{/if}}
+
+    {{#if document.system.description}}
+      <i>{{{document.system.description}}}</i>
+    {{/if}}
+
+    {{#if document.system.motivesAndTactics}}
+      <div class="motivesAndTactics">
+        <b>{{localize
+            "DAGGERHEART.ACTORS.Adversary.FIELDS.motivesAndTactics.label"
+          }}:</b>
+        <span>{{document.system.motivesAndTactics}}</span>
+      </div>
+    {{/if}}
+
+    {{#if hasExperiences}}
+      <div class="info-header">
+        <h3>{{localize "DAGGERHEART.GENERAL.Experience.plural"}}</h3>
+      </div>
+
+      <div class="adversary-experiences">
+        {{#each document.system.experiences as |experience id|}}
+          <div
+            class="experience-container"
+            data-action="sendExpToChat"
+            data-type="experience"
+            data-id="{{id}}"
+          >
+            <div class="experience-number">+{{experience.value}}</div>
+            <span>{{experience.name}}</span>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+
+  </div>
+
+  <button
+    type="button"
+    class="settings-button"
+    data-action="openSettings"
+    data-tooltip-text="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}"
+    aria-label="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}"
+  >
+    <i class="fa-solid fa-gear"></i>
+  </button>
+
+</div>
