@@ -408,6 +408,11 @@
   align-items: center;
 }
 
+.daggerheart.sheet.actor.sleek-ui .tag i {
+  margin-right: var(--spacing-tiny);
+  transform: translateY(-1px);
+}
+
 .daggerheart.sheet.actor.sleek-ui .tag-blue {
   color: var(--color-tag-text);
   border: 1px solid var(--color-tag-border);

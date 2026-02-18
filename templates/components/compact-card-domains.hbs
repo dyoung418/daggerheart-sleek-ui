@@ -3,7 +3,8 @@
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}" data-action="navigateToCard">
 
     <div class="card-icon" data-item-uuid="{{item.uuid}}"
-      data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}">
+      data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+      data-tooltip="#item#{{item.uuid}}">
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
       <img class="dice-roll" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
     </div>
