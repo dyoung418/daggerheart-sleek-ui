@@ -79,36 +79,40 @@ export function registerCharacterSheet() {
         "daggerheart-sleek-ui",
         "quickAccess",
       );
+      context.tabsPosition = game.settings.get(
+        "daggerheart-sleek-ui",
+        "tabsPosition",
+      );
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {
           features: {
             id: "features",
-            label: "Features",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.features"),
             icon: "fa-solid fa-list-ul",
             active: true,
           },
           loadout: {
             id: "loadout",
-            label: "Loadout",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.loadout"),
             icon: "fa-solid fa-book",
             active: false,
           },
           inventory: {
             id: "inventory",
-            label: "Inventory",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.inventory"),
             icon: "fa-solid fa-backpack",
             active: false,
           },
           biography: {
             id: "biography",
-            label: "Biography",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.biography"),
             icon: "fa-solid fa-feather-pointed",
             active: false,
           },
           effects: {
             id: "effects",
-            label: "Effects",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.effects"),
             icon: "fa-solid fa-sparkles",
             active: false,
           },
@@ -747,12 +751,24 @@ export function registerCharacterSheet() {
     _onRender(context, options) {
       super._onRender(context, options);
 
-      if (!this.floatingTabs) {
-        this.floatingTabs = new FloatingTabs(this, this.tabs);
-        this.floatingTabs.render(true);
+      const tabsPosition = game.settings.get(
+        "daggerheart-sleek-ui",
+        "tabsPosition",
+      );
+
+      if (tabsPosition === "floating") {
+        if (!this.floatingTabs) {
+          this.floatingTabs = new FloatingTabs(this, this.tabs);
+          this.floatingTabs.render(true);
+        } else {
+          this.floatingTabs.tabs = this.tabs;
+          this.floatingTabs.render(false, { parts: ["tabs"] });
+        }
       } else {
-        this.floatingTabs.tabs = this.tabs;
-        this.floatingTabs.render(false, { parts: ["tabs"] });
+        if (this.floatingTabs) {
+          this.floatingTabs.close();
+          this.floatingTabs = null;
+        }
       }
 
       this._restoreCardStates();
@@ -830,6 +846,7 @@ export function registerCharacterSheet() {
       this._attachDamageRollListeners(htmlElement);
       this._attachQuantityListeners(htmlElement);
       this._attachCompactCardHoverListeners(htmlElement);
+      this._attachBasicTabListeners(htmlElement);
 
       htmlElement.querySelectorAll(".card-resource").forEach((el) => {
         if (el.textContent.trim() === "" && el.children.length === 0) {
@@ -1223,6 +1240,21 @@ export function registerCharacterSheet() {
           },
           true,
         );
+      });
+    }
+
+    _attachBasicTabListeners(htmlElement) {
+      htmlElement.querySelectorAll(".basic-tabs .tab-button").forEach((btn) => {
+        btn.addEventListener("click", async (event) => {
+          event.preventDefault();
+          const tabId = btn.dataset.tab;
+
+          Object.keys(this.tabs).forEach((key) => {
+            this.tabs[key].active = key === tabId;
+          });
+
+          await this.render(true);
+        });
       });
     }
 

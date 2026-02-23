@@ -1,0 +1,10 @@
+{{#if (eq tabsPosition "basic")}}
+<nav class="basic-tabs">
+  {{#each tabs}}
+    <button class="tab-button {{#if this.active}}active{{/if}}" data-tab="{{this.id}}">
+      {{!-- <i class="{{this.icon}}"></i> --}}
+      <span class="tab-text">{{localize (concat "DAGGERHEART.GENERAL.Tabs." this.id)}}</span>
+    </button>
+  {{/each}}
+</nav>
+{{/if}}

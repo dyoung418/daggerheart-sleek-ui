@@ -1,0 +1,35 @@
+<div class="tabs companion details-tab">
+
+  <div class="actions">
+    {{! ATTACK }}
+    {{> "modules/daggerheart-sleek-ui/templates/components/card-actor-attack.hbs"}}
+    {{! ACTION ROLL }}
+    <div class="action-roll" data-action="actionRoll">
+      <h3>{{localize "DAGGERHEART.GENERAL.Roll.action"}}</h3>
+    </div>
+  </div>
+
+  {{! EXPERIENCES }}
+  {{#if hasExperiences}}
+    <div class="experiences-container">
+
+      <div class="info-header">
+        <h3>{{localize "DAGGERHEART.GENERAL.Experience.plural"}}</h3>
+      </div>
+
+      <div class="actor-experiences">
+        {{#each document.system.experiences as |experience id|}}
+          <div
+            class="experience-container"
+            data-action="sendExpToChat"
+            data-type="experience"
+            data-id="{{id}}"
+          >
+            <div class="experience-number">+{{experience.value}}</div>
+            <span>{{experience.name}}</span>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+</div>

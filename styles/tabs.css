@@ -1,4 +1,82 @@
 /* ==================== 
+   FLOATING TABS
+   ==================== */
+
+.floating-tabs-nav {
+  position: fixed !important;
+  pointer-events: none !important;
+}
+
+.floating-tabs-nav .floating-tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  pointer-events: auto;
+}
+
+.floating-tabs-nav .tab-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-primary);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.floating-tabs-nav .tab-button:hover {
+  background: var(--color-background-dark);
+}
+
+.floating-tabs-nav .tab-button.active {
+  background: var(--color-background-dark);
+  color: var(--color-tertiary);
+}
+
+.floating-tabs-nav .tab-button i {
+  font-size: var(--font-size-lg);
+  pointer-events: none;
+}
+
+/* ==================== 
+   BASIC TABS
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .basic-tabs {
+  display: flex;
+  padding: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+  justify-content: space-around;
+}
+
+.daggerheart.sheet.actor.sleek-ui .basic-tabs .tab-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: none;
+  color: var(--color-secondary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .basic-tabs .tab-button:hover {
+  color: var(--color-primary);
+}
+
+.daggerheart.sheet.actor.sleek-ui .basic-tabs .tab-button.active {
+  color: var(--color-tertiary);
+}
+
+/* ==================== 
    TAB CONTENT
    ==================== */
 

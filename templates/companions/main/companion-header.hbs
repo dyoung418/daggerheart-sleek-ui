@@ -1,0 +1,72 @@
+<div class="character-information companion">
+
+  <div class="character-details companion">
+    {{!-- NAME --}}
+    <h1 class="actor-name" contenteditable="plaintext-only" data-property="name"
+      placeholder="{{localize 'DAGGERHEART.GENERAL.actorName'}}">{{source.name}}</h1>
+    
+    {{!-- PARTNER --}}
+    {{> "modules/daggerheart-sleek-ui/templates/components/card-companion-partner.hbs"
+            item=document.system.partner
+            type='companion'
+            isActor=true
+            hideTooltip=true
+            }}
+  </div>
+  {{!-- LEVEL --}}
+    {{#if (or document.system.needsCharacterSetup document.system.levelData.canLevelUp)}}
+    <button type="button" class="level-button"
+      data-tooltip="{{#if document.system.needsCharacterSetup}}{{localize 'DAGGERHEART.APPLICATIONS.CharacterCreation.buttonTitle'}}{{else}}{{localize 'DAGGERHEART.ACTORS.Character.levelUp'}}{{/if}}"
+      data-action="levelManagement">
+      <i class="fa-solid fa-angles-up"></i>
+    </button>
+    {{/if}}
+
+    <div class="character-level">
+      <h3>{{localize 'DAGGERHEART.GENERAL.level'}}</h3>
+      <input type="number" data-dtype="Number" class="level-number" min="0" max="10"
+        value={{document.system.levelData.level.changed}} disabled
+        style="cursor: default">
+    </div>
+</div>
+
+<div class="header-details">
+
+  <div class="resources-row">
+    {{!-- EVASION --}}
+      <div class="values-container evasion companion">
+        <h3>{{localize "DAGGERHEART.GENERAL.evasion"}}</h3>
+        <span class="value-number">{{document.system.evasion}}</span>
+      </div>
+    {{!-- STRESS --}}
+    {{#if document.system.resources.stress.max}}
+    <div class="resource-container">
+      <div class="resource-header" data-action="modifyResource" data-resource="system.resources.stress.value"
+        data-amount="1">
+        <h3>{{localize "DAGGERHEART.GENERAL.stress"}}</h3>
+        <span class="resource-number">{{document.system.resources.stress.value}} /
+          {{document.system.resources.stress.max}}</span>
+      </div>
+      <div class="resource-bar">
+        {{#times document.system.resources.stress.max}}
+        <div
+          class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+          data-action="toggleResource" data-resource="system.resources.stress.value" data-value="{{add this 1}}">
+        </div>
+        {{/times}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+
+</div>
+
+<button
+    type="button"
+    class="settings-button"
+    data-action="openSettings"
+    data-tooltip-text="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}"
+    aria-label="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}"
+  >
+    <i class="fa-solid fa-gear"></i>
+  </button>

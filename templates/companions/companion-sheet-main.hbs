@@ -1,0 +1,22 @@
+<div class="main-content companion">
+
+  <div class="portrait companion">
+    <img
+        src="{{document.img}}"
+        alt="{{document.name}}"
+        data-action="editImage"
+        data-edit="img"
+    />
+  </div>
+
+  <div class="header-content partner">
+        {{> "modules/daggerheart-sleek-ui/templates/companions/main/companion-header.hbs"}}
+    </div>
+
+   {{> "modules/daggerheart-sleek-ui/templates/components/tabs-basic.hbs"}}
+
+    <div class="tab-content">
+        {{> "modules/daggerheart-sleek-ui/templates/companions/main/companion-tabs.hbs"}}
+    </div>
+
+</div>

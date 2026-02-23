@@ -28,7 +28,7 @@ export function registerAdversarySheet() {
         window: { controls: [] },
         position: { width: 750, height: 750 },
         actions: {
-          useAdversaryAttack: SleekAdversarySheet._onUseAdversaryAttack,
+          useActorAttack: SleekAdversarySheet._onUseActorAttack,
           toggleCategory: SleekAdversarySheet._onToggleCategory,
         },
       },
@@ -57,25 +57,30 @@ export function registerAdversarySheet() {
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
 
+      context.tabsPosition = game.settings.get(
+        "daggerheart-sleek-ui",
+        "tabsPosition",
+      );
+
       await this._prepareNotesContext(context, options);
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {
           features: {
             id: "features",
-            label: "Features",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.features"),
             icon: "fa-solid fa-list-ul",
             active: true,
           },
           effects: {
             id: "effects",
-            label: "Effects",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.effects"),
             icon: "fa-solid fa-sparkles",
             active: false,
           },
           notes: {
             id: "notes",
-            label: "Notes",
+            label: game.i18n.localize("DAGGERHEART.GENERAL.Tabs.notes"),
             icon: "fa-solid fa-feather-pointed",
             active: false,
           },
@@ -266,12 +271,25 @@ export function registerAdversarySheet() {
     _onRender(context, options) {
       super._onRender(context, options);
 
-      if (!this.floatingTabs) {
-        this.floatingTabs = new FloatingTabs(this, this.tabs);
-        this.floatingTabs.render(true);
+      const tabsPosition = game.settings.get(
+        "daggerheart-sleek-ui",
+        "tabsPosition",
+      );
+
+      if (tabsPosition === "floating") {
+        if (!this.floatingTabs) {
+          this.floatingTabs = new FloatingTabs(this, this.tabs);
+          this.floatingTabs.render(true);
+        } else {
+          this.floatingTabs.tabs = this.tabs;
+          this.floatingTabs.render(false, { parts: ["tabs"] });
+        }
       } else {
-        this.floatingTabs.tabs = this.tabs;
-        this.floatingTabs.render(false, { parts: ["tabs"] });
+        // Close floating tabs if they exist
+        if (this.floatingTabs) {
+          this.floatingTabs.close();
+          this.floatingTabs = null;
+        }
       }
 
       this._restoreCardStates();
@@ -304,6 +322,7 @@ export function registerAdversarySheet() {
       this._attachDieResourceListeners(htmlElement);
       this._attachDiceResourceListeners(htmlElement);
       this._attachActionListeners(htmlElement);
+      this._attachBasicTabListeners(htmlElement);
     }
 
     _attachResourceListeners(htmlElement) {
@@ -334,24 +353,22 @@ export function registerAdversarySheet() {
     }
 
     _attachAdversaryAttackListener(htmlElement) {
-      htmlElement
-        .querySelectorAll(".adversary-attack-roll")
-        .forEach((button) => {
-          button.addEventListener("click", async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+      htmlElement.querySelectorAll(".actor-attack-roll").forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            const action = this.actor.system.attack;
-            const config = action.prepareConfig(event);
-            config.effects =
-              await game.system.api.data.actions.actionsTypes.base.getEffects(
-                this.actor,
-                null,
-              );
-            config.hasRoll = false;
-            action.workflow.get("damage").execute(config, null, true);
-          });
+          const action = this.actor.system.attack;
+          const config = action.prepareConfig(event);
+          config.effects =
+            await game.system.api.data.actions.actionsTypes.base.getEffects(
+              this.actor,
+              null,
+            );
+          config.hasRoll = false;
+          action.workflow.get("damage").execute(config, null, true);
         });
+      });
     }
 
     _attachCardListeners(htmlElement) {
@@ -362,7 +379,7 @@ export function registerAdversarySheet() {
         nameContainer.addEventListener("click", (event) => {
           if (
             event.target.closest(
-              '.card-controls, [data-action="useItem"], [data-action="useAdversaryAttack"], [data-action="useAction"], .uses-resource, .adversary-attack-roll, .simple-resource, .die-resource, .dice-resource',
+              '.card-controls, [data-action="useItem"], [data-action="useActorAttack"], [data-action="useAction"], .uses-resource, .actor-attack-roll, .simple-resource, .die-resource, .dice-resource',
             )
           )
             return;
@@ -548,6 +565,21 @@ export function registerAdversarySheet() {
         });
     }
 
+    _attachBasicTabListeners(htmlElement) {
+      htmlElement.querySelectorAll(".basic-tabs .tab-button").forEach((btn) => {
+        btn.addEventListener("click", async (event) => {
+          event.preventDefault();
+          const tabId = btn.dataset.tab;
+
+          Object.keys(this.tabs).forEach((key) => {
+            this.tabs[key].active = key === tabId;
+          });
+
+          await this.render(true);
+        });
+      });
+    }
+
     static async _onModifyResource(event, target) {
       event.preventDefault();
       const resource = target.dataset.resource;
@@ -574,7 +606,7 @@ export function registerAdversarySheet() {
       await this.actor.update({ [resource]: Math.max(0, newValue) });
     }
 
-    static async _onUseAdversaryAttack(event, target) {
+    static async _onUseActorAttack(event, target) {
       const action = this.actor.system.attack;
       await action.use(event);
     }

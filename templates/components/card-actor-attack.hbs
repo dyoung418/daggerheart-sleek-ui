@@ -1,18 +1,26 @@
-<div class="card-wrapper adversary-attack">
+<div class="card-wrapper actor-attack">
 
   <div class="card-container header">
 
-    <div class="card-icon" data-action="useAdversaryAttack">
+    <div class="card-icon" data-action="useActorAttack">
       <img
         class="icon"
         src="{{document.system.attack.img}}"
         alt="{{document.system.attack.name}}"
       />
-      <img
-        class="dice-roll"
-        src="systems/daggerheart/assets/icons/dice/default/d20.svg"
-        alt="d20"
-      />
+      {{#if @root.isNPC}}
+        <img
+          class="dice-roll"
+          src="systems/daggerheart/assets/icons/dice/default/d20.svg"
+          alt="d20"
+        />
+      {{else}}
+        <img
+          class="dice-roll"
+          src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg"
+          alt="2d12"
+        />
+      {{/if}}
     </div>
 
     <div class="card-header">
@@ -30,7 +38,7 @@
 
       <div class="card-resource">
         <div
-          class="card-resource roll-damage adversary-attack-roll"
+          class="card-resource roll-damage actor-attack-roll"
           data-tooltip="DAGGERHEART.GENERAL.rollDamage"
         >
           {{attackDamage}}

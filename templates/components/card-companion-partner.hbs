@@ -1,0 +1,40 @@
+<div class="card-wrapper partner">
+
+  <div
+    class="card-container header partner"
+    data-item-uuid="{{item.uuid}}"
+    data-action="{{#if document.system.partner}}editDoc{{else}}openSettings{{/if}}"
+  >
+
+    {{! PARTNER PORTRAIT }}
+    {{#if document.system.partner}}
+      <div class="card-icon" data-item-uuid="{{item.uuid}}">
+        <img class="icon" src="{{item.img}}" alt="{{partner.name}}" />
+      </div>
+    {{/if}}
+
+    <div class="card-header">
+      {{! PARTNER NAME }}
+      <div class="card-text">
+        {{#if document.system.partner}}
+          <span class="card-text-name">{{item.name}}</span>
+        {{else}}
+          <h3 class="no-partner">{{localize
+              "DAGGERHEART.ACTORS.Companion.noPartner"
+            }}</h3>
+        {{/if}}
+      </div>
+
+      {{#if document.system.partner}}
+        <div class="partner-label">
+          <h3>{{localize
+              "DAGGERHEART.ACTORS.Companion.FIELDS.partner.label"
+            }}</h3>
+        </div>
+      {{/if}}
+
+    </div>
+
+  </div>
+
+</div>

@@ -68,7 +68,7 @@ SIDEBAR
   background: var(--gradient-line-right);
 }
 
-.daggerheart.sheet.actor.sleek-ui .adversary-experiences {
+.daggerheart.sheet.actor.sleek-ui .actor-experiences {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -109,37 +109,37 @@ HEADER
 FEATURES
 ==================== */
 
-.daggerheart.sheet.actor.sleek-ui .adversary .values-row.attack {
+.daggerheart.sheet.actor.sleek-ui .values-row.attack {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 50px;
 }
 
-.daggerheart.sheet.actor.sleek-ui .adversary .values-row.attack .attack-bonus {
+.daggerheart.sheet.actor.sleek-ui .values-row.attack .attack-bonus {
   padding: 0 var(--spacing-lg);
 }
 
 .daggerheart.sheet.actor.sleek-ui
-  .adversary-attack
+  .actor-attack
   .card-container.header
   .card-header,
 .daggerheart.sheet.actor.sleek-ui
-  .adversary-attack
+  .actor-attack
   .card-container.header
   .card-text,
 .daggerheart.sheet.actor.sleek-ui
-  .adversary-attack
+  .actor-attack
   .card-container.header
   .card-resource {
   cursor: default;
 }
 
 .daggerheart.sheet.actor.sleek-ui
-  .adversary-attack
+  .actor-attack
   .card-container.header
   .card-resource
-  .adversary-attack-roll {
+  .actor-attack-roll {
   cursor: pointer;
 }
 
