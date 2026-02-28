@@ -40,6 +40,10 @@ export function registerCompanionSheet() {
         template:
           "modules/daggerheart-sleek-ui/templates/companions/companion-sheet-main.hbs",
       },
+      limited: {
+        template:
+          "systems/daggerheart/templates/sheets/actors/character/limited.hbs", // Use system's limited template
+      },
     };
 
     async _prepareContext(options) {
@@ -391,6 +395,18 @@ export function registerCompanionSheet() {
         this.floatingTabs = null;
       }
       return super.close(options);
+    }
+
+    async render(options = {}, _options = {}) {
+      if (this.actor.limited && !this.actor.isOwner) {
+        const systemSheet =
+          CONFIG.Actor.sheetClasses.companion["daggerheart.DhCompanionSheet"];
+        if (systemSheet) {
+          const defaultSheet = new systemSheet.cls({ document: this.actor });
+          return defaultSheet.render(true, _options);
+        }
+      }
+      return super.render(options, _options);
     }
   }
 

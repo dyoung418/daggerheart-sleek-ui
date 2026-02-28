@@ -34,6 +34,7 @@ export function registerCharacterSheet() {
           addToQuickAccess: this._onAddToQuickAccess,
           removeFromQuickAccess: this._onRemoveFromQuickAccess,
           addQuickAccessDivider: this._onAddQuickAccessDivider,
+          cancelBeastform: SleekCharacterSheet._onCancelBeastform,
         },
         dragDrop: [
           {
@@ -127,6 +128,30 @@ export function registerCharacterSheet() {
 
       context.tabs = this.tabs;
       context.collapsedCategories = this.collapsedCategories;
+      context.beastformActive = this.actor.effects.find(
+        (x) => x.type === "beastform",
+      );
+      if (context.beastformActive) {
+        context.beastformItem = this.actor.items.find(
+          (i) =>
+            i.type === "feature" &&
+            i.system.actions?.some((a) => a.type === "beastform"),
+        );
+      }
+      if (context.beastformActive) {
+        const useBeastformPortrait = game.settings.get(
+          "daggerheart-sleek-ui",
+          "beastformPortrait",
+        );
+
+        if (useBeastformPortrait) {
+          const portrait = this.actor.prototypeToken.ring.subject.texture;
+
+          if (portrait) {
+            context.beastformPortrait = portrait;
+          }
+        }
+      }
 
       await this._prepareFeaturesData(context);
       await this._prepareLoadoutData(context);
@@ -1712,12 +1737,40 @@ export function registerCharacterSheet() {
       );
     }
 
+    static async _onCancelBeastform(event, target) {
+      const itemUuid = target.closest("[data-item-uuid]")?.dataset.itemUuid;
+      if (!itemUuid) return;
+
+      const item = await fromUuid(itemUuid);
+      console.log("Item:", item);
+      console.log("Item actor:", item?.actor);
+      console.log("Item parent:", item?.parent);
+
+      if (!item) return;
+
+      game.system.api.fields.ActionFields.BeastformField.handleActiveTransformations.call(
+        item,
+      );
+    }
+
     async close(options = {}) {
       if (this.floatingTabs) {
         this.floatingTabs.close();
         this.floatingTabs = null;
       }
       return super.close(options);
+    }
+
+    async render(options = {}, _options = {}) {
+      if (this.actor.limited && !this.actor.isOwner) {
+        const systemSheet =
+          CONFIG.Actor.sheetClasses.character["daggerheart.CharacterSheet"];
+        if (systemSheet) {
+          const defaultSheet = new systemSheet.cls({ document: this.actor });
+          return defaultSheet.render(true, _options);
+        }
+      }
+      return super.render(options, _options);
     }
   }
 

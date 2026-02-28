@@ -366,3 +366,7 @@
 .daggerheart.sheet.actor.sleek-ui .biography-tab .textbox .editor-content {
   scrollbar-color: var(--color-background-resourceHover);
 }
+
+.daggerheart.sheet.actor.sleek-ui .biography-tab .textbox .editor-container {
+  min-height: 200px;
+}

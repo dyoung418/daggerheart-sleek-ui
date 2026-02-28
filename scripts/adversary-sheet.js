@@ -44,6 +44,10 @@ export function registerAdversarySheet() {
         template:
           "modules/daggerheart-sleek-ui/templates/adversaries/adversary-sheet-main.hbs",
       },
+      limited: {
+        template:
+          "systems/daggerheart/templates/sheets/actors/character/limited.hbs", // Use system's limited template
+      },
     };
 
     async close(options = {}) {
@@ -635,6 +639,18 @@ export function registerAdversarySheet() {
       this.actor.setFlag("daggerheart-sleek-ui", "collapsedCategories", [
         ...this.collapsedCategories,
       ]);
+    }
+
+    async render(options = {}, _options = {}) {
+      if (this.actor.limited && !this.actor.isOwner) {
+        const systemSheet =
+          CONFIG.Actor.sheetClasses.adversary["daggerheart.AdversarySheet"];
+        if (systemSheet) {
+          const defaultSheet = new systemSheet.cls({ document: this.actor });
+          return defaultSheet.render(true, _options);
+        }
+      }
+      return super.render(options, _options);
     }
   }
 

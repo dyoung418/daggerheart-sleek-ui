@@ -2,10 +2,8 @@
 
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="feature">
 
-    <div class="card-icon"
-      data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
-      data-item-uuid="{{item.uuid}}"
-      data-tooltip="#item#{{item.uuid}}">
+    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+      data-item-uuid="{{item.uuid}}" data-tooltip="#item#{{item.uuid}}">
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
       <img class="dice-roll" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
     </div>
@@ -45,7 +43,7 @@
         hopeCost=hopeCost
         actorHope=@root.document.system.resources.hope.value}}
         {{/if}}
-        
+
       </div>
 
       <div class="card-controls">
@@ -74,8 +72,16 @@
       </div>
       <div class="card-actions">
         {{#each item.system.actions as |action|}}
+        {{#if (and (eq action.type "beastform") @root.beastformActive)}}
+        <button class="card-button" data-action="cancelBeastform" data-item-uuid="{{../item.uuid}}">
+          {{localize "Cancel Beastform"}}
+        </button>
+        {{else}}
         <button class="card-button" data-action="useAction" data-item-uuid="{{../item.uuid}}"
-          data-action-id="{{action._id}}">{{localize action.name}}</button>
+          data-action-id="{{action._id}}">
+          {{localize action.name}}
+        </button>
+        {{/if}}
         {{/each}}
       </div>
     </div>

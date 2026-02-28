@@ -47,6 +47,39 @@
 }
 
 /* ==================== 
+   BEASTFORM
+   ==================== */
+
+.daggerheart.sheet.actor.sleek-ui .portrait:has(.beastform-portrait) {
+  pointer-events: none;
+}
+
+.daggerheart.sheet.actor.sleek-ui .cancel-beastform-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  height: 32px;
+  margin: 0 var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  position: absolute;
+  top: 290px;
+  right: 0px;
+  left: 0px;
+  background: var(--gradient-card);
+  background-color: var(--color-background-dark);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.daggerheart.sheet.actor.sleek-ui .cancel-beastform-btn:hover {
+  box-shadow: 0px 0px 9px -1px var(--color-border);
+}
+
+/* ==================== 
    SETTINGS BUTTON
    ==================== */
 .daggerheart.sheet.actor.sleek-ui .settings-button {

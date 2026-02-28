@@ -1,12 +1,22 @@
 <div class="sidebar-content">
 
   <div class="portrait {{#if isDeath}}deathroll{{/if}}">
+    {{#if beastformPortrait}}
+    <img src="{{beastformPortrait}}" alt="{{document.name}} (Beastform)" class="beastform-portrait" />
+    {{else}}
     <img src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img" />
+    {{/if}}
     {{#if isDeath}}
     <a class="deathroll-btn" data-tooltip="DAGGERHEART.UI.Tooltip.makeDeathMove" data-action="makeDeathMove"><i
         class="fa-solid fa-skull death-save"></i></a>
     {{/if}}
   </div>
+
+  {{#if beastformItem}}
+  <div class="cancel-beastform-btn" data-action="cancelBeastform" data-item-uuid="{{beastformItem.uuid}}">
+    <h3>{{localize "DAGGERHEART.ACTORS.Character.cancelBeastform"}}</h3>
+  </div>
+  {{/if}}
 
   {{#if quickAccess}}
   <div class="favorites">
@@ -17,9 +27,9 @@
           <div class="add-divider" data-action="addQuickAccessDivider" data-tooltip="Add Divider">
             <i class="fa-solid fa-plus"></i>
           </div>
-          
+
         </h3>
-        
+
       </div>
 
 
