@@ -61,7 +61,7 @@
   justify-content: center;
   gap: var(--sleekUI-spacing-md);
   height: 32px;
-  margin: 0 var(--sleekUI-spacing-md);
+  margin: 0 var(--sleekUI-spacing-sm);
   border: 1px solid var(--sleekUI-color-border);
   border-radius: var(--sleekUI-border-radius);
   position: absolute;

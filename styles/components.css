@@ -695,7 +695,7 @@ QUICK ACCESS
   display: flex;
 }
 
-#sleek-ui-sheet .favorites-header:hover::after {
+#sleek-ui-sheet .favorites-header.quick-access-header:hover::after {
   background: linear-gradient(
     260deg,
     rgba(79, 89, 137, 0) 0%,
@@ -726,6 +726,7 @@ QUICK ACCESS
 }
 
 #sleek-ui-sheet .compact.weapon.quick-access.card-equipped::after,
+#sleek-ui-sheet .compact.weapon.quick-access.card-unarmed::after,
 #sleek-ui-sheet .compact.armor.quick-access.card-equipped::after,
 #sleek-ui-sheet .compact.domains.quick-access.card-equipped::after {
   display: none;

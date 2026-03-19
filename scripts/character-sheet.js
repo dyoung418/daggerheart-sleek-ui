@@ -35,6 +35,7 @@ export function registerCharacterSheet() {
           removeFromQuickAccess: this._onRemoveFromQuickAccess,
           addQuickAccessDivider: this._onAddQuickAccessDivider,
           cancelBeastform: SleekCharacterSheet._onCancelBeastform,
+          useUnarmedAttack: SleekCharacterSheet._onUseUnarmedAttack,
         },
         dragDrop: [
           {
@@ -608,7 +609,7 @@ export function registerCharacterSheet() {
             name: game.i18n.localize(
               unarmed.name || "DAGGERHEART.GENERAL.unarmedAttack",
             ),
-            img: "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+            img: unarmed.img,
             uuid: "unarmed-attack",
             system: {
               actions: new Map([[unarmed._id, unarmed]]),
@@ -1753,6 +1754,13 @@ export function registerCharacterSheet() {
       game.system.api.fields.ActionFields.BeastformField.handleActiveTransformations.call(
         item,
       );
+    }
+
+    static async _onUseUnarmedAttack(event, target) {
+      const action = this.actor.system.usedUnarmed;
+      if (action) {
+        await action.use(event);
+      }
     }
 
     async close(options = {}) {

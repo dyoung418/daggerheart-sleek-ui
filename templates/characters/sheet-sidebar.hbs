@@ -18,10 +18,31 @@
   </div>
   {{/if}}
 
+ 
+
   {{#if quickAccess}}
   <div class="favorites">
+
+    {{#if unarmedAttack}}
+      <div class="favorites-container">
+        <div class="favorites-header">
+          <h3>{{localize "DAGGERHEART.ACTIONS.TYPES.attack.name"}}</h3>
+        </div>
+
+        <ul class="favorites-list">
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-weapon.hbs"
+          item=unarmedAttack.item
+          tags=unarmedAttack.tags
+          hopeCost=unarmedAttack.hopeCost
+          usesData=unarmedAttack.usesData
+          damage=unarmedAttack.damage
+          enrichedDescription=unarmedAttack.enrichedDescription}}
+        </ul>
+      </div>
+    {{/if}}
+
     <div class="favorites-container">
-      <div class="favorites-header">
+      <div class="favorites-header quick-access-header">
         <h3>Quick Access
 
           <div class="add-divider" data-action="addQuickAccessDivider" data-tooltip="Add Divider">
@@ -32,58 +53,57 @@
 
       </div>
 
-
       <ul class="favorites-list">
         {{#each quickAccessItems as |itemData|}}
-        {{#if itemData.isDivider}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/divider.hbs"
-        dividerUuid=itemData.dividerUuid}}
-        {{else if (eq itemData.itemType "weapon")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-weapon.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData
-        damage=itemData.damage
-        enrichedDescription=itemData.enrichedDescription}}
-        {{else if (eq itemData.itemType "armor")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-armor.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData
-        marks=itemData.marks
-        enrichedDescription=itemData.enrichedDescription}}
-        {{else if (eq itemData.itemType "domainCard")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-domains.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData}}
-        {{else if (eq itemData.itemType "consumable")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData
-        quantity=itemData.quantity
-        enrichedDescription=itemData.enrichedDescription}}
-        {{else if (eq itemData.itemType "loot")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData
-        quantity=itemData.quantity
-        enrichedDescription=itemData.enrichedDescription}}
-        {{else if (eq itemData.itemType "feature")}}
-        {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-features.hbs"
-        item=itemData.item
-        tags=itemData.tags
-        hopeCost=itemData.hopeCost
-        usesData=itemData.usesData
-        enrichedDescription=itemData.enrichedDescription}}
-        {{/if}}
+          {{#if itemData.isDivider}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/divider.hbs"
+          dividerUuid=itemData.dividerUuid}}
+          {{else if (eq itemData.itemType "weapon")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-weapon.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData
+          damage=itemData.damage
+          enrichedDescription=itemData.enrichedDescription}}
+          {{else if (eq itemData.itemType "armor")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-armor.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData
+          marks=itemData.marks
+          enrichedDescription=itemData.enrichedDescription}}
+          {{else if (eq itemData.itemType "domainCard")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-domains.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData}}
+          {{else if (eq itemData.itemType "consumable")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData
+          quantity=itemData.quantity
+          enrichedDescription=itemData.enrichedDescription}}
+          {{else if (eq itemData.itemType "loot")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData
+          quantity=itemData.quantity
+          enrichedDescription=itemData.enrichedDescription}}
+          {{else if (eq itemData.itemType "feature")}}
+          {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-features.hbs"
+          item=itemData.item
+          tags=itemData.tags
+          hopeCost=itemData.hopeCost
+          usesData=itemData.usesData
+          enrichedDescription=itemData.enrichedDescription}}
+          {{/if}}
         {{/each}}
 
         <div class="drag-area">

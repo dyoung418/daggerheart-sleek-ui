@@ -170,6 +170,38 @@
 }
 
 /* ==================== 
+   WINDOW CONTROLS
+   ==================== */
+
+#sleek-ui-sheet .window-header button {
+  color: var(--sleekUI-color-primary);
+}
+
+#sleek-ui-sheet .window-header .attribution-header-label {
+  color: rgba(239, 230, 216, 0.3);
+}
+
+#sleek-ui-sheet .controls-dropdown {
+  background: black;
+  border-radius: var(--sleekUI-border-radius-s);
+  right: var(--sleekUI-spacing-tiny);
+  transition: all 0.3s ease;
+}
+
+#sleek-ui-sheet .controls-dropdown .header-control button {
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+  padding: var(--sleekUI-spacing-md) var(--sleekUI-spacing-xs);
+  color: var(--sleekUI-color-primary);
+  transition: none;
+}
+
+#sleek-ui-sheet .controls-dropdown .header-control button:hover {
+  background: var(--sleekUI-color-border);
+}
+
+/* ==================== 
    SCROLLBAR
    ==================== */
 
