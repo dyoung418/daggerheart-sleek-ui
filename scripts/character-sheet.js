@@ -73,17 +73,21 @@ export function registerCharacterSheet() {
 
       const context = await super._prepareContext(options);
 
-      context.currencyLabel = game.settings.get(
+      context.tabsPosition = game.settings.get(
         "daggerheart-sleek-ui",
-        "currencyLabel",
+        "tabsPosition",
       );
       context.quickAccess = game.settings.get(
         "daggerheart-sleek-ui",
         "quickAccess",
       );
-      context.tabsPosition = game.settings.get(
+      context.showTooltip = game.settings.get(
         "daggerheart-sleek-ui",
-        "tabsPosition",
+        "showTooltip",
+      );
+      context.currencyLabel = game.settings.get(
+        "daggerheart-sleek-ui",
+        "currencyLabel",
       );
 
       if (Object.keys(this.tabs).length === 0) {
@@ -778,6 +782,20 @@ export function registerCharacterSheet() {
       super._onRender(context, options);
 
       this.element.id = "sleek-ui-sheet";
+      this._element = this.element;
+
+      // Only remove tooltips when hovering nothing
+      this.element.addEventListener("mousemove", (e) => {
+        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+        const isOverTooltipTrigger = hoveredElement?.closest(
+          "[data-tooltip], [data-tooltip-text]",
+        );
+
+        if (!isOverTooltipTrigger) {
+          const tooltip = document.querySelector(".tooltip.active");
+          if (tooltip) tooltip.remove();
+        }
+      });
 
       const tabsPosition = game.settings.get(
         "daggerheart-sleek-ui",
@@ -1784,11 +1802,16 @@ export function registerCharacterSheet() {
     }
   }
 
-  DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekCharacterSheet, {
-    types: ["character"],
-    makeDefault: true,
-    label: "DH Sleek UI",
-  });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    Actor,
+    "daggerheart",
+    SleekCharacterSheet,
+    {
+      types: ["character"],
+      makeDefault: true,
+      label: "DH Sleek UI",
+    },
+  );
 
   Hooks.on("preCreateItem", async (item, data, options, userId) => {
     if (!SleekCharacterSheet.draggedItem) return;

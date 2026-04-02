@@ -65,6 +65,10 @@ export function registerAdversarySheet() {
         "daggerheart-sleek-ui",
         "tabsPosition",
       );
+      context.showTooltip = game.settings.get(
+        "daggerheart-sleek-ui",
+        "showTooltip",
+      );
 
       await this._prepareNotesContext(context, options);
 
@@ -276,6 +280,20 @@ export function registerAdversarySheet() {
       super._onRender(context, options);
 
       this.element.id = "sleek-ui-sheet";
+      this._element = this.element;
+
+      // Only remove tooltips when hovering nothing
+      this.element.addEventListener("mousemove", (e) => {
+        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+        const isOverTooltipTrigger = hoveredElement?.closest(
+          "[data-tooltip], [data-tooltip-text]",
+        );
+
+        if (!isOverTooltipTrigger) {
+          const tooltip = document.querySelector(".tooltip.active");
+          if (tooltip) tooltip.remove();
+        }
+      });
 
       const tabsPosition = game.settings.get(
         "daggerheart-sleek-ui",
@@ -656,11 +674,16 @@ export function registerAdversarySheet() {
     }
   }
 
-  DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekAdversarySheet, {
-    types: ["adversary"],
-    makeDefault: true,
-    label: "DH Sleek UI",
-  });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    Actor,
+    "daggerheart",
+    SleekAdversarySheet,
+    {
+      types: ["adversary"],
+      makeDefault: true,
+      label: "DH Sleek UI",
+    },
+  );
 
   Hooks.on("updateSetting", (setting) => {
     if (

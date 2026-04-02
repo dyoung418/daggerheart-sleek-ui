@@ -71,6 +71,10 @@ export function registerCompanionSheet() {
         "daggerheart-sleek-ui",
         "tabsPosition",
       );
+      context.showTooltip = game.settings.get(
+        "daggerheart-sleek-ui",
+        "showTooltip",
+      );
 
       // Collapsed categories
       if (options.isFirstRender && !this.collapsedCategories) {
@@ -185,6 +189,20 @@ export function registerCompanionSheet() {
       super._onRender(context, options);
 
       this.element.id = "sleek-ui-sheet";
+      this._element = this.element;
+
+      // Only remove tooltips when hovering nothing
+      this.element.addEventListener("mousemove", (e) => {
+        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+        const isOverTooltipTrigger = hoveredElement?.closest(
+          "[data-tooltip], [data-tooltip-text]",
+        );
+
+        if (!isOverTooltipTrigger) {
+          const tooltip = document.querySelector(".tooltip.active");
+          if (tooltip) tooltip.remove();
+        }
+      });
 
       const tabsPosition = game.settings.get(
         "daggerheart-sleek-ui",
@@ -412,9 +430,14 @@ export function registerCompanionSheet() {
     }
   }
 
-  DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekCompanionSheet, {
-    types: ["companion"],
-    makeDefault: true,
-    label: "DH Sleek UI",
-  });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    Actor,
+    "daggerheart",
+    SleekCompanionSheet,
+    {
+      types: ["companion"],
+      makeDefault: true,
+      label: "DH Sleek UI",
+    },
+  );
 }

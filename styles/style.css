@@ -133,6 +133,7 @@
 #sleek-ui-sheet {
   width: fit-content;
   min-width: 860px;
+  border: none !important;
 }
 
 #sleek-ui-sheet.daggerheart.sheet.actor.adversary.sleek-ui {
@@ -146,7 +147,7 @@
 }
 
 #sleek-ui-sheet.minimized {
-  min-width: 0;
+  min-width: 0 !important;
 }
 
 #sleek-ui-sheet .window-content {

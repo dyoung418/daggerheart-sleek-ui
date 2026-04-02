@@ -218,6 +218,12 @@
   color: var(--sleekUI-color-primary);
 }
 
+#sleek-ui-sheet hr {
+  height: 1px;
+  margin: 0;
+  background-image: linear-gradient(90deg, #4f5989 0%, transparent 100%);
+}
+
 /* ==================== 
    CARD BOTTOM
    ==================== */

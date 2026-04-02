@@ -7,7 +7,7 @@
 
     <div class="card-icon" data-action="{{#if (eq item.uuid 'unarmed-attack')}}useUnarmedAttack{{else}}useItem{{/if}}"
       {{#unless (eq item.uuid 'unarmed-attack' )}}data-item-uuid="{{item.uuid}}" {{/unless}}
-      data-tooltip="{{#if (eq item.uuid 'unarmed-attack')}}Use Unarmed Attack{{else}}#item#{{item.uuid}}{{/if}}">
+      {{#if @root.showTooltip}}data-tooltip="{{#if (eq item.uuid 'unarmed-attack')}}Use Unarmed Attack{{else}}#item#{{item.uuid}}{{/if}}"{{/if}}>
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
       <img class="dice-roll" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />
     </div>

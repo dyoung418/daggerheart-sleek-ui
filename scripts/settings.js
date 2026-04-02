@@ -27,6 +27,16 @@ export function registerSettings() {
     default: false,
   });
 
+  // Tooltips
+  game.settings.register("daggerheart-sleek-ui", "showTooltip", {
+    name: "Show Card Tooltips",
+    hint: "Shows tooltips for cards when hovering the icon",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
   // Beastform Portrait
   game.settings.register("daggerheart-sleek-ui", "beastformPortrait", {
     name: "Use Beastform Portrait",
