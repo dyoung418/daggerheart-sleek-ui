@@ -1,0 +1,55 @@
+<div class="character-information">
+  <div class="character-details environment">
+    {{! NAME }}
+    <h1 class="actor-name small" contenteditable="plaintext-only" data-property="name" placeholder="{{localize 'DAGGERHEART.GENERAL.actorName'}}">{{source.name}}</h1>
+    {{! TAGS }}
+    <div class="character-tags">
+      <span class="tag tag-red">
+        {{localize "DAGGERHEART.ACTORS.Adversary.FIELDS.tier.label"}}
+        {{document.system.tier}}
+      </span>
+
+      <span class="tag tag-green">
+        {{localize (concat "DAGGERHEART.CONFIG.EnvironmentType." document.system.type ".label")}}
+      </span>
+
+    </div>
+  </div>
+  {{! DIFFICULTY }}
+  <div class="environment-difficulty">
+    <h3>{{localize "DAGGERHEART.ACTORS.Adversary.FIELDS.difficulty.label"}}</h3>
+    <div class="level-number">{{document.system.difficulty}}</div>
+  </div>
+</div>
+
+<div class="header-details">
+
+  <div class="environment-info divider">
+    {{#if document.system.description}}
+      <div class="divider-line"> </div>
+    {{else if document.system.impulses}}
+      <div class="divider-line"> </div>
+    {{/if}}
+
+    {{#if document.system.description}}
+      <i>{{{document.system.description}}}</i>
+    {{/if}}
+
+    {{#if document.system.impulses}}
+      <div class="impulses">
+        <b>{{localize "DAGGERHEART.ACTORS.Environment.FIELDS.impulses.label"}}:</b>
+        <span>{{document.system.impulses}}</span>
+      </div>
+    {{/if}}
+
+  </div>
+
+</div>
+
+<button type="button" class="settings-button" data-action="openSettings" data-tooltip-text="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}" aria-label="{{localize 'DAGGERHEART.UI.Tooltip.openSheetSettings'}}">
+  <i class="fa-solid fa-gear"></i>
+</button>
+
+{{#if (and showAttribution document.system.attributionLabel)}}
+  <label class="attribution-header-label">{{document.system.attributionLabel}}</label>
+{{/if}}

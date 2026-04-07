@@ -1,0 +1,25 @@
+<div class="tabs environment adversaries-tab">
+
+    {{#each adversaryCategories}}
+        <div class="category-wrapper {{#if (contains @root.collapsedCategories categoryId)}}collapsed{{/if}}" data-category-id="{{categoryId}}">
+
+            <div class="category-header" data-action="toggleCategory">
+                <h2>{{label}}</h2>
+                <span class="line"></span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
+            <div class="category-content env-adversaries">
+                {{#each adversaries}}
+                {{> "modules/daggerheart-sleek-ui/templates/components/card-environment-adversaries.hbs"
+                    uuid=uuid
+                    name=name
+                    img=img tier=tier
+                    typeName=typeName}}
+                {{/each}}
+            </div>
+
+        </div>
+    {{/each}}
+
+</div>

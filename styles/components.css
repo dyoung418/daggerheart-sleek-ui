@@ -187,9 +187,13 @@
   gap: var(--sleekUI-spacing-xs);
 }
 
-#sleek-ui-sheet a.content-link {
-  padding: var(--sleekUI-spacing-tiny) var(--sleekUI-spacing-xs);
-  border-radius: var(--sleekUI-border-radius);
+#sleek-ui-sheet a.content-link,
+#sleek-ui-sheet a.inline-roll {
+  border-radius: var(--sleekUI-border-radius-s);
+}
+
+#sleek-ui-sheet a.content-link:hover {
+  font-weight: unset;
 }
 
 #sleek-ui-sheet .card-description button {
@@ -318,6 +322,10 @@
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
+}
+
+#sleek-ui-sheet .features .card-resource {
+  width: auto;
 }
 
 #sleek-ui-sheet .resource {

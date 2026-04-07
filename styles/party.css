@@ -48,36 +48,40 @@ PARTY MEMBERS
   gap: var(--sleekUI-spacing-xs);
 }
 
-#sleek-ui-sheet .card-container.header.character-party-header {
+#sleek-ui-sheet .card-container.header.party-character-header {
   display: flex;
   min-height: 74px;
 }
 
-#sleek-ui-sheet .character-party-header .character-party-icon {
+#sleek-ui-sheet .party-character-header .party-character-icon {
   width: 100px;
   height: 100%;
   mask-image: var(--sleekUI-gradient-mask-icon);
 }
 
-#sleek-ui-sheet .character-party-header .character-party-details .card-text {
+#sleek-ui-sheet .party-character-header .party-character-icon img {
+  transition: transform 0.2s ease;
+}
+
+#sleek-ui-sheet .party-character-header .party-character-icon:hover img {
+  transform: scale(1.05);
+}
+
+#sleek-ui-sheet .party-character-header .party-character-details .card-text {
   margin-right: var(--sleekUI-spacing-md);
 }
 
-#sleek-ui-sheet .character-party-header .character-party-details .card-text .tag {
+#sleek-ui-sheet .party-character-header .party-character-details .card-text .tag {
   margin-top: var(--sleekUI-spacing-xs);
 }
 
-#sleek-ui-sheet .character-party-header .character-party-details .character-name {
-  font-size: var(--sleekUI-font-size-xl);
-}
-
-#sleek-ui-sheet .character-party .party-controls {
+#sleek-ui-sheet .party-character .party-controls {
   gap: var(--sleekUI-spacing-sm);
   margin-left: 0;
   margin-right: var(--sleekUI-spacing-sm);
 }
 
-#sleek-ui-sheet .character-party .party-controls a {
+#sleek-ui-sheet .party-character .party-controls a {
   display: flex;
   width: 32px;
   height: 32px;
@@ -86,16 +90,16 @@ PARTY MEMBERS
   border-radius: var(--sleekUI-border-radius-s);
 }
 
-#sleek-ui-sheet .character-party .party-controls a:hover {
+#sleek-ui-sheet .party-character .party-controls a:hover {
   filter: none;
 }
 
-#sleek-ui-sheet .character-party .party-controls a:hover .fa-trash {
+#sleek-ui-sheet .party-character .party-controls a:hover .fa-trash {
   color: #b83636;
   text-shadow: none;
 }
 
-#sleek-ui-sheet .character-party .character-party-information {
+#sleek-ui-sheet .party-character .party-character-information {
   display: flex;
   flex-direction: column;
   gap: var(--sleekUI-spacing-xs);
@@ -103,6 +107,6 @@ PARTY MEMBERS
   padding-top: 0;
 }
 
-#sleek-ui-sheet .character-party .values-row.level {
+#sleek-ui-sheet .party-character .values-row.level {
   margin-left: auto;
 }

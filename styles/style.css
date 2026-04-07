@@ -114,6 +114,11 @@
   min-height: 700px;
 }
 
+#sleek-ui-sheet.daggerheart.sheet.actor.environment.sleek-ui {
+  min-width: 540px;
+  min-height: 900px;
+}
+
 #sleek-ui-sheet.minimized {
   min-width: 0 !important;
 }
@@ -233,6 +238,10 @@
   font-size: var(--sleekUI-font-size-name);
   font-weight: var(--sleekUI-font-weight-bold);
   text-transform: uppercase;
+}
+
+#sleek-ui-sheet h1.small {
+  font-size: var(--sleekUI-font-size-xl);
 }
 
 #sleek-ui-sheet h2 {

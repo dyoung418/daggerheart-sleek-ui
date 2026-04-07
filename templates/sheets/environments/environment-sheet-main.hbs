@@ -1,0 +1,22 @@
+<div class="main-content environment">
+
+  <div class="portrait environment">
+    <img
+        src="{{document.img}}"
+        alt="{{document.name}}"
+        data-action="editImage"
+        data-edit="img"
+    />
+  </div>
+
+  <div class="header-content">
+        {{> "modules/daggerheart-sleek-ui/templates/sheets/environments/main/environment-header.hbs"}}
+    </div>
+
+   {{> "modules/daggerheart-sleek-ui/templates/components/tabs-basic.hbs"}}
+
+    <div class="tab-content">
+        {{> "modules/daggerheart-sleek-ui/templates/sheets/environments/main/environment-tabs.hbs"}}
+    </div>
+
+</div>

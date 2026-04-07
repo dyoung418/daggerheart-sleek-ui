@@ -1,0 +1,72 @@
+/* ==================== 
+PORTRAIT
+==================== */
+
+#sleek-ui-sheet .portrait.environment {
+  min-height: 200px;
+  max-height: 200px;
+  overflow: hidden;
+  margin-bottom: -42px;
+}
+
+/* ==================== 
+HEADER
+==================== */
+
+#sleek-ui-sheet .environment-difficulty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  max-height: 90px;
+  padding: var(--sleekUI-spacing-xs) var(--sleekUI-spacing-md);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+}
+
+#sleek-ui-sheet .environment-info {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  gap: var(--sleekUI-spacing-md);
+  padding-bottom: var(--sleekUI-spacing-tiny);
+  text-align: center;
+  color: var(--sleekUI-color-secondary);
+  line-height: 20px;
+  cursor: default;
+}
+
+#sleek-ui-sheet .impulses {
+  display: flex;
+  flex-direction: column;
+}
+
+#sleek-ui-sheet .environment .attribution-header-label {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  background: transparent;
+}
+
+/* ==================== 
+POTENTIAL ADVERSARIES
+==================== */
+
+#sleek-ui-sheet .env-adversaries .card-container.header {
+  cursor: pointer;
+}
+
+#sleek-ui-sheet .env-adversaries .card-container.header .card-icon {
+  width: 72px;
+  cursor: pointer;
+}
+
+#sleek-ui-sheet .env-adversaries .card-header .card-text {
+  width: unset;
+}
+
+#sleek-ui-sheet .env-adversaries .character-tags {
+  gap: var(--sleekUI-spacing-xs);
+  padding-right: var(--sleekUI-spacing-tiny);
+}

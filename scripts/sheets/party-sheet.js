@@ -23,7 +23,7 @@ export function registerPartySheet() {
       {
         classes: ["daggerheart", "sheet", "actor", "sleek-ui", "sleek-party"],
         window: { title: "TYPES.Actor.party", controls: [] },
-        position: { width: 550, height: 670 },
+        position: { width: 650, height: 700 },
         actions: {
           toggleCategory: SleekPartySheet._onToggleCategory,
           toggleHope: SleekPartySheet._onToggleMemberHope,
@@ -150,7 +150,7 @@ export function registerPartySheet() {
         const level = sys.levelData?.level?.changed ?? sys.levelData?.level?.value ?? 0;
 
         results.push({
-          ownershipLevel: actor.getUserLevel(game.user),
+          ownershipLevel: game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : actor.getUserLevel(game.user),
           actor,
           level,
           hope,

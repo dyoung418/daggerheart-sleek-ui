@@ -75,7 +75,7 @@ export function registerCharacterSheet() {
       context.quickAccess = game.settings.get("daggerheart-sleek-ui", "quickAccess");
       context.showTooltip = game.settings.get("daggerheart-sleek-ui", "showTooltip");
       context.currencyLabel = game.settings.get("daggerheart-sleek-ui", "currencyLabel");
-      context.ownershipLevel = this.actor.getUserLevel(game.user);
+      context.ownershipLevel = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : this.actor.getUserLevel(game.user);
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {

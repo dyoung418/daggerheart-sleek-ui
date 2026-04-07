@@ -2,10 +2,6 @@
 SIDEBAR
 ==================== */
 
-#sleek-ui-sheet .adversary h1 {
-  font-size: var(--sleekUI-font-size-xl);
-}
-
 #sleek-ui-sheet .adversary .dead {
   position: absolute;
   display: flex;
@@ -86,7 +82,7 @@ HEADER
   align-items: center;
   justify-content: space-evenly;
   height: 100%;
-  max-height: fit-content;
+  max-height: 90px;
   padding: var(--sleekUI-spacing-xs) var(--sleekUI-spacing-md);
   border: 1px solid var(--sleekUI-color-border);
   border-radius: var(--sleekUI-border-radius);

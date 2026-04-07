@@ -18,8 +18,6 @@ export async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/sheets/adversaries/tabs/adversary-features.hbs",
     "modules/daggerheart-sleek-ui/templates/sheets/adversaries/tabs/adversary-effects.hbs",
     "modules/daggerheart-sleek-ui/templates/sheets/adversaries/tabs/adversary-notes.hbs",
-    "modules/daggerheart-sleek-ui/templates/components/card-adversary-features.hbs",
-    "modules/daggerheart-sleek-ui/templates/components/res-fear.hbs",
     // Companion templates
     "modules/daggerheart-sleek-ui/templates/sheets/companions/companion-sheet-main.hbs",
     "modules/daggerheart-sleek-ui/templates/sheets/companions/main/companion-header.hbs",
@@ -34,7 +32,15 @@ export async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/sheets/party/tabs/party-members.hbs",
     "modules/daggerheart-sleek-ui/templates/sheets/party/tabs/party-inventory.hbs",
     "modules/daggerheart-sleek-ui/templates/sheets/party/tabs/party-notes.hbs",
-    "modules/daggerheart-sleek-ui/templates/components/card-character-party.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/card-party-character.hbs",
+    // Environment templates
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/environment-sheet-main.hbs",
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/main/environment-header.hbs",
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/main/environment-tabs.hbs",
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/tabs/environment-features.hbs",
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/tabs/environment-adversaries.hbs",
+    "modules/daggerheart-sleek-ui/templates/sheets/environments/tabs/environment-notes.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/card-environment-adversaries.hbs",
     // Shared components
     "modules/daggerheart-sleek-ui/templates/components/tabs-floating.hbs",
     "modules/daggerheart-sleek-ui/templates/components/tabs-basic.hbs",
@@ -45,8 +51,9 @@ export async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/components/card-armor.hbs",
     "modules/daggerheart-sleek-ui/templates/components/card-item.hbs",
     "modules/daggerheart-sleek-ui/templates/components/card-effects.hbs",
-    "modules/daggerheart-sleek-ui/templates/components/card-small-effects.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/card-companion-effects.hbs",
     "modules/daggerheart-sleek-ui/templates/components/card-actor-attack.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/card-npc-features.hbs",
     "modules/daggerheart-sleek-ui/templates/components/compact-card-weapon.hbs",
     "modules/daggerheart-sleek-ui/templates/components/compact-card-armor.hbs",
     "modules/daggerheart-sleek-ui/templates/components/compact-card-domains.hbs",
@@ -60,6 +67,7 @@ export async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-quantity.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/res-fear.hbs",
   ];
   return loadTemplates(templatePaths);
 }
