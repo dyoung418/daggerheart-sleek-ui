@@ -52,8 +52,12 @@
   height: 48px;
   mask-image: var(--sleekUI-gradient-mask-icon);
   position: relative;
-  cursor: pointer;
   flex-shrink: 0;
+  cursor: default;
+}
+
+#sleek-ui-sheet .card-container.header .card-icon[data-action] {
+  cursor: pointer;
 }
 
 #sleek-ui-sheet .card-container.header .card-icon .dice-roll {
@@ -64,6 +68,11 @@
   left: 32px;
   opacity: 0;
   transition: all 0.2s ease;
+  cursor: default;
+}
+
+#sleek-ui-sheet .card-container.header .card-icon[data-action] .dice-roll {
+  cursor: pointer;
 }
 
 #sleek-ui-sheet .card-container.header .card-icon .icon {
@@ -72,11 +81,11 @@
   object-fit: cover;
 }
 
-#sleek-ui-sheet .card-container.header .card-icon:hover .icon {
+#sleek-ui-sheet .card-container.header .card-icon[data-action]:hover .icon {
   filter: brightness(0.2);
 }
 
-#sleek-ui-sheet .card-container.header .card-icon:hover .dice-roll {
+#sleek-ui-sheet .card-container.header .card-icon[data-action]:hover .dice-roll {
   opacity: 1;
   transform: translateX(-12px);
 }
@@ -148,6 +157,21 @@
 
 #sleek-ui-sheet .unequipped i {
   opacity: 0.25;
+}
+
+#sleek-ui-sheet .card-controls .delete-item {
+  margin-right: var(--sleekUI-spacing-tiny);
+  transform: translateY(-1px);
+}
+
+#sleek-ui-sheet .card-controls .delete-item:hover {
+  color: #b83636;
+  filter: drop-shadow(0 0 2px #b83636);
+  text-shadow: none;
+}
+
+#sleek-ui-sheet .card-controls .edit-doc {
+  transform: translateY(-1px);
 }
 
 /* ==================== 
@@ -294,7 +318,6 @@
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
-  padding-left: var(--sleekUI-spacing-lg);
 }
 
 #sleek-ui-sheet .resource {
@@ -573,13 +596,19 @@ COMPACT CARDS
   flex: 1;
   display: flex;
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#sleek-ui-sheet .compact .card-text-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 #sleek-ui-sheet .compact .card-resource {
-  position: absolute;
-  right: 4px;
+  flex-shrink: 0;
   width: fit-content;
-  z-index: 5;
 }
 
 #sleek-ui-sheet .compact .hover-area {
@@ -702,12 +731,7 @@ QUICK ACCESS
 }
 
 #sleek-ui-sheet .favorites-header.quick-access-header:hover::after {
-  background: linear-gradient(
-    260deg,
-    rgba(79, 89, 137, 0) 0%,
-    rgba(79, 89, 137, 1) 82%,
-    rgba(79, 89, 137, 0) 0%
-  );
+  background: linear-gradient(260deg, rgba(79, 89, 137, 0) 0%, rgba(79, 89, 137, 1) 82%, rgba(79, 89, 137, 0) 0%);
 }
 
 #sleek-ui-sheet .favorites-header .add-divider:hover {

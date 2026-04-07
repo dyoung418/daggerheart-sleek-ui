@@ -126,11 +126,7 @@ FEATURES
   cursor: default;
 }
 
-#sleek-ui-sheet
-  .actor-attack
-  .card-container.header
-  .card-resource
-  .actor-attack-roll {
+#sleek-ui-sheet .actor-attack .card-container.header .card-resource .actor-attack-roll {
   cursor: pointer;
 }
 
@@ -155,21 +151,4 @@ FEATURES
 #sleek-ui-sheet .resource.fear-resource .fear-icon-empty i {
   margin: 0;
   opacity: 0.2;
-}
-
-/* ==================== 
-NOTES
-==================== */
-
-#sleek-ui-sheet .tab-pane.active:has(.notes-tab),
-#sleek-ui-sheet .tabs.notes-tab,
-#sleek-ui-sheet .tabs.notes-tab .category-wrapper {
-  height: 100%;
-}
-
-#sleek-ui-sheet .notes-tab .notes-content {
-  height: 100%;
-  background: var(--sleekUI-color-background-input);
-  border-radius: var(--sleekUI-border-radius);
-  padding: var(--sleekUI-spacing-md);
 }

@@ -1,4 +1,4 @@
-import { FloatingTabs } from "./floating-tabs.js";
+import { FloatingTabs } from "../floating-tabs.js";
 
 export function registerCharacterSheet() {
   if (game.system.id !== "daggerheart") return;
@@ -49,12 +49,10 @@ export function registerCharacterSheet() {
 
     static PARTS = {
       sidebar: {
-        template:
-          "modules/daggerheart-sleek-ui/templates/characters/sheet-sidebar.hbs",
+        template: "modules/daggerheart-sleek-ui/templates/sheets/characters/sheet-sidebar.hbs",
       },
       mainSheet: {
-        template:
-          "modules/daggerheart-sleek-ui/templates/characters/sheet-main.hbs",
+        template: "modules/daggerheart-sleek-ui/templates/sheets/characters/sheet-main.hbs",
       },
     };
 
@@ -73,22 +71,11 @@ export function registerCharacterSheet() {
 
       const context = await super._prepareContext(options);
 
-      context.tabsPosition = game.settings.get(
-        "daggerheart-sleek-ui",
-        "tabsPosition",
-      );
-      context.quickAccess = game.settings.get(
-        "daggerheart-sleek-ui",
-        "quickAccess",
-      );
-      context.showTooltip = game.settings.get(
-        "daggerheart-sleek-ui",
-        "showTooltip",
-      );
-      context.currencyLabel = game.settings.get(
-        "daggerheart-sleek-ui",
-        "currencyLabel",
-      );
+      context.tabsPosition = game.settings.get("daggerheart-sleek-ui", "tabsPosition");
+      context.quickAccess = game.settings.get("daggerheart-sleek-ui", "quickAccess");
+      context.showTooltip = game.settings.get("daggerheart-sleek-ui", "showTooltip");
+      context.currencyLabel = game.settings.get("daggerheart-sleek-ui", "currencyLabel");
+      context.ownershipLevel = this.actor.getUserLevel(game.user);
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {
@@ -126,28 +113,18 @@ export function registerCharacterSheet() {
       }
 
       if (options.isFirstRender && this.collapsedCategories.length === 0) {
-        this.collapsedCategories =
-          this.actor.getFlag("daggerheart-sleek-ui", "collapsedCategories") ||
-          [];
+        this.collapsedCategories = this.actor.getFlag("daggerheart-sleek-ui", "collapsedCategories") || [];
       }
 
+      context.isCharacterSheet = true;
       context.tabs = this.tabs;
       context.collapsedCategories = this.collapsedCategories;
-      context.beastformActive = this.actor.effects.find(
-        (x) => x.type === "beastform",
-      );
+      context.beastformActive = this.actor.effects.find((x) => x.type === "beastform");
       if (context.beastformActive) {
-        context.beastformItem = this.actor.items.find(
-          (i) =>
-            i.type === "feature" &&
-            i.system.actions?.some((a) => a.type === "beastform"),
-        );
+        context.beastformItem = this.actor.items.find((i) => i.type === "feature" && i.system.actions?.some((a) => a.type === "beastform"));
       }
       if (context.beastformActive) {
-        const useBeastformPortrait = game.settings.get(
-          "daggerheart-sleek-ui",
-          "beastformPortrait",
-        );
+        const useBeastformPortrait = game.settings.get("daggerheart-sleek-ui", "beastformPortrait");
 
         if (useBeastformPortrait) {
           const portrait = this.actor.prototypeToken.ring.subject.texture;
@@ -171,18 +148,10 @@ export function registerCharacterSheet() {
     async _prepareFeaturesData(context) {
       const ancestry = this.actor.items.find((i) => i.type === "ancestry");
       const community = this.actor.items.find((i) => i.type === "community");
-      const classItem = this.actor.items.find(
-        (i) => i.type === "class" && !i.system.isMulticlass,
-      );
-      const subclass = this.actor.items.find(
-        (i) => i.type === "subclass" && !i.system.isMulticlass,
-      );
-      const multiclassItem = this.actor.items.find(
-        (i) => i.type === "class" && i.system.isMulticlass,
-      );
-      const multiclassSubclass = this.actor.items.find(
-        (i) => i.type === "subclass" && i.system.isMulticlass,
-      );
+      const classItem = this.actor.items.find((i) => i.type === "class" && !i.system.isMulticlass);
+      const subclass = this.actor.items.find((i) => i.type === "subclass" && !i.system.isMulticlass);
+      const multiclassItem = this.actor.items.find((i) => i.type === "class" && i.system.isMulticlass);
+      const multiclassSubclass = this.actor.items.find((i) => i.type === "subclass" && i.system.isMulticlass);
 
       const sheetLists = this.actor.system.sheetLists;
       const ancestryFeatures = sheetLists?.ancestryFeatures?.values || [];
@@ -191,18 +160,10 @@ export function registerCharacterSheet() {
       const allSubclassFeatures = sheetLists?.subclassFeatures?.values || [];
       const extraFeatures = sheetLists?.features?.values || [];
 
-      const classFeatures = allClassFeatures.filter(
-        (f) => !f.system.multiclassOrigin,
-      );
-      const multiclassClassFeatures = allClassFeatures.filter(
-        (f) => f.system.multiclassOrigin,
-      );
-      const subclassFeatures = allSubclassFeatures.filter(
-        (f) => !f.system.multiclassOrigin,
-      );
-      const multiclassSubclassFeatures = allSubclassFeatures.filter(
-        (f) => f.system.multiclassOrigin,
-      );
+      const classFeatures = allClassFeatures.filter((f) => !f.system.multiclassOrigin);
+      const multiclassClassFeatures = allClassFeatures.filter((f) => f.system.multiclassOrigin);
+      const subclassFeatures = allSubclassFeatures.filter((f) => !f.system.multiclassOrigin);
+      const multiclassSubclassFeatures = allSubclassFeatures.filter((f) => f.system.multiclassOrigin);
 
       const createFeatureData = async (item, tags) => {
         let hopeCost = 0;
@@ -231,11 +192,7 @@ export function registerCharacterSheet() {
           }
         }
 
-        const enrichedDescription =
-          await foundry.applications.ux.TextEditor.enrichHTML(
-            item.system.description,
-            { relativeTo: item, rollData: this.actor.getRollData() },
-          );
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item, rollData: this.actor.getRollData() });
 
         return { item, tags, hopeCost, usesData, enrichedDescription };
       };
@@ -245,88 +202,30 @@ export function registerCharacterSheet() {
       const heritagePromises = [];
 
       if (ancestryFeatures[0]) {
-        heritagePromises.push(
-          createFeatureData(ancestryFeatures[0], [
-            createTag(
-              `Ancestry — ${ancestry?.name || "Unknown"}`,
-              ancestry?.uuid || "",
-              "tag-purple",
-            ),
-          ]),
-        );
+        heritagePromises.push(createFeatureData(ancestryFeatures[0], [createTag(`Ancestry — ${ancestry?.name || "Unknown"}`, ancestry?.uuid || "", "tag-purple")]));
       }
 
       if (ancestryFeatures[1]) {
-        heritagePromises.push(
-          createFeatureData(ancestryFeatures[1], [
-            createTag(
-              `Ancestry — ${ancestry?.name || "Unknown"}`,
-              ancestry?.uuid || "",
-              "tag-purple",
-            ),
-          ]),
-        );
+        heritagePromises.push(createFeatureData(ancestryFeatures[1], [createTag(`Ancestry — ${ancestry?.name || "Unknown"}`, ancestry?.uuid || "", "tag-purple")]));
       }
 
       if (communityFeatures[0]) {
-        heritagePromises.push(
-          createFeatureData(communityFeatures[0], [
-            createTag(
-              `Community — ${community?.name || "Unknown"}`,
-              community?.uuid || "",
-              "tag-orange",
-            ),
-          ]),
-        );
+        heritagePromises.push(createFeatureData(communityFeatures[0], [createTag(`Community — ${community?.name || "Unknown"}`, community?.uuid || "", "tag-orange")]));
       }
 
       context.heritageFeatures = await Promise.all(heritagePromises);
 
       context.classFeatures = await Promise.all([
-        ...classFeatures.map((feature) =>
-          createFeatureData(feature, [
-            createTag(
-              `Class — ${classItem?.name || "Unknown"}`,
-              classItem?.uuid || "",
-              "tag-green",
-            ),
-          ]),
-        ),
-        ...subclassFeatures.map((feature) =>
-          createFeatureData(feature, [
-            createTag(
-              `Subclass — ${subclass?.name || "Unknown"}`,
-              subclass?.uuid || "",
-              "tag-green",
-            ),
-          ]),
-        ),
+        ...classFeatures.map((feature) => createFeatureData(feature, [createTag(`Class — ${classItem?.name || "Unknown"}`, classItem?.uuid || "", "tag-green")])),
+        ...subclassFeatures.map((feature) => createFeatureData(feature, [createTag(`Subclass — ${subclass?.name || "Unknown"}`, subclass?.uuid || "", "tag-green")])),
       ]);
 
       context.multiclassFeatures = await Promise.all([
-        ...multiclassClassFeatures.map((feature) =>
-          createFeatureData(feature, [
-            createTag(
-              `Multiclass — ${multiclassItem?.name || "Unknown"}`,
-              multiclassItem?.uuid || "",
-              "tag-blue",
-            ),
-          ]),
-        ),
-        ...multiclassSubclassFeatures.map((feature) =>
-          createFeatureData(feature, [
-            createTag(
-              `Multiclass Subclass — ${multiclassSubclass?.name || "Unknown"}`,
-              multiclassSubclass?.uuid || "",
-              "tag-blue",
-            ),
-          ]),
-        ),
+        ...multiclassClassFeatures.map((feature) => createFeatureData(feature, [createTag(`Multiclass — ${multiclassItem?.name || "Unknown"}`, multiclassItem?.uuid || "", "tag-blue")])),
+        ...multiclassSubclassFeatures.map((feature) => createFeatureData(feature, [createTag(`Multiclass Subclass — ${multiclassSubclass?.name || "Unknown"}`, multiclassSubclass?.uuid || "", "tag-blue")])),
       ]);
 
-      context.extraFeatures = await Promise.all(
-        extraFeatures.map((feature) => createFeatureData(feature)),
-      );
+      context.extraFeatures = await Promise.all(extraFeatures.map((feature) => createFeatureData(feature)));
     }
 
     async _prepareLoadoutData(context) {
@@ -361,15 +260,11 @@ export function registerCharacterSheet() {
 
         const tags = [
           {
-            label:
-              item.system.type.charAt(0).toUpperCase() +
-              item.system.type.slice(1),
+            label: item.system.type.charAt(0).toUpperCase() + item.system.type.slice(1),
             tagClass: "tag-orange",
           },
           {
-            label:
-              item.system.domain.charAt(0).toUpperCase() +
-              item.system.domain.slice(1),
+            label: item.system.domain.charAt(0).toUpperCase() + item.system.domain.slice(1),
             tagClass: "tag-orange",
           },
           {
@@ -382,28 +277,16 @@ export function registerCharacterSheet() {
           },
         ];
 
-        const enrichedDescription =
-          await foundry.applications.ux.TextEditor.enrichHTML(
-            item.system.description,
-            { relativeTo: item },
-          );
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item });
 
         return { item, tags, hopeCost, usesData, enrichedDescription };
       };
 
-      const sortedLoadout = (domainCards?.loadout || []).sort(
-        (a, b) => a.sort - b.sort,
-      );
-      const sortedVault = (domainCards?.vault || []).sort(
-        (a, b) => a.sort - b.sort,
-      );
+      const sortedLoadout = (domainCards?.loadout || []).sort((a, b) => a.sort - b.sort);
+      const sortedVault = (domainCards?.vault || []).sort((a, b) => a.sort - b.sort);
 
-      context.loadoutCards = await Promise.all(
-        sortedLoadout.map((item) => createDomainData(item)),
-      );
-      context.vaultCards = await Promise.all(
-        sortedVault.map((item) => createDomainData(item)),
-      );
+      context.loadoutCards = await Promise.all(sortedLoadout.map((item) => createDomainData(item)));
+      context.vaultCards = await Promise.all(sortedVault.map((item) => createDomainData(item)));
     }
 
     async _prepareInventoryData(context) {
@@ -434,11 +317,7 @@ export function registerCharacterSheet() {
           }
         }
 
-        const enrichedDescription =
-          await foundry.applications.ux.TextEditor.enrichHTML(
-            item.system.description,
-            { relativeTo: item },
-          );
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item });
 
         return { hopeCost, usesData, enrichedDescription };
       };
@@ -451,19 +330,9 @@ export function registerCharacterSheet() {
         if (attack?.damage?.parts?.length) {
           damage = attack.damage.parts
             .map((part) => {
-              const dice = part.value?.dice
-                ? `${proficiency}${part.value.dice}`
-                : "";
+              const dice = part.value?.dice ? `${proficiency}${part.value.dice}` : "";
               const bonus = part.value?.bonus ? ` + ${part.value.bonus}` : "";
-              const typeIcons = part.type
-                ? [...part.type]
-                    .map((t) =>
-                      t === "magical"
-                        ? '<i class="fa-solid fa-wand-sparkles"></i>'
-                        : '<i class="fa-solid fa-hand-fist"></i>',
-                    )
-                    .join(" ")
-                : "";
+              const typeIcons = part.type ? [...part.type].map((t) => (t === "magical" ? '<i class="fa-solid fa-wand-sparkles"></i>' : '<i class="fa-solid fa-hand-fist"></i>')).join(" ") : "";
               return `${dice}${bonus}&nbsp;&nbsp;${typeIcons}`;
             })
             .join(", ");
@@ -479,28 +348,19 @@ export function registerCharacterSheet() {
 
         const tags = [
           {
-            label: item.system.secondary
-              ? game.i18n.localize("DAGGERHEART.ITEMS.Weapon.secondaryWeapon")
-              : game.i18n.localize("DAGGERHEART.ITEMS.Weapon.primaryWeapon"),
+            label: item.system.secondary ? game.i18n.localize("DAGGERHEART.ITEMS.Weapon.secondaryWeapon") : game.i18n.localize("DAGGERHEART.ITEMS.Weapon.primaryWeapon"),
             tagClass: "tag-green",
           },
           {
-            label: attack?.roll?.trait
-              ? attack.roll.trait.charAt(0).toUpperCase() +
-                attack.roll.trait.slice(1)
-              : "",
+            label: attack?.roll?.trait ? attack.roll.trait.charAt(0).toUpperCase() + attack.roll.trait.slice(1) : "",
             tagClass: "tag-blue",
           },
           {
-            label: game.i18n.localize(
-              `DAGGERHEART.CONFIG.Range.${attack.range}.name`,
-            ),
+            label: game.i18n.localize(`DAGGERHEART.CONFIG.Range.${attack.range}.name`),
             tagClass: "tag-blue",
           },
           {
-            label: game.i18n.localize(
-              `DAGGERHEART.CONFIG.Burden.${item.system.burden}`,
-            ),
+            label: game.i18n.localize(`DAGGERHEART.CONFIG.Burden.${item.system.burden}`),
             tagClass: "tag-blue",
           },
           {
@@ -547,33 +407,15 @@ export function registerCharacterSheet() {
         return { item, tags: [], quantity: item.system.quantity, ...base };
       };
 
-      const weapons = this.actor.items
-        .filter((i) => i.type === "weapon")
-        .sort((a, b) => a.sort - b.sort);
-      const armors = this.actor.items
-        .filter((i) => i.type === "armor")
-        .sort((a, b) => a.sort - b.sort);
-      const consumables = this.actor.items
-        .filter((i) => i.type === "consumable")
-        .sort((a, b) => a.sort - b.sort);
-      const loots = this.actor.items
-        .filter((i) => i.type === "loot")
-        .sort((a, b) => a.sort - b.sort);
+      const weapons = this.actor.items.filter((i) => i.type === "weapon").sort((a, b) => a.sort - b.sort);
+      const armors = this.actor.items.filter((i) => i.type === "armor").sort((a, b) => a.sort - b.sort);
+      const consumables = this.actor.items.filter((i) => i.type === "consumable").sort((a, b) => a.sort - b.sort);
+      const loots = this.actor.items.filter((i) => i.type === "loot").sort((a, b) => a.sort - b.sort);
 
-      context.weapons = await Promise.all(
-        weapons.map((item) =>
-          createWeaponData(item, this.actor.system.proficiency),
-        ),
-      );
-      context.armors = await Promise.all(
-        armors.map((item) => createArmorData(item)),
-      );
-      context.consumables = await Promise.all(
-        consumables.map((item) => createConsumableData(item)),
-      );
-      context.loots = await Promise.all(
-        loots.map((item) => createLootData(item)),
-      );
+      context.weapons = await Promise.all(weapons.map((item) => createWeaponData(item, this.actor.system.proficiency)));
+      context.armors = await Promise.all(armors.map((item) => createArmorData(item)));
+      context.consumables = await Promise.all(consumables.map((item) => createConsumableData(item)));
+      context.loots = await Promise.all(loots.map((item) => createLootData(item)));
 
       if (this.actor.system.usedUnarmed) {
         const unarmed = this.actor.system.usedUnarmed;
@@ -594,15 +436,7 @@ export function registerCharacterSheet() {
                 dice = `${proficiency}${part.value.dice}`;
               }
               const bonus = part.value?.bonus ? ` + ${part.value.bonus}` : "";
-              const typeIcons = part.type
-                ? [...part.type]
-                    .map((t) =>
-                      t === "magical"
-                        ? '<i class="fa-solid fa-wand-sparkles"></i>'
-                        : '<i class="fa-solid fa-hand-fist"></i>',
-                    )
-                    .join(" ")
-                : "";
+              const typeIcons = part.type ? [...part.type].map((t) => (t === "magical" ? '<i class="fa-solid fa-wand-sparkles"></i>' : '<i class="fa-solid fa-hand-fist"></i>')).join(" ") : "";
               return `${dice}${bonus}&nbsp;&nbsp;${typeIcons}`;
             })
             .join(", ");
@@ -610,9 +444,7 @@ export function registerCharacterSheet() {
 
         context.unarmedAttack = {
           item: {
-            name: game.i18n.localize(
-              unarmed.name || "DAGGERHEART.GENERAL.unarmedAttack",
-            ),
+            name: game.i18n.localize(unarmed.name || "DAGGERHEART.GENERAL.unarmedAttack"),
             img: unarmed.img,
             uuid: "unarmed-attack",
             system: {
@@ -676,11 +508,7 @@ export function registerCharacterSheet() {
           });
         }
 
-        const isTemporary =
-          effect.isTemporary ||
-          effect.duration?.rounds != null ||
-          (effect.duration?.seconds != null && effect.duration.seconds > 0) ||
-          effect.duration?.turns != null;
+        const isTemporary = effect.isTemporary || effect.duration?.rounds != null || (effect.duration?.seconds != null && effect.duration.seconds > 0) || effect.duration?.turns != null;
 
         resourceTags.push({
           label: isTemporary ? "Temporary" : "Passive",
@@ -692,10 +520,9 @@ export function registerCharacterSheet() {
         if (description && /^[A-Z][A-Z_]+\./.test(description)) {
           description = game.i18n.localize(description);
         }
-        const enrichedDescription =
-          await foundry.applications.ux.TextEditor.enrichHTML(description, {
-            relativeTo: effect,
-          });
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(description, {
+          relativeTo: effect,
+        });
 
         return { item: effect, infoTags, resourceTags, enrichedDescription };
       };
@@ -704,12 +531,8 @@ export function registerCharacterSheet() {
       const activeEffects = allEffects.filter((e) => !e.disabled);
       const inactiveEffects = allEffects.filter((e) => e.disabled);
 
-      context.activeEffects = await Promise.all(
-        activeEffects.map((effect) => createEffectData(effect)),
-      );
-      context.inactiveEffects = await Promise.all(
-        inactiveEffects.map((effect) => createEffectData(effect)),
-      );
+      context.activeEffects = await Promise.all(activeEffects.map((effect) => createEffectData(effect)));
+      context.inactiveEffects = await Promise.all(inactiveEffects.map((effect) => createEffectData(effect)));
     }
 
     async _prepareBiographyData(context) {
@@ -735,8 +558,7 @@ export function registerCharacterSheet() {
     }
 
     async _prepareQuickAccessData(context) {
-      const quickAccessUuids =
-        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const quickAccessUuids = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
       const quickAccessItems = [];
 
       for (const uuid of quickAccessUuids) {
@@ -755,19 +577,13 @@ export function registerCharacterSheet() {
         } else if (item.type === "armor") {
           itemData = context.armors?.find((a) => a.item.uuid === uuid);
         } else if (item.type === "domainCard") {
-          itemData =
-            context.loadoutCards?.find((c) => c.item.uuid === uuid) ||
-            context.vaultCards?.find((c) => c.item.uuid === uuid);
+          itemData = context.loadoutCards?.find((c) => c.item.uuid === uuid) || context.vaultCards?.find((c) => c.item.uuid === uuid);
         } else if (item.type === "consumable") {
           itemData = context.consumables?.find((c) => c.item.uuid === uuid);
         } else if (item.type === "loot") {
           itemData = context.loots?.find((l) => l.item.uuid === uuid);
         } else if (item.type === "feature") {
-          itemData =
-            context.heritageFeatures?.find((f) => f.item.uuid === uuid) ||
-            context.classFeatures?.find((f) => f.item.uuid === uuid) ||
-            context.multiclassFeatures?.find((f) => f.item.uuid === uuid) ||
-            context.extraFeatures?.find((f) => f.item.uuid === uuid);
+          itemData = context.heritageFeatures?.find((f) => f.item.uuid === uuid) || context.classFeatures?.find((f) => f.item.uuid === uuid) || context.multiclassFeatures?.find((f) => f.item.uuid === uuid) || context.extraFeatures?.find((f) => f.item.uuid === uuid);
         }
 
         if (itemData) {
@@ -787,9 +603,7 @@ export function registerCharacterSheet() {
       // Only remove tooltips when hovering nothing
       this.element.addEventListener("mousemove", (e) => {
         const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-        const isOverTooltipTrigger = hoveredElement?.closest(
-          "[data-tooltip], [data-tooltip-text]",
-        );
+        const isOverTooltipTrigger = hoveredElement?.closest("[data-tooltip], [data-tooltip-text]");
 
         if (!isOverTooltipTrigger) {
           const tooltip = document.querySelector(".tooltip.active");
@@ -797,10 +611,7 @@ export function registerCharacterSheet() {
         }
       });
 
-      const tabsPosition = game.settings.get(
-        "daggerheart-sleek-ui",
-        "tabsPosition",
-      );
+      const tabsPosition = game.settings.get("daggerheart-sleek-ui", "tabsPosition");
 
       if (tabsPosition === "floating") {
         if (!this.floatingTabs) {
@@ -842,14 +653,10 @@ export function registerCharacterSheet() {
       if (!mainSheet) return;
 
       this.openCards.forEach((uuid) => {
-        const header = mainSheet.querySelector(
-          `.card-container.header[data-item-uuid="${uuid}"]`,
-        );
+        const header = mainSheet.querySelector(`.card-container.header[data-item-uuid="${uuid}"]`);
         if (header) {
           const cardWrapper = header.closest(".card-wrapper");
-          const description = cardWrapper?.querySelector(
-            ".card-container.description",
-          );
+          const description = cardWrapper?.querySelector(".card-container.description");
           if (description) {
             description.style.display = "flex";
           }
@@ -860,9 +667,7 @@ export function registerCharacterSheet() {
     _restoreCompactCardHover() {
       if (!this.hoveredCompactCard) return;
 
-      const card = this.element.querySelector(
-        `.compact.card-wrapper[data-item-uuid="${this.hoveredCompactCard}"]`,
-      );
+      const card = this.element.querySelector(`.compact.card-wrapper[data-item-uuid="${this.hoveredCompactCard}"]`);
       if (!card) return;
 
       const hoverArea = card.querySelector(".hover-area");
@@ -902,9 +707,7 @@ export function registerCharacterSheet() {
     }
 
     _attachCompactCardHoverListeners(htmlElement) {
-      const compactCards = htmlElement.querySelectorAll(
-        ".compact.card-wrapper",
-      );
+      const compactCards = htmlElement.querySelectorAll(".compact.card-wrapper");
 
       compactCards.forEach((card) => {
         const hoverArea = card.querySelector(".hover-area");
@@ -968,9 +771,7 @@ export function registerCharacterSheet() {
         });
       });
 
-      const resourcePips = htmlElement.querySelectorAll(
-        '[data-action="toggleResource"]',
-      );
+      const resourcePips = htmlElement.querySelectorAll('[data-action="toggleResource"]');
       resourcePips.forEach((element) => {
         element.addEventListener("click", (event) => {
           this.constructor._onToggleResource.call(this, event, element);
@@ -981,9 +782,7 @@ export function registerCharacterSheet() {
         });
       });
 
-      const resourceModifiers = htmlElement.querySelectorAll(
-        '[data-action="modifyResource"]',
-      );
+      const resourceModifiers = htmlElement.querySelectorAll('[data-action="modifyResource"]');
       resourceModifiers.forEach((element) => {
         element.addEventListener("contextmenu", (event) => {
           this.constructor._onModifyResource.call(this, event, element);
@@ -995,8 +794,7 @@ export function registerCharacterSheet() {
       const usesResources = htmlElement.querySelectorAll(".uses-resource");
       usesResources.forEach((element) => {
         element.addEventListener("click", async (event) => {
-          const itemUuid =
-            element.closest("[data-item-uuid]")?.dataset.itemUuid;
+          const itemUuid = element.closest("[data-item-uuid]")?.dataset.itemUuid;
           const actionId = element.dataset.actionId;
 
           if (!itemUuid || !actionId) return;
@@ -1017,8 +815,7 @@ export function registerCharacterSheet() {
             event.preventDefault();
             event.stopImmediatePropagation();
 
-            const itemUuid =
-              element.closest("[data-item-uuid]")?.dataset.itemUuid;
+            const itemUuid = element.closest("[data-item-uuid]")?.dataset.itemUuid;
             const actionId = element.dataset.actionId;
 
             if (!itemUuid || !actionId) return;
@@ -1086,8 +883,7 @@ export function registerCharacterSheet() {
           const item = await fromUuid(itemUuid);
           if (!item) return;
 
-          const dieFaces =
-            parseInt(element.dataset.dieFaces.replace("d", "")) || 6;
+          const dieFaces = parseInt(element.dataset.dieFaces.replace("d", "")) || 6;
           const currentValue = item.system.resource.value || 0;
           const newValue = (currentValue + 1) % (dieFaces + 1);
 
@@ -1124,8 +920,7 @@ export function registerCharacterSheet() {
           diceValue.addEventListener("click", async (event) => {
             event.stopPropagation();
 
-            const itemUuid =
-              diceValue.closest("[data-item-uuid]")?.dataset.itemUuid;
+            const itemUuid = diceValue.closest("[data-item-uuid]")?.dataset.itemUuid;
             const item = await fromUuid(itemUuid);
             const diceIndex = diceValue.dataset.dice;
             const currentState = item.system.resource.diceStates[diceIndex];
@@ -1133,8 +928,7 @@ export function registerCharacterSheet() {
             if (!currentState) return;
 
             await item.update({
-              [`system.resource.diceStates.${diceIndex}.used`]:
-                !currentState.used,
+              [`system.resource.diceStates.${diceIndex}.used`]: !currentState.used,
             });
           });
         });
@@ -1142,29 +936,18 @@ export function registerCharacterSheet() {
     }
 
     _attachCardListeners(htmlElement) {
-      const cardNameContainers = htmlElement.querySelectorAll(
-        ".card-text, .card-resource",
-      );
+      const cardNameContainers = htmlElement.querySelectorAll(".card-text, .card-resource");
       cardNameContainers.forEach((nameContainer) => {
         nameContainer.addEventListener("click", (event) => {
-          if (
-            event.target.closest(
-              '.card-controls, [data-action="useItem"], .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource',
-            )
-          ) {
+          if (event.target.closest('.card-controls, [data-action="useItem"], .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource')) {
             return;
           }
           const cardWrapper = nameContainer.closest(".card-wrapper");
           if (!cardWrapper) return;
-          const description = cardWrapper.querySelector(
-            ".card-container.description",
-          );
-          const itemUuid =
-            nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
+          const description = cardWrapper.querySelector(".card-container.description");
+          const itemUuid = nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
           if (description && itemUuid) {
-            const isCurrentlyHidden =
-              description.style.display === "none" ||
-              !description.style.display;
+            const isCurrentlyHidden = description.style.display === "none" || !description.style.display;
             description.style.display = isCurrentlyHidden ? "flex" : "none";
             if (isCurrentlyHidden) {
               this.openCards.add(itemUuid);
@@ -1194,20 +977,13 @@ export function registerCharacterSheet() {
           const maxStress = this.actor.system.resources.stress.max;
 
           if (currentStress + recallCost > maxStress) {
-            ui.notifications.warn(
-              `${game.i18n.localize("DAGGERHEART.UI.Notifications.notEnoughStress")}`,
-            );
+            ui.notifications.warn(`${game.i18n.localize("DAGGERHEART.UI.Notifications.notEnoughStress")}`);
             return;
           }
 
           const loadoutSlot = this.actor.system.loadoutSlot;
-          if (
-            loadoutSlot.max !== null &&
-            loadoutSlot.current >= loadoutSlot.max
-          ) {
-            ui.notifications.warn(
-              `${game.i18n.localize("DAGGERHEART.UI.Notifications.loadoutMaxReached")}`,
-            );
+          if (loadoutSlot.max !== null && loadoutSlot.current >= loadoutSlot.max) {
+            ui.notifications.warn(`${game.i18n.localize("DAGGERHEART.UI.Notifications.loadoutMaxReached")}`);
             return;
           }
 
@@ -1234,11 +1010,7 @@ export function registerCharacterSheet() {
             if (!action) return;
 
             const config = action.prepareConfig(event);
-            config.effects =
-              await game.system.api.data.actions.actionsTypes.base.getEffects(
-                this.actor,
-                null,
-              );
+            config.effects = await game.system.api.data.actions.actionsTypes.base.getEffects(this.actor, null);
             config.hasRoll = false;
             action.workflow.get("damage").execute(config, null, true);
             return;
@@ -1249,11 +1021,7 @@ export function registerCharacterSheet() {
 
           const action = item.system.attack;
           const config = action.prepareConfig(event);
-          config.effects =
-            await game.system.api.data.actions.actionsTypes.base.getEffects(
-              this.actor,
-              item,
-            );
+          config.effects = await game.system.api.data.actions.actionsTypes.base.getEffects(this.actor, item);
           config.hasRoll = false;
           action.workflow.get("damage").execute(config, null, true);
         });
@@ -1307,8 +1075,7 @@ export function registerCharacterSheet() {
     static async _onToggleHope(event, target) {
       const clickedValue = parseInt(target.dataset.value);
       const currentHope = this.actor.system.resources.hope.value;
-      const newHope =
-        clickedValue === currentHope ? currentHope - 1 : clickedValue;
+      const newHope = clickedValue === currentHope ? currentHope - 1 : clickedValue;
       await this.actor.update({ "system.resources.hope.value": newHope });
     }
 
@@ -1323,17 +1090,12 @@ export function registerCharacterSheet() {
 
       const currentValue = foundry.utils.getProperty(this.actor, resource);
       const maxPath = resource.replace(".value", ".max");
-      const maxValue =
-        resource === "system.armor.system.marks.value"
-          ? this.actor.system.armorScore
-          : foundry.utils.getProperty(this.actor, maxPath);
+      const maxValue = resource === "system.armor.system.marks.value" ? this.actor.system.armorScore : foundry.utils.getProperty(this.actor, maxPath);
 
       const newValue = Math.max(0, Math.min(maxValue, currentValue + amount));
 
       if (resource === "system.armor.system.marks.value") {
-        await this.actor.items
-          .get(this.actor.system.armor._id)
-          .update({ "system.marks.value": newValue });
+        await this.actor.items.get(this.actor.system.armor._id).update({ "system.marks.value": newValue });
       } else {
         await this.actor.update({ [resource]: newValue });
       }
@@ -1343,8 +1105,7 @@ export function registerCharacterSheet() {
       const resource = target.dataset.resource;
       const clickedValue = parseInt(target.dataset.value);
       const currentValue = foundry.utils.getProperty(this.actor, resource);
-      const newValue =
-        clickedValue === currentValue ? currentValue - 1 : clickedValue;
+      const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
 
       if (resource === "system.armor.system.marks.value") {
         await this.actor.items.get(this.actor.system.armor._id).update({
@@ -1376,15 +1137,11 @@ export function registerCharacterSheet() {
           this.collapsedCategories.splice(index, 1);
         }
       }
-      this.actor.setFlag("daggerheart-sleek-ui", "collapsedCategories", [
-        ...this.collapsedCategories,
-      ]);
+      this.actor.setFlag("daggerheart-sleek-ui", "collapsedCategories", [...this.collapsedCategories]);
     }
 
     static async _onUseAction(event, target) {
-      const itemUuid =
-        target.dataset.itemUuid ||
-        target.closest("[data-item-uuid]")?.dataset.itemUuid;
+      const itemUuid = target.dataset.itemUuid || target.closest("[data-item-uuid]")?.dataset.itemUuid;
       const actionId = target.dataset.actionId;
 
       if (!itemUuid || !actionId) return;
@@ -1443,17 +1200,13 @@ export function registerCharacterSheet() {
       if (data && data.type === "Divider") {
         const quickAccessArea = event.target.closest(".favorites-list");
         const container = quickAccessArea?.closest(".favorites-container");
-        const isQuickAccess =
-          container
-            ?.querySelector(".favorites-header h3")
-            ?.textContent.trim() === "Quick Access";
+        const isQuickAccess = container?.querySelector(".favorites-header h3")?.textContent.trim() === "Quick Access";
 
         if (quickAccessArea && isQuickAccess) {
           event.preventDefault();
           event.stopPropagation();
 
-          const quickAccessItems =
-            this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+          const quickAccessItems = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
           const draggedUuid = data.uuid;
 
           const dropTarget = event.target.closest(".compact.card-wrapper");
@@ -1470,11 +1223,7 @@ export function registerCharacterSheet() {
           quickAccessItems.splice(currentIndex, 1);
           quickAccessItems.splice(targetIndex, 0, draggedUuid);
 
-          await this.actor.setFlag(
-            "daggerheart-sleek-ui",
-            "quickAccess",
-            quickAccessItems,
-          );
+          await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", quickAccessItems);
           return false;
         }
       }
@@ -1488,16 +1237,13 @@ export function registerCharacterSheet() {
 
       const quickAccessArea = event.target.closest(".favorites-list");
       const container = quickAccessArea?.closest(".favorites-container");
-      const isQuickAccess =
-        container?.querySelector(".favorites-header h3")?.textContent.trim() ===
-        "Quick Access";
+      const isQuickAccess = container?.querySelector(".favorites-header h3")?.textContent.trim() === "Quick Access";
 
       if (quickAccessArea && isQuickAccess) {
         event.preventDefault();
         event.stopPropagation();
 
-        const quickAccessItems =
-          this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+        const quickAccessItems = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
         const draggedUuid = item?.uuid || data.uuid;
 
         if (quickAccessItems.includes(draggedUuid)) {
@@ -1515,11 +1261,7 @@ export function registerCharacterSheet() {
           quickAccessItems.splice(currentIndex, 1);
           quickAccessItems.splice(targetIndex, 0, draggedUuid);
 
-          await this.actor.setFlag(
-            "daggerheart-sleek-ui",
-            "quickAccess",
-            quickAccessItems,
-          );
+          await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", quickAccessItems);
           return false;
         }
 
@@ -1537,11 +1279,7 @@ export function registerCharacterSheet() {
           quickAccessItems.push(item.uuid);
         }
 
-        await this.actor.setFlag(
-          "daggerheart-sleek-ui",
-          "quickAccess",
-          quickAccessItems,
-        );
+        await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", quickAccessItems);
         return false;
       }
 
@@ -1558,9 +1296,7 @@ export function registerCharacterSheet() {
 
         if (item.type !== targetItem.type) return;
 
-        const siblings = this.actor.items
-          .filter((i) => i.type === item.type)
-          .sort((a, b) => a.sort - b.sort);
+        const siblings = this.actor.items.filter((i) => i.type === item.type).sort((a, b) => a.sort - b.sort);
 
         const draggedIndex = siblings.indexOf(item);
         const targetIndex = siblings.indexOf(targetItem);
@@ -1585,15 +1321,11 @@ export function registerCharacterSheet() {
         const sourceActor = item.parent;
 
         const itemData = item.toObject();
-        const createdItems = await this.actor.createEmbeddedDocuments("Item", [
-          itemData,
-        ]);
+        const createdItems = await this.actor.createEmbeddedDocuments("Item", [itemData]);
 
         if (createdItems && createdItems.length > 0) {
           await sourceActor.deleteEmbeddedDocuments("Item", [sourceItem.id]);
-          ui.notifications.info(
-            `Transferred ${sourceItem.name} to ${this.actor.name}`,
-          );
+          ui.notifications.info(`Transferred ${sourceItem.name} to ${this.actor.name}`);
         }
 
         return false;
@@ -1603,11 +1335,7 @@ export function registerCharacterSheet() {
     }
 
     static async _onNavigateToCard(event, target) {
-      if (
-        event.target.closest(
-          ".hover-area, .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource",
-        )
-      ) {
+      if (event.target.closest(".hover-area, .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource")) {
         return;
       }
 
@@ -1623,12 +1351,7 @@ export function registerCharacterSheet() {
 
       if (itemType === "domainCard") {
         targetTab = "loadout";
-      } else if (
-        itemType === "weapon" ||
-        itemType === "armor" ||
-        itemType === "consumable" ||
-        itemType === "loot"
-      ) {
+      } else if (itemType === "weapon" || itemType === "armor" || itemType === "consumable" || itemType === "loot") {
         targetTab = "inventory";
       } else if (itemType === "feature") {
         targetTab = "features";
@@ -1654,25 +1377,18 @@ export function registerCharacterSheet() {
       } else {
         const mainSheet = this.element.querySelector(".tab-content");
         if (mainSheet) {
-          mainSheet
-            .querySelectorAll(".card-container.description")
-            .forEach((desc) => {
-              const wrapper = desc.closest(".card-wrapper");
-              const uuid =
-                wrapper?.querySelector("[data-item-uuid]")?.dataset.itemUuid;
-              if (uuid !== itemUuid) {
-                desc.style.display = "none";
-              }
-            });
+          mainSheet.querySelectorAll(".card-container.description").forEach((desc) => {
+            const wrapper = desc.closest(".card-wrapper");
+            const uuid = wrapper?.querySelector("[data-item-uuid]")?.dataset.itemUuid;
+            if (uuid !== itemUuid) {
+              desc.style.display = "none";
+            }
+          });
 
-          const targetHeader = mainSheet.querySelector(
-            `.card-container.header[data-item-uuid="${itemUuid}"]`,
-          );
+          const targetHeader = mainSheet.querySelector(`.card-container.header[data-item-uuid="${itemUuid}"]`);
           if (targetHeader) {
             const cardWrapper = targetHeader.closest(".card-wrapper");
-            const description = cardWrapper?.querySelector(
-              ".card-container.description",
-            );
+            const description = cardWrapper?.querySelector(".card-container.description");
             if (description) {
               description.style.display = "flex";
             }
@@ -1685,9 +1401,7 @@ export function registerCharacterSheet() {
       const mainSheet = this.element.querySelector(".tab-content");
       if (!mainSheet) return;
 
-      const originalCard = mainSheet.querySelector(
-        `.card-container.header[data-item-uuid="${itemUuid}"]`,
-      );
+      const originalCard = mainSheet.querySelector(`.card-container.header[data-item-uuid="${itemUuid}"]`);
       if (!originalCard) return;
 
       const cardWrapper = originalCard.closest(".card-wrapper");
@@ -1718,8 +1432,7 @@ export function registerCharacterSheet() {
       const itemUuid = target.dataset.itemUuid;
       if (!itemUuid) return;
 
-      const quickAccessItems =
-        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const quickAccessItems = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
 
       if (quickAccessItems.includes(itemUuid)) {
         ui.notifications.warn("Item is already in Quick Access");
@@ -1727,35 +1440,25 @@ export function registerCharacterSheet() {
       }
 
       quickAccessItems.push(itemUuid);
-      await this.actor.setFlag(
-        "daggerheart-sleek-ui",
-        "quickAccess",
-        quickAccessItems,
-      );
+      await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", quickAccessItems);
     }
 
     static async _onRemoveFromQuickAccess(event, target) {
       const itemUuid = target.dataset.itemUuid;
       if (!itemUuid) return;
 
-      const quickAccessItems =
-        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const quickAccessItems = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
       const filtered = quickAccessItems.filter((uuid) => uuid !== itemUuid);
 
       await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", filtered);
     }
 
     static async _onAddQuickAccessDivider(event, target) {
-      const quickAccessItems =
-        this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
+      const quickAccessItems = this.actor.getFlag("daggerheart-sleek-ui", "quickAccess") || [];
       const dividerUuid = `divider-${foundry.utils.randomID()}`;
 
       quickAccessItems.unshift(dividerUuid);
-      await this.actor.setFlag(
-        "daggerheart-sleek-ui",
-        "quickAccess",
-        quickAccessItems,
-      );
+      await this.actor.setFlag("daggerheart-sleek-ui", "quickAccess", quickAccessItems);
     }
 
     static async _onCancelBeastform(event, target) {
@@ -1769,9 +1472,7 @@ export function registerCharacterSheet() {
 
       if (!item) return;
 
-      game.system.api.fields.ActionFields.BeastformField.handleActiveTransformations.call(
-        item,
-      );
+      game.system.api.fields.ActionFields.BeastformField.handleActiveTransformations.call(item);
     }
 
     static async _onUseUnarmedAttack(event, target) {
@@ -1791,8 +1492,7 @@ export function registerCharacterSheet() {
 
     async render(options = {}, _options = {}) {
       if (this.actor.limited && !this.actor.isOwner) {
-        const systemSheet =
-          CONFIG.Actor.sheetClasses.character["daggerheart.CharacterSheet"];
+        const systemSheet = CONFIG.Actor.sheetClasses.character["daggerheart.CharacterSheet"];
         if (systemSheet) {
           const defaultSheet = new systemSheet.cls({ document: this.actor });
           return defaultSheet.render(true, _options);
@@ -1802,16 +1502,11 @@ export function registerCharacterSheet() {
     }
   }
 
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(
-    Actor,
-    "daggerheart",
-    SleekCharacterSheet,
-    {
-      types: ["character"],
-      makeDefault: true,
-      label: "DH Sleek UI",
-    },
-  );
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekCharacterSheet, {
+    types: ["character"],
+    makeDefault: true,
+    label: "DH Sleek UI",
+  });
 
   Hooks.on("preCreateItem", async (item, data, options, userId) => {
     if (!SleekCharacterSheet.draggedItem) return;
@@ -1819,21 +1514,14 @@ export function registerCharacterSheet() {
 
     const dragData = SleekCharacterSheet.draggedItem;
 
-    if (
-      item.parent?.type === "character" &&
-      item.parent?.id !== dragData.actorId
-    ) {
+    if (item.parent?.type === "character" && item.parent?.id !== dragData.actorId) {
       setTimeout(async () => {
         const sourceActor = game.actors.get(dragData.actorId);
         if (sourceActor) {
           const sourceItem = sourceActor.items.get(dragData.itemId);
           if (sourceItem) {
-            await sourceActor.deleteEmbeddedDocuments("Item", [
-              dragData.itemId,
-            ]);
-            ui.notifications.info(
-              `Transferred ${dragData.itemName} from ${sourceActor.name}`,
-            );
+            await sourceActor.deleteEmbeddedDocuments("Item", [dragData.itemId]);
+            ui.notifications.info(`Transferred ${dragData.itemName} from ${sourceActor.name}`);
           }
         }
 

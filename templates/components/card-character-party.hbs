@@ -1,0 +1,216 @@
+<div class="card-wrapper character-party">
+
+  <div class="card-container header character-party-header" data-actor-uuid="{{actorUuid}}">
+
+    <div class="character-party-icon">
+      <img class="icon" src="{{actor.img}}" />
+    </div>
+
+    <div class="card-header character-party-details">
+
+      <div class="card-text">
+        <h1 class="character-name">{{actor.name}}</h1>
+        {{#if (gte ownershipLevel 1)}}
+          <div class="character-tags">
+            {{!-- CLASS --}}
+            {{#if actor.system.class.value}}
+            <span class="tag tag-green">
+              <span>{{actor.system.class.value.name}}</span>
+            </span>
+            {{/if}}
+
+            {{!-- SUBCLASS --}}
+            {{#if actor.system.class.subclass}}
+            <span class="tag tag-green">
+              <span>{{actor.system.class.subclass.name}}</span>
+            </span>
+            {{/if}}
+
+            {{!-- MULTICLASS --}}
+            {{#if actor.system.multiclass.value}}
+            <span class="tag tag-blue">
+              <span>{{actor.system.multiclass.value.name}}</span>
+            </span>
+            {{/if}}
+
+            {{!-- MULTICLASS SUBCLASS --}}
+            {{#if actor.system.multiclass.subclass}}
+            <span class="tag tag-blue">
+              <span>{{actor.system.multiclass.subclass.name}}</span>
+            </span>
+            {{/if}}
+
+            {{!-- COMMUNITY --}}
+            {{#if actor.system.community}}
+            <span class="tag tag-orange">
+              <span>{{actor.system.community.name}}</span>
+            </span>
+            {{/if}}
+
+            {{!-- ANCESTRY --}}
+            {{#if actor.system.ancestry}}
+            <span class="tag tag-purple">
+              <span>{{actor.system.ancestry.name}}</span>
+            </span>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="card-controls party-controls">
+        {{#if (gte ownershipLevel 1)}}
+          <a data-action="openMemberSheet" data-actor-uuid="{{actorUuid}}" data-tooltip="Open Character Sheet">
+            <i class="fa-solid fa-user"></i>
+          </a>
+        {{/if}}
+        {{#if (gte ownershipLevel 3)}}
+          <a data-action="deletePartyMember" data-actor-uuid="{{actorUuid}}" data-tooltip="Remove from Party">
+            <i class="fa-solid fa-trash"></i>
+          </a>
+        {{/if}}
+      </div>
+
+    </div>
+
+  </div>
+
+  {{#if (gte ownershipLevel 2)}}
+  <div class="card-container description">
+    <span class="separator-line"></span>
+    <div class="character-party-information">
+      <div class="hope-domains-rest-row">
+
+        {{!-- HOPE --}}
+        <div class="hope-container">
+          <h3 data-action="modifyResource" data-actor-uuid="{{actorUuid}}" data-resource="hope.value" data-amount="1">
+            {{localize "DAGGERHEART.GENERAL.hope"}}</h3>
+          <span class="hope-bar">
+            {{#times hope.max}}
+            <span class='hope-value' data-action='toggleHope' data-actor-uuid="{{../actorUuid}}"
+              data-value="{{add this 1}}">
+              {{#if (gte ../hope.value (add this 1))}}
+              <div class="hope-icon-full"></div>
+              {{else}}
+              <div class="hope-icon-empty"></div>
+              {{/if}}
+            </span>
+            {{/times}}
+          </span>
+        </div>
+        <span class="separator"></span>
+
+        {{!-- DOMAINS --}}
+        {{#if actor.system.class.value}}
+        <div class="domains-container">
+          {{#each actor.system.domainData as |data|}}
+          <div class="domain">
+            <img src="{{data.src}}" alt="" data-tooltip="{{data.label}}" />
+          </div>
+          {{/each}}
+        </div>
+        {{/if}}
+
+        {{!-- LEVEL --}}
+        <div class="values-row level">
+          <div class="values-container level">
+            <h3>{{localize "DAGGERHEART.GENERAL.level"}}</h3>
+            <span class="value-number">{{level}}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="values-row">
+        {{!-- EVASION --}}
+        <div class="values-container evasion">
+          <h3>{{localize "DAGGERHEART.GENERAL.evasion"}}</h3>
+          <span class="value-number">{{evasion}}</span>
+        </div>
+        {{!-- THRESHOLDS --}}
+        <div class="values-container thresholds">
+          <h3 class="threshold-damage" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="hitPoints.value" data-amount="1">
+            {{localize "DAGGERHEART.GENERAL.DamageThresholds.minor"}}
+          </h3>
+
+          <span class="value-number">{{damageThresholds.major}}</span>
+
+          <h3 class="threshold-damage" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="hitPoints.value" data-amount="2">
+            {{localize "DAGGERHEART.GENERAL.DamageThresholds.major"}}
+          </h3>
+
+          <span class="value-number">{{damageThresholds.severe}}</span>
+
+          <h3 class="threshold-damage" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="hitPoints.value" data-amount="3">
+            {{localize "DAGGERHEART.GENERAL.DamageThresholds.severe"}}
+          </h3>
+        </div>
+        {{!-- PROFICIENCY --}}
+        <div class="values-container proficiency">
+          <h3>{{localize "DAGGERHEART.GENERAL.proficiency"}}</h3>
+          <span class="value-number">{{proficiency}}</span>
+        </div>
+      </div>
+
+      <div class="resources-row">
+        {{#if hitPoints.max}}
+        {{!-- HIT POINTS --}}
+        <div class="resource-container">
+          <div class="resource-header" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="hitPoints.value" data-amount="1">
+            <h3>{{localize "DAGGERHEART.GENERAL.HitPoints.plural"}}</h3>
+            <span class="resource-number">{{hitPoints.value}} / {{hitPoints.max}}</span>
+          </div>
+          <div class="resource-bar">
+            {{#times hitPoints.max}}
+            <div
+              class="resource-pip pip-hitpoints {{#if (gte ../hitPoints.value (add this 1))}}filled{{else}}empty{{/if}}"
+              data-action="toggleHitPoints" data-actor-uuid="{{../actorUuid}}" data-value="{{add this 1}}">
+            </div>
+            {{/times}}
+          </div>
+        </div>
+        {{/if}}
+        {{!-- STRESS --}}
+        {{#if stress.max}}
+        <div class="resource-container">
+          <div class="resource-header" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="stress.value" data-amount="1">
+            <h3>{{localize "DAGGERHEART.GENERAL.stress"}}</h3>
+            <span class="resource-number">{{stress.value}} / {{stress.max}}</span>
+          </div>
+          <div class="resource-bar">
+            {{#times stress.max}}
+            <div class="resource-pip pip-stress {{#if (gte ../stress.value (add this 1))}}filled{{else}}empty{{/if}}"
+              data-action="toggleStress" data-actor-uuid="{{../actorUuid}}" data-value="{{add this 1}}">
+            </div>
+            {{/times}}
+          </div>
+        </div>
+        {{/if}}
+        {{!-- ARMOR --}}
+        {{#if armorSlots.itemUuid}}
+        <div class="resource-container">
+          <div class="resource-header" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
+            data-resource="armorSlots" data-amount="1">
+            <h3>{{localize "DAGGERHEART.GENERAL.armorSlots"}}</h3>
+            <span class="resource-number">{{armorSlots.value}} / {{armorSlots.max}}</span>
+          </div>
+          <div class="resource-bar">
+            {{#times armorSlots.max}}
+            <div class="resource-pip pip-armor {{#if (gte ../armorSlots.value (add this 1))}}filled{{else}}empty{{/if}}"
+              data-action="toggleArmorSlot" data-item-uuid="{{../armorSlots.itemUuid}}" data-value="{{add this 1}}">
+            </div>
+            {{/times}}
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+
+  </div>
+  {{/if}}
+
+</div>

@@ -1,0 +1,15 @@
+<div class="tabs members-tab">
+  {{#each partyMembersData as |memberData|}}
+    {{> "modules/daggerheart-sleek-ui/templates/components/card-character-party.hbs"
+        actor=memberData.actor
+        actorUuid=memberData.actorUuid
+        level=memberData.level
+        hope=memberData.hope
+        hitPoints=memberData.hitPoints
+        stress=memberData.stress
+        armorSlots=memberData.armorSlots
+        evasion=memberData.evasion
+        proficiency=memberData.proficiency
+        damageThresholds=memberData.damageThresholds}}
+  {{/each}}
+</div>

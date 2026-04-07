@@ -1,4 +1,4 @@
-import { FloatingTabs } from "./floating-tabs.js";
+import { FloatingTabs } from "../floating-tabs.js";
 
 export function registerAdversarySheet() {
   if (game.system.id !== "daggerheart") return;
@@ -18,13 +18,7 @@ export function registerAdversarySheet() {
     static DEFAULT_OPTIONS = foundry.utils.mergeObject(
       super.DEFAULT_OPTIONS,
       {
-        classes: [
-          "daggerheart",
-          "sheet",
-          "actor",
-          "sleek-ui",
-          "sleek-adversary",
-        ],
+        classes: ["daggerheart", "sheet", "actor", "sleek-ui", "sleek-adversary"],
         window: { controls: [] },
         position: { width: 750, height: 750 },
         actions: {
@@ -37,16 +31,13 @@ export function registerAdversarySheet() {
 
     static PARTS = {
       sidebar: {
-        template:
-          "modules/daggerheart-sleek-ui/templates/adversaries/adversary-sheet-sidebar.hbs",
+        template: "modules/daggerheart-sleek-ui/templates/sheets/adversaries/adversary-sheet-sidebar.hbs",
       },
       mainSheet: {
-        template:
-          "modules/daggerheart-sleek-ui/templates/adversaries/adversary-sheet-main.hbs",
+        template: "modules/daggerheart-sleek-ui/templates/sheets/adversaries/adversary-sheet-main.hbs",
       },
       limited: {
-        template:
-          "systems/daggerheart/templates/sheets/actors/character/limited.hbs", // Use system's limited template
+        template: "systems/daggerheart/templates/sheets/actors/character/limited.hbs", // Use system's limited template
       },
     };
 
@@ -61,14 +52,8 @@ export function registerAdversarySheet() {
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
 
-      context.tabsPosition = game.settings.get(
-        "daggerheart-sleek-ui",
-        "tabsPosition",
-      );
-      context.showTooltip = game.settings.get(
-        "daggerheart-sleek-ui",
-        "showTooltip",
-      );
+      context.tabsPosition = game.settings.get("daggerheart-sleek-ui", "tabsPosition");
+      context.showTooltip = game.settings.get("daggerheart-sleek-ui", "showTooltip");
 
       await this._prepareNotesContext(context, options);
 
@@ -97,18 +82,12 @@ export function registerAdversarySheet() {
 
       context.tabs = this.tabs;
 
-      context.currentFear = game.settings.get(
-        CONFIG.DH.id,
-        CONFIG.DH.SETTINGS.gameSettings.Resources.Fear,
-      );
+      context.currentFear = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Resources.Fear);
 
-      context.hasExperiences =
-        Object.keys(this.actor.system.experiences ?? {}).length > 0;
+      context.hasExperiences = Object.keys(this.actor.system.experiences ?? {}).length > 0;
 
       if (options.isFirstRender && !this.collapsedCategories) {
-        this.collapsedCategories =
-          this.actor.getFlag("daggerheart-sleek-ui", "collapsedCategories") ||
-          [];
+        this.collapsedCategories = this.actor.getFlag("daggerheart-sleek-ui", "collapsedCategories") || [];
       }
       context.collapsedCategories = this.collapsedCategories || [];
 
@@ -128,10 +107,7 @@ export function registerAdversarySheet() {
     }
 
     async _prepareFeaturesData(context) {
-      const currentFear = game.settings.get(
-        CONFIG.DH.id,
-        CONFIG.DH.SETTINGS.gameSettings.Resources.Fear,
-      );
+      const currentFear = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Resources.Fear);
 
       context.adversaryFeatures = await Promise.all(
         (context.features || []).map(async (item) => {
@@ -160,17 +136,11 @@ export function registerAdversarySheet() {
             }
           }
 
-          const enrichedDescription =
-            await foundry.applications.ux.TextEditor.enrichHTML(
-              item.system.description,
-              { relativeTo: item, rollData: this.actor.getRollData() },
-            );
+          const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item, rollData: this.actor.getRollData() });
 
           const tags = [
             {
-              label: game.i18n.localize(
-                `DAGGERHEART.CONFIG.FeatureForm.${item.system.featureForm}`,
-              ),
+              label: game.i18n.localize(`DAGGERHEART.CONFIG.FeatureForm.${item.system.featureForm}`),
               tagClass: "tag-blue",
             },
           ];
@@ -225,11 +195,7 @@ export function registerAdversarySheet() {
           });
         }
 
-        const isTemporary =
-          effect.isTemporary ||
-          effect.duration?.rounds != null ||
-          (effect.duration?.seconds != null && effect.duration.seconds > 0) ||
-          effect.duration?.turns != null;
+        const isTemporary = effect.isTemporary || effect.duration?.rounds != null || (effect.duration?.seconds != null && effect.duration.seconds > 0) || effect.duration?.turns != null;
 
         resourceTags.push({
           label: isTemporary ? "Temporary" : "Passive",
@@ -241,10 +207,9 @@ export function registerAdversarySheet() {
         if (description && /^[A-Z][A-Z_]+\./.test(description)) {
           description = game.i18n.localize(description);
         }
-        const enrichedDescription =
-          await foundry.applications.ux.TextEditor.enrichHTML(description, {
-            relativeTo: effect,
-          });
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(description, {
+          relativeTo: effect,
+        });
 
         return { item: effect, infoTags, resourceTags, enrichedDescription };
       };
@@ -253,26 +218,18 @@ export function registerAdversarySheet() {
       const activeEffects = allEffects.filter((e) => !e.disabled);
       const inactiveEffects = allEffects.filter((e) => e.disabled);
 
-      context.activeEffects = await Promise.all(
-        activeEffects.map((effect) => createEffectData(effect)),
-      );
-      context.inactiveEffects = await Promise.all(
-        inactiveEffects.map((effect) => createEffectData(effect)),
-      );
+      context.activeEffects = await Promise.all(activeEffects.map((effect) => createEffectData(effect)));
+      context.inactiveEffects = await Promise.all(inactiveEffects.map((effect) => createEffectData(effect)));
     }
 
     async _prepareNotesContext(context, options) {
       await super._prepareNotesContext(context, options);
 
       if (context.notes?.value) {
-        context.notes.enriched =
-          await foundry.applications.ux.TextEditor.enrichHTML(
-            context.notes.value,
-            {
-              relativeTo: this.document,
-              rollData: this.actor.getRollData(),
-            },
-          );
+        context.notes.enriched = await foundry.applications.ux.TextEditor.enrichHTML(context.notes.value, {
+          relativeTo: this.document,
+          rollData: this.actor.getRollData(),
+        });
       }
     }
 
@@ -285,9 +242,7 @@ export function registerAdversarySheet() {
       // Only remove tooltips when hovering nothing
       this.element.addEventListener("mousemove", (e) => {
         const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-        const isOverTooltipTrigger = hoveredElement?.closest(
-          "[data-tooltip], [data-tooltip-text]",
-        );
+        const isOverTooltipTrigger = hoveredElement?.closest("[data-tooltip], [data-tooltip-text]");
 
         if (!isOverTooltipTrigger) {
           const tooltip = document.querySelector(".tooltip.active");
@@ -295,10 +250,7 @@ export function registerAdversarySheet() {
         }
       });
 
-      const tabsPosition = game.settings.get(
-        "daggerheart-sleek-ui",
-        "tabsPosition",
-      );
+      const tabsPosition = game.settings.get("daggerheart-sleek-ui", "tabsPosition");
 
       if (tabsPosition === "floating") {
         if (!this.floatingTabs) {
@@ -321,14 +273,10 @@ export function registerAdversarySheet() {
 
     _restoreCardStates() {
       this.openCards.forEach((uuid) => {
-        const header = this.element.querySelector(
-          `.card-container.header[data-item-uuid="${uuid}"]`,
-        );
+        const header = this.element.querySelector(`.card-container.header[data-item-uuid="${uuid}"]`);
         if (header) {
           const cardWrapper = header.closest(".card-wrapper");
-          const description = cardWrapper?.querySelector(
-            ".card-container.description",
-          );
+          const description = cardWrapper?.querySelector(".card-container.description");
           if (description) {
             description.style.display = "flex";
           }
@@ -350,9 +298,7 @@ export function registerAdversarySheet() {
     }
 
     _attachResourceListeners(htmlElement) {
-      const resourceHeaders = htmlElement.querySelectorAll(
-        '[data-action="modifyResource"]',
-      );
+      const resourceHeaders = htmlElement.querySelectorAll('[data-action="modifyResource"]');
       resourceHeaders.forEach((element) => {
         element.addEventListener("click", (event) => {
           this.constructor._onModifyResource.call(this, event, element);
@@ -362,9 +308,7 @@ export function registerAdversarySheet() {
         });
       });
 
-      const resourcePips = htmlElement.querySelectorAll(
-        '[data-action="toggleResource"]',
-      );
+      const resourcePips = htmlElement.querySelectorAll('[data-action="toggleResource"]');
       resourcePips.forEach((element) => {
         element.addEventListener("click", (event) => {
           this.constructor._onToggleResource.call(this, event, element);
@@ -384,11 +328,7 @@ export function registerAdversarySheet() {
 
           const action = this.actor.system.attack;
           const config = action.prepareConfig(event);
-          config.effects =
-            await game.system.api.data.actions.actionsTypes.base.getEffects(
-              this.actor,
-              null,
-            );
+          config.effects = await game.system.api.data.actions.actionsTypes.base.getEffects(this.actor, null);
           config.hasRoll = false;
           action.workflow.get("damage").execute(config, null, true);
         });
@@ -396,31 +336,19 @@ export function registerAdversarySheet() {
     }
 
     _attachCardListeners(htmlElement) {
-      const cardNameContainers = htmlElement.querySelectorAll(
-        ".card-text, .card-resource",
-      );
+      const cardNameContainers = htmlElement.querySelectorAll(".card-text, .card-resource");
       cardNameContainers.forEach((nameContainer) => {
         nameContainer.addEventListener("click", (event) => {
-          if (
-            event.target.closest(
-              '.card-controls, [data-action="useItem"], [data-action="useActorAttack"], [data-action="useAction"], .uses-resource, .actor-attack-roll, .simple-resource, .die-resource, .dice-resource',
-            )
-          )
-            return;
+          if (event.target.closest('.card-controls, [data-action="useItem"], [data-action="useActorAttack"], [data-action="useAction"], .uses-resource, .actor-attack-roll, .simple-resource, .die-resource, .dice-resource')) return;
 
           const cardWrapper = nameContainer.closest(".card-wrapper");
           if (!cardWrapper) return;
 
-          const description = cardWrapper.querySelector(
-            ".card-container.description",
-          );
-          const itemUuid =
-            nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
+          const description = cardWrapper.querySelector(".card-container.description");
+          const itemUuid = nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
 
           if (description && itemUuid) {
-            const isCurrentlyHidden =
-              description.style.display === "none" ||
-              !description.style.display;
+            const isCurrentlyHidden = description.style.display === "none" || !description.style.display;
             description.style.display = isCurrentlyHidden ? "flex" : "none";
             if (isCurrentlyHidden) {
               this.openCards.add(itemUuid);
@@ -439,8 +367,7 @@ export function registerAdversarySheet() {
           event.preventDefault();
           event.stopPropagation();
 
-          const itemUuid =
-            element.closest("[data-item-uuid]")?.dataset.itemUuid;
+          const itemUuid = element.closest("[data-item-uuid]")?.dataset.itemUuid;
           const actionId = element.dataset.actionId;
           if (!itemUuid || !actionId) return;
 
@@ -460,8 +387,7 @@ export function registerAdversarySheet() {
             event.preventDefault();
             event.stopImmediatePropagation();
 
-            const itemUuid =
-              element.closest("[data-item-uuid]")?.dataset.itemUuid;
+            const itemUuid = element.closest("[data-item-uuid]")?.dataset.itemUuid;
             const actionId = element.dataset.actionId;
             if (!itemUuid || !actionId) return;
 
@@ -519,8 +445,7 @@ export function registerAdversarySheet() {
           if (!itemUuid) return;
           const item = await fromUuid(itemUuid);
           if (!item) return;
-          const dieFaces =
-            parseInt(element.dataset.dieFaces.replace("d", "")) || 6;
+          const dieFaces = parseInt(element.dataset.dieFaces.replace("d", "")) || 6;
           const currentValue = item.system.resource.value || 0;
           await item.update({
             "system.resource.value": (currentValue + 1) % (dieFaces + 1),
@@ -551,15 +476,13 @@ export function registerAdversarySheet() {
         resource.querySelectorAll(".dice-value").forEach((diceValue) => {
           diceValue.addEventListener("click", async (event) => {
             event.stopPropagation();
-            const itemUuid =
-              diceValue.closest("[data-item-uuid]")?.dataset.itemUuid;
+            const itemUuid = diceValue.closest("[data-item-uuid]")?.dataset.itemUuid;
             const item = await fromUuid(itemUuid);
             const diceIndex = diceValue.dataset.dice;
             const currentState = item.system.resource.diceStates[diceIndex];
             if (!currentState) return;
             await item.update({
-              [`system.resource.diceStates.${diceIndex}.used`]:
-                !currentState.used,
+              [`system.resource.diceStates.${diceIndex}.used`]: !currentState.used,
             });
           });
         });
@@ -567,26 +490,24 @@ export function registerAdversarySheet() {
     }
 
     _attachActionListeners(htmlElement) {
-      htmlElement
-        .querySelectorAll('[data-action="useAction"]')
-        .forEach((button) => {
-          button.addEventListener("click", async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+      htmlElement.querySelectorAll('[data-action="useAction"]').forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-            const itemUuid = button.dataset.itemUuid;
-            const actionId = button.dataset.actionId;
-            if (!itemUuid || !actionId) return;
+          const itemUuid = button.dataset.itemUuid;
+          const actionId = button.dataset.actionId;
+          if (!itemUuid || !actionId) return;
 
-            const item = await fromUuid(itemUuid);
-            if (!item) return;
+          const item = await fromUuid(itemUuid);
+          if (!item) return;
 
-            const action = item.system.actions?.get(actionId);
-            if (!action) return;
+          const action = item.system.actions?.get(actionId);
+          if (!action) return;
 
-            await action.use(event);
-          });
+          await action.use(event);
         });
+      });
     }
 
     _attachBasicTabListeners(htmlElement) {
@@ -625,8 +546,7 @@ export function registerAdversarySheet() {
       const resource = target.dataset.resource;
       const clickedValue = parseInt(target.dataset.value);
       const currentValue = foundry.utils.getProperty(this.actor, resource);
-      const newValue =
-        clickedValue === currentValue ? currentValue - 1 : clickedValue;
+      const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
       await this.actor.update({ [resource]: Math.max(0, newValue) });
     }
 
@@ -656,15 +576,12 @@ export function registerAdversarySheet() {
           this.collapsedCategories.splice(index, 1);
         }
       }
-      this.actor.setFlag("daggerheart-sleek-ui", "collapsedCategories", [
-        ...this.collapsedCategories,
-      ]);
+      this.actor.setFlag("daggerheart-sleek-ui", "collapsedCategories", [...this.collapsedCategories]);
     }
 
     async render(options = {}, _options = {}) {
       if (this.actor.limited && !this.actor.isOwner) {
-        const systemSheet =
-          CONFIG.Actor.sheetClasses.adversary["daggerheart.AdversarySheet"];
+        const systemSheet = CONFIG.Actor.sheetClasses.adversary["daggerheart.AdversarySheet"];
         if (systemSheet) {
           const defaultSheet = new systemSheet.cls({ document: this.actor });
           return defaultSheet.render(true, _options);
@@ -674,23 +591,14 @@ export function registerAdversarySheet() {
     }
   }
 
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(
-    Actor,
-    "daggerheart",
-    SleekAdversarySheet,
-    {
-      types: ["adversary"],
-      makeDefault: true,
-      label: "DH Sleek UI",
-    },
-  );
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekAdversarySheet, {
+    types: ["adversary"],
+    makeDefault: true,
+    label: "DH Sleek UI",
+  });
 
   Hooks.on("updateSetting", (setting) => {
-    if (
-      setting.key !==
-      `${CONFIG.DH.id}.${CONFIG.DH.SETTINGS.gameSettings.Resources.Fear}`
-    )
-      return;
+    if (setting.key !== `${CONFIG.DH.id}.${CONFIG.DH.SETTINGS.gameSettings.Resources.Fear}`) return;
 
     canvas.tokens.placeables
       .filter((t) => t.actor?.type === "adversary")

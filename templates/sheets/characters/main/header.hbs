@@ -25,10 +25,6 @@
           {{/if}}
         </span>
         
-        {{!-- {{#if document.system.multiclass.value}}
-        <span class="separator"></span>
-        {{/if}} --}}
-        
         {{#if document.system.multiclass.value}}
         <span class="tag tag-blue">
           <span data-action="editDoc"
@@ -42,8 +38,6 @@
             data-item-uuid="{{document.system.multiclass.subclass.uuid}}">{{document.system.multiclass.subclass.name}}</span>
         </span>
         {{/if}}
-
-        {{!-- <span class="separator"></span> --}}
 
         <span class="tag tag-orange">
           {{#if document.system.community}}
@@ -220,7 +214,7 @@
       <div
         class="trait-container {{#if (eq key @root.document.system.class.subclass.system.spellcastingTrait)}}spellcast-trait{{/if}}"
         data-tooltip="{{#if (eq key @root.document.system.class.subclass.system.spellcastingTrait)}}<b>{{localize "DAGGERHEART.ITEMS.Subclass.spellcastingTrait"}}</b><br><br>{{/if}}<b>{{localize (concat 'DAGGERHEART.CONFIG.Traits.' key '.name') }}:</b><br>{{#each attribute.verbs}}{{this}}<br>{{/each}}"
-        data-action="rollAttribute" data-attribute="{{key}}" data-value="{{attribute.value}}">
+        {{#if (gte @root.ownershipLevel 3)}}data-action="rollAttribute"{{/if}} data-attribute="{{key}}" data-value="{{attribute.value}}">
         <span class="trait-number">
           {{#if (gt attribute.value 0)}}
           <span>+{{attribute.value}}</span>

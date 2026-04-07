@@ -1,5 +1,5 @@
 ![](https://github.com/user-attachments/assets/7bd87dfd-59f9-4c74-b077-ca98f8a9e4fa)
-An alternative character sheet with UI/UX improvements for Foundryborne's Daggerheart System
+Alternative actor sheets with UI/UX improvements for Foundryborne's Daggerheart System
 
 # Features
 
@@ -14,13 +14,13 @@ An alternative character sheet with UI/UX improvements for Foundryborne's Dagger
 - Sidebar equipment and loadout cards functioning as shortcuts to the corresponding domain card or item on the main sheet when clicked.
 - Character description questions from DH's core rulebook sheets inside the Biography tab.
 - Optional setting that changes the default sidebar's Equipment and Loadout sections with a universal Quick Access section where you can drag anything, create dividers and organize it however you want.
-- Adversary and Companion Sheet with similar style, layout and usability
+- Adversary, Companion and Party Sheets with similar style, layout and usability.
 
 ![](https://github.com/user-attachments/assets/8a7165b3-89fd-4fa1-ab94-6904d990fedc)
 
 # Planned features
 
-- Toggleable sidebar to reduce the sheet's width
-- Sheets for Environments and Party
+- Environment Sheet
+- V14 compatibility
 
 ![](https://github.com/user-attachments/assets/e3dbcf73-d216-4437-9136-af520d9c857a)

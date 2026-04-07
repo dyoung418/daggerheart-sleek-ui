@@ -33,7 +33,8 @@
       {{#each heritageFeatures as |featureData|}}
         {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
             item=featureData.item 
-            tags=featureData.tags}}
+            tags=featureData.tags
+            ownershipLevel=@root.ownershipLevel}}
       {{/each}}
     </div>
   </div>
@@ -52,7 +53,8 @@
       {{#each classFeatures as |featureData|}}
         {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
             item=featureData.item 
-            tags=featureData.tags}}
+            tags=featureData.tags
+            ownershipLevel=@root.ownershipLevel}}
       {{/each}}
     </div>
 
@@ -74,7 +76,8 @@
       {{#each multiclassFeatures as |featureData|}}
         {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
             item=featureData.item 
-            tags=featureData.tags}}
+            tags=featureData.tags
+            ownershipLevel=@root.ownershipLevel}}
       {{/each}}
     </div>
 
@@ -102,7 +105,8 @@
       {{#each extraFeatures as |featureData|}}
         {{> "modules/daggerheart-sleek-ui/templates/components/card-features.hbs" 
             item=featureData.item 
-            tags=featureData.tags}}
+            tags=featureData.tags
+            ownershipLevel=@root.ownershipLevel}}
       {{/each}}
     </div>
 

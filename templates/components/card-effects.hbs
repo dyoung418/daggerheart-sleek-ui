@@ -2,7 +2,7 @@
 
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="effect">
 
-    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+    <div class="card-icon" {{#if (gte ownershipLevel 3)}} {{#if item.system.actions.size}}data-action="useItem" {{else}} data-action="toChat"{{/if}} {{/if}}
       data-item-uuid="{{item.uuid}}">
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
       <img class="dice-roll" src="systems/daggerheart/assets/icons/dice/duality/DualityBW.svg" alt="" />

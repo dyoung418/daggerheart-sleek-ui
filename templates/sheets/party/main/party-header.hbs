@@ -1,0 +1,28 @@
+<div class="party-portrait">
+  <img src="{{source.img}}" data-action="editImage" data-edit="img" />
+</div>
+
+<div class="party-header-container">
+  <div class="party-details">
+    <h1 class="actor-name" contenteditable="plaintext-only" data-property="name" placeholder="{{localize 'DAGGERHEART.GENERAL.actorName'}}">{{source.name}}</h1>
+
+    <h3>Party of {{partySize}}</h3>
+  </div>
+
+  <div class="btn-container">
+    <button data-action="triggerRest" data-type="shortRest" data-tooltip="{{localize 'DAGGERHEART.APPLICATIONS.Downtime.shortRest.title'}}">
+      <i class="fa-solid fa-utensils"></i>
+    </button>
+    <button data-action="triggerRest" data-type="longRest" data-tooltip="{{localize 'DAGGERHEART.APPLICATIONS.Downtime.longRest.title'}}">
+      <i class="fa-solid fa-bed"></i>
+    </button>
+    <button class="party-roll" data-action="tagTeamRoll">
+      <i class="fa-solid fa-user-group"></i>
+      <h3>{{localize "DAGGERHEART.APPLICATIONS.TagTeamSelect.title"}}</h3>
+    </button>
+    <button class="party-roll" data-action="groupRoll">
+      <i class="fa-solid fa-users"></i>
+      <h3>{{localize "DAGGERHEART.UI.Chat.groupRoll.title"}}</h3>
+    </button>
+  </div>
+</div>

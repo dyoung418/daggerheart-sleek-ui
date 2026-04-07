@@ -2,7 +2,7 @@
 
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}" data-action="navigateToCard">
 
-    <div class="card-icon" data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"
+    <div class="card-icon" {{#if (gte ownershipLevel 3)}}data-action="{{#if item.system.actions.size}}useItem{{else}}toChat{{/if}}"{{/if}}
       data-item-uuid="{{item.uuid}}"
       {{#if @root.showTooltip}}data-tooltip="#item#{{item.uuid}}"{{/if}}>
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />

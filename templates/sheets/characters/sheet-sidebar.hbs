@@ -36,7 +36,8 @@
           hopeCost=unarmedAttack.hopeCost
           usesData=unarmedAttack.usesData
           damage=unarmedAttack.damage
-          enrichedDescription=unarmedAttack.enrichedDescription}}
+          enrichedDescription=unarmedAttack.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
         </ul>
       </div>
     {{/if}}
@@ -65,7 +66,8 @@
           hopeCost=itemData.hopeCost
           usesData=itemData.usesData
           damage=itemData.damage
-          enrichedDescription=itemData.enrichedDescription}}
+          enrichedDescription=itemData.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
           {{else if (eq itemData.itemType "armor")}}
           {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-armor.hbs"
           item=itemData.item
@@ -73,13 +75,15 @@
           hopeCost=itemData.hopeCost
           usesData=itemData.usesData
           marks=itemData.marks
-          enrichedDescription=itemData.enrichedDescription}}
+          enrichedDescription=itemData.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
           {{else if (eq itemData.itemType "domainCard")}}
           {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-domains.hbs"
           item=itemData.item
           tags=itemData.tags
           hopeCost=itemData.hopeCost
-          usesData=itemData.usesData}}
+          usesData=itemData.usesData
+          ownershipLevel=@root.ownershipLevel}}
           {{else if (eq itemData.itemType "consumable")}}
           {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
           item=itemData.item
@@ -87,7 +91,8 @@
           hopeCost=itemData.hopeCost
           usesData=itemData.usesData
           quantity=itemData.quantity
-          enrichedDescription=itemData.enrichedDescription}}
+          enrichedDescription=itemData.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
           {{else if (eq itemData.itemType "loot")}}
           {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-item.hbs"
           item=itemData.item
@@ -95,14 +100,16 @@
           hopeCost=itemData.hopeCost
           usesData=itemData.usesData
           quantity=itemData.quantity
-          enrichedDescription=itemData.enrichedDescription}}
+          enrichedDescription=itemData.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
           {{else if (eq itemData.itemType "feature")}}
           {{> "modules/daggerheart-sleek-ui/templates/components/compact-card-features.hbs"
           item=itemData.item
           tags=itemData.tags
           hopeCost=itemData.hopeCost
           usesData=itemData.usesData
-          enrichedDescription=itemData.enrichedDescription}}
+          enrichedDescription=itemData.enrichedDescription
+          ownershipLevel=@root.ownershipLevel}}
           {{/if}}
         {{/each}}
 
@@ -126,7 +133,8 @@
         hopeCost=unarmedAttack.hopeCost
         usesData=unarmedAttack.usesData
         damage=unarmedAttack.damage
-        enrichedDescription=unarmedAttack.enrichedDescription}}
+        enrichedDescription=unarmedAttack.enrichedDescription
+        ownershipLevel=@root.ownershipLevel}}
         {{/if}}
         {{#each weapons as |weaponData|}}
         {{#if weaponData.item.system.equipped}}
@@ -135,7 +143,8 @@
         tags=weaponData.tags
         hopeCost=weaponData.hopeCost
         usesData=weaponData.usesData
-        enrichedDescription=weaponData.enrichedDescription}}
+        enrichedDescription=weaponData.enrichedDescription
+        ownershipLevel=@root.ownershipLevel}}
         {{/if}}
         {{/each}}
         {{#each armors as |armorData|}}
@@ -146,7 +155,8 @@
         hopeCost=armorData.hopeCost
         usesData=armorData.usesData
         marks=armorData.marks
-        enrichedDescription=armorData.enrichedDescription}}
+        enrichedDescription=armorData.enrichedDescription
+        ownershipLevel=@root.ownershipLevel}}
         {{/if}}
         {{/each}}
       </ul>
@@ -163,7 +173,8 @@
         item=cardData.item
         tags=cardData.tags
         hopeCost=cardData.hopeCost
-        usesData=cardData.usesData}}
+        usesData=cardData.usesData
+        ownershipLevel=@root.ownershipLevel}}
         {{/each}}
       </ul>
     </div>

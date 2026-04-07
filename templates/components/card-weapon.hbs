@@ -2,7 +2,7 @@
 
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="weapon">
 
-    <div class="card-icon" data-action="useItem"
+    <div class="card-icon" {{#if (gte ownershipLevel 3)}}data-action="useItem"{{/if}}
       data-item-uuid="{{item.uuid}}"
       {{#if @root.showTooltip}}data-tooltip="#item#{{item.uuid}}"{{/if}}>
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
@@ -45,13 +45,16 @@
         {{/if}}
 
         {{#if item.system.equipped}}
+        {{#if (gte ownershipLevel 3)}}
         <div class="card-resource roll-damage" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.GENERAL.rollDamage">
             {{{damage}}}
         </div>
         {{/if}}
+        {{/if}}
       </div>
 
       <div class="card-controls">
+        {{#if @root.isCharacterSheet}}
         <a class="{{#unless item.system.equipped}}unequipped{{/unless}} equip" data-action="toggleEquipItem"
           data-tooltip="DAGGERHEART.UI.Tooltip.{{ifThen item.system.equipped 'unequip' 'equip' }}">
           {{#if (eq item.system.burden 'oneHanded')}}
@@ -60,12 +63,22 @@
           <i class="fa-solid fa-hands {{#if item.system.equipped}}equipped{{/if}}"></i>
           {{/if}}
         </a>
+        {{/if}}
         <a data-action="toChat" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.UI.Tooltip.sendToChat">
           <i class="fa-regular fa-message"></i>
         </a>
+        {{#if @root.isCharacterSheet}}
         <a data-action="triggerContextMenu" data-tooltip="DAGGERHEART.UI.Tooltip.moreOptions">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </a>
+        {{else}}
+        <a class="edit-doc" data-action="editDoc" data-tooltip="DAGGERHEART.UI.Tooltip.openItemWorld">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </a>
+        <a class="delete-item" data-action="deleteItem" data-item-uuid="{{item.uuid}}" data-tooltip="DAGGERHEART.UI.Tooltip.deleteItem">
+          <i class="fa-regular fa-trash-can"></i>
+        </a>
+        {{/if}}
       </div>
 
     </div>

@@ -5,7 +5,7 @@
   <div class="card-container header" data-item-uuid="{{item.uuid}}" data-type="{{item.type}}"
     data-action="navigateToCard">
 
-    <div class="card-icon" data-action="{{#if (eq item.uuid 'unarmed-attack')}}useUnarmedAttack{{else}}useItem{{/if}}"
+    <div class="card-icon" {{#if (gte ownershipLevel 3)}}data-action="{{#if (eq item.uuid 'unarmed-attack')}}useUnarmedAttack{{else}}useItem{{/if}}"{{/if}}
       {{#unless (eq item.uuid 'unarmed-attack' )}}data-item-uuid="{{item.uuid}}" {{/unless}}
       {{#if @root.showTooltip}}data-tooltip="{{#if (eq item.uuid 'unarmed-attack')}}Use Unarmed Attack{{else}}#item#{{item.uuid}}{{/if}}"{{/if}}>
       <img class="icon" src="{{item.img}}" alt="{{item.name}}" />
@@ -43,10 +43,12 @@
         <div class="hover-resources">
           
             {{#if (or item.system.equipped (eq item.uuid 'unarmed-attack'))}}
-            <div class="roll-damage" data-item-uuid="{{item.uuid}}" data-action="item.system.attack"
-              data-tooltip="DAGGERHEART.GENERAL.rollDamage">
-              <i class="fa-solid fa-dice"></i>
-            </div>
+              {{#if (gte ownershipLevel 3)}}
+              <div class="roll-damage" data-item-uuid="{{item.uuid}}" data-action="item.system.attack"
+                data-tooltip="DAGGERHEART.GENERAL.rollDamage">
+                <i class="fa-solid fa-dice"></i>
+              </div>
+              {{/if}}
             {{else}}
             <div class="equip-btn" data-item-uuid="{{item.uuid}}" data-action="toggleEquipItem"
               data-tooltip="DAGGERHEART.UI.Tooltip.equip">
