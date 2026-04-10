@@ -1,0 +1,1256 @@
+/* ==================== 
+WINDOW HEADER
+==================== */
+
+.application.daggerheart.sheet:not(.sleek-ui) {
+  border: 1px solid var(--sleekUI-color-border) !important;
+  background-color: var(--sleekUI-color-background-primary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-weight: var(--sleekUI-font-weight-regular) !important;
+  font-size: var(--sleekUI-font-size-md) !important;
+}
+
+.application.dialog.dh-style .window-header {
+  background: var(--sleekUI-color-background-primary) !important;
+}
+
+.application.dialog.dh-style,
+.application.daggerheart.action-config {
+  border: 1px solid var(--sleekUI-color-border) !important;
+  background: var(--sleekUI-color-background-primary) !important;
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .profile {
+  border: none;
+  mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .item-info {
+  margin-top: 0;
+  margin-left: 12px;
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .item-info line-div {
+  display: none;
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .item-info h1.item-name {
+  width: 100%;
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .item-info .item-name input[type="text"] {
+  color: var(--sleekUI-color-primary) !important;
+  font-family: var(--sleekUI-font-secondary) !important;
+  font-size: var(--sleekUI-font-size-name);
+  font-weight: var(--sleekUI-font-weight-bold);
+  text-transform: uppercase;
+  text-align: start;
+  text-overflow: ellipsis;
+  transform: translateX(-3px);
+  padding: 0;
+  outline: none;
+  border: none !important;
+  background: none !important;
+  width: 100%;
+}
+
+.application.sheet.daggerheart.dh-style .item-sheet-header .item-info .item-description h3 {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.application.daggerheart.dh-style.dialog .window-content .dialog-header h1 {
+  color: var(--sleekUI-color-primary) !important;
+  font-family: var(--sleekUI-font-secondary) !important;
+  font-size: var(--sleekUI-font-size-xl);
+  font-weight: var(--sleekUI-font-weight-bold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ==================== 
+SCROLLBAR
+==================== */
+
+* {
+  scrollbar-color: var(--sleekUI-color-scrollbar) transparent !important;
+}
+
+/* ==================== 
+WINDOW TAB NAV
+==================== */
+
+.daggerheart.dh-style .tab-navigation {
+  margin-top: 0;
+}
+
+.daggerheart.dh-style .tab-navigation .navigation-container .navigation-inner-container line-div {
+  border-bottom: 1px solid var(--sleekUI-color-border);
+  mask-image: none;
+}
+
+.daggerheart.dh-style .tab-navigation .navigation-container .navigation-inner-container .feature-tab a {
+  font-weight: 500;
+  transition: none;
+  text-shadow: none;
+  line-height: 44px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style .tab-navigation .navigation-container .navigation-inner-container .feature-tab a:hover {
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style .tab-navigation .navigation-container .navigation-inner-container .feature-tab a.active {
+  color: var(--sleekUI-color-tertiary);
+}
+
+/* ==================== 
+DESCRIPTION
+==================== */
+
+.daggerheart.dh-style .tab.active.description {
+  padding: 16px;
+  color: var(--sleekUI-color-secondary);
+  line-height: 20px;
+  padding-bottom: 0;
+}
+
+/* ==================== 
+FIELDSETS
+==================== */
+
+.dh-style fieldset {
+  border: 1px solid var(--sleekUI-color-border);
+  padding: 12px;
+  padding-top: 8px;
+  margin-top: 12px;
+  /* background: var(--sleekUI-gradient-card); */
+  background: none;
+}
+
+.dh-style legend {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 12px;
+  display: flex;
+  gap: 12px;
+  background: none;
+  white-space: nowrap;
+}
+
+.dh-style .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dh-style .form-group.checkbox {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.dh-style .form-group label {
+  color: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: 600;
+  padding-left: 4px;
+}
+
+.dh-style fieldset span {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.daggerheart.dh-style .hint {
+  color: var(--sleekUI-color-secondary);
+  opacity: 0.5;
+}
+
+.application.daggerheart.dh-style .tab[data-tab="trigger"] {
+  margin-top: 16px;
+}
+
+/* ==================== 
+INPUTS
+==================== */
+
+.dh-style select,
+.dh-style input {
+  background: var(--sleekUI-color-background-dark) !important;
+  border: 1px solid var(--sleekUI-color-background-resourceHover) !important;
+  height: 28px;
+  border-radius: 3px;
+  transition: none;
+}
+
+.dh-style select {
+  padding: 0 4px !important;
+}
+
+.dh-style input[type="text"] {
+  color: var(--sleekUI-color-primary);
+}
+
+.dh-style input[type="checkbox"],
+.dh-style input[type="radio"] {
+  width: 20px;
+  height: 20px;
+}
+
+.dh-style input[type="checkbox"]::before,
+.dh-style input[type="radio"]::before {
+  color: transparent;
+}
+
+.dh-style input[type="radio"] {
+  border-radius: 50%;
+}
+
+.application.daggerheart .nest-inputs {
+  width: 100% !important;
+  justify-content: flex-start;
+}
+
+.dh-style multi-select {
+  height: 28px;
+}
+
+.dh-style multi-select .tags .tag {
+  padding: 2px 8px;
+  border-radius: 24px;
+}
+
+.system-daggerheart .tagify {
+  background: var(--sleekUI-color-background-dark) !important;
+  border: 1px solid var(--sleekUI-color-background-resourceHover) !important;
+}
+
+/* ==================== 
+TEXT AREA
+==================== */
+
+.dh-style textarea {
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
+  color: var(--sleekUI-color-secondary);
+  line-height: 20px;
+  min-height: 100px;
+}
+
+.application.sheet.daggerheart.dh-style:not(.sleek-ui) prose-mirror {
+  min-height: 240px;
+}
+
+/* ==================== 
+CARDS
+==================== */
+
+.application.daggerheart.dh-style .items-list {
+  gap: 4px;
+}
+
+.application.daggerheart.dh-style .inventory-item {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  overflow: hidden;
+}
+
+/* CARDS - HEADER //////////////////////////////////////////////////*/
+
+.application.daggerheart.dh-style .inventory-item:has(.inventory-item-header:hover) {
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
+}
+
+.application.daggerheart.dh-style .inventory-item:hover .inventory-item-header {
+  background: transparent;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header {
+  height: 48px;
+  gap: 0;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .img-portait,
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .img-portait {
+  height: 100%;
+  flex: 0 0 60px;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .img-portait .item-img,
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .img-portait .item-img,
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .img-portait .roll-img,
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .img-portait .roll-img {
+  width: 100%;
+  height: 100%;
+  mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 1) 50%);
+  border-radius: 0;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .item-label .item-name {
+  flex: 1;
+}
+
+.application.daggerheart.dh-style .inventory-item .expanded-icon {
+  display: none;
+}
+
+.daggerheart.dh-style .item-tags {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.daggerheart.dh-style .item-tags .tag {
+  font-size: 10px;
+  color: var(--sleekUI-color-tag-text);
+  border: 1px solid var(--sleekUI-color-tag-border);
+  border-radius: var(--sleekUI-border-radius);
+  background: var(--sleekUI-color-tag-background);
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .controls,
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .controls {
+  gap: 4px;
+  margin: 0 4px 0 12px;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .controls a,
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .controls a {
+  display: flex;
+  justify-content: center;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-header .controls a[data-action="toChat"],
+.application.daggerheart.dh-style .inventory-item.inventory-item-compact .controls a[data-action="toChat"] {
+  transform: translateX(3px);
+}
+
+/* CARDS - DESCRIPTION //////////////////////////////////////////////////*/
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-content.extensible {
+  transition: none;
+  padding: 0;
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-content.extensible.extended::before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(270deg, rgba(79, 89, 137, 0) 0%, rgba(79, 89, 137, 1) 100%);
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-content.extensible .invetory-description {
+  padding: 12px;
+  line-height: 20px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.application.daggerheart.dh-style .inventory-item .inventory-item-content.extensible:not(.extended) .invetory-description {
+  display: none;
+}
+
+/* ==================== 
+ITEM CARDS (DOMAIN/ANCESTRY/COMMUNITY)
+==================== */
+
+.application.daggerheart .item-card-header .profile {
+  mask-image: linear-gradient(0deg, transparent 0%, black 30%);
+}
+
+.application.daggerheart .item-card-header .item-info {
+  margin-top: -12px;
+}
+
+.application.daggerheart .item-card-header .item-info h1.item-name {
+  width: 100%;
+}
+
+.application.daggerheart .item-card-header .item-info .item-name input[type="text"] {
+  color: var(--sleekUI-color-primary) !important;
+  font-family: var(--sleekUI-font-secondary) !important;
+  font-size: var(--sleekUI-font-size-name);
+  font-weight: var(--sleekUI-font-weight-bold);
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  padding: 0 16px;
+  outline: none;
+  border: none !important;
+  background: none !important;
+  backdrop-filter: none;
+  width: 100%;
+}
+
+.application.daggerheart .item-card-header {
+  margin-bottom: 8px;
+}
+
+.application.daggerheart .item-card-header .item-info .attribution-header-label {
+  margin-top: 8px;
+}
+
+.application.daggerheart .item-card-header .item-info .item-description h3 {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* DOMAIN CARDS ICONS //////////////////////////////////////////////////*/
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon {
+  max-width: unset;
+  text-align: unset;
+  justify-content: center;
+  padding: 0;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 12px 0 12px;
+  background: var(--sleekUI-color-background-primary);
+  border: 4px double var(--sleekUI-color-border);
+  color: var(--sleekUI-color-primary);
+}
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon .recall-label {
+  display: none;
+  margin: 0;
+  margin-right: 32px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon .recall-value {
+  position: absolute;
+  right: 18px;
+}
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon i {
+  position: absolute;
+  right: 6px;
+  top: 14px;
+  font-size: 12px;
+}
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon img {
+  position: absolute;
+  right: 8px;
+  filter: invert(100%) sepia(5%) saturate(5777%) hue-rotate(307deg) brightness(101%) contrast(90%);
+}
+
+.application.daggerheart.domain-card .item-card-header .item-icons-list .item-icon:hover .recall-label {
+  display: block;
+  opacity: 1;
+}
+
+/* ==================== 
+TRAIT ROLL
+==================== */
+
+.application.daggerheart .modifier-container .nest-inputs {
+  width: unset !important;
+}
+
+.application.daggerheart .modifier-container span {
+  margin-bottom: -8px;
+  margin-top: 8px;
+}
+
+.application.daggerheart .modifier-container .advantage-chip span,
+.application.daggerheart .modifier-container .disadvantage-chip span {
+  margin: 0;
+}
+
+.application.daggerheart .roll-dialog-container .dices-section {
+  padding: 1em;
+  gap: 32px;
+}
+
+.application.daggerheart .roll-dialog-container .dices-section .dice-option .dice-select .label {
+  color: var(--sleekUI-color-primary) !important;
+  font-family: var(--sleekUI-font-secondary) !important;
+  font-size: var(--sleekUI-font-size-md);
+  font-weight: var(--sleekUI-font-weight-bold);
+  text-transform: uppercase;
+}
+
+.application.daggerheart .roll-dialog-container .formula-label {
+  text-align: center;
+}
+
+/* ==================== 
+CLASS WINDOW
+==================== */
+
+.application.daggerheart.class .item-sheet-header .item-info .item-description {
+  gap: 0;
+}
+
+.application.daggerheart.class .tagify tag div span {
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.application.daggerheart.class .tagify tag div img {
+  margin-left: 6px;
+}
+
+.application.daggerheart.class .tagify__tag__removeBtn {
+  width: 8px;
+}
+
+/* FEATURE CARDS //////////////////////////////////////////////////*/
+.sheet.daggerheart.dh-style.item .tab.features .feature-list {
+  gap: 4px;
+}
+
+.sheet.daggerheart.dh-style.item .tab.features .feature-list .feature-item {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  height: 48px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.sheet.daggerheart.dh-style.item .tab.features .feature-list .feature-item .feature-line {
+  display: flex;
+  height: 100%;
+}
+
+.sheet.daggerheart.dh-style.item .tab.features .feature-list .feature-item .feature-line .image {
+  border-radius: 0;
+  height: 100%;
+  width: 60px;
+  mask-image: var(--sleekUI-gradient-mask-icon);
+}
+
+.sheet.daggerheart.dh-style.item .tab.features .feature-list .feature-item .feature-line h4 {
+  flex: 1;
+}
+
+.sheet.daggerheart.dh-style.item .tab.features .feature-list .feature-item .feature-line .controls {
+  gap: 12px;
+  margin-right: 12px;
+}
+
+/* CLASS SETTINGS //////////////////////////////////////////////////*/
+.application.sheet.daggerheart.dh-style.class .tab.settings .fieldsets-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .fieldsets-section:last-child fieldset.two-columns {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-auto-flow: column;
+  row-gap: 0px;
+  place-items: center;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .fieldsets-section:last-child fieldset.two-columns input {
+  text-align: center;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .fieldsets-section fieldset.one-column:not(.drop-section, .item-line) {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 0;
+  align-items: stretch;
+  justify-items: center;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .fieldsets-section fieldset.one-column:not(.drop-section, .item-line) fieldset {
+  max-width: 230px;
+}
+
+/* ITEM OPTIONS //////////////////////////////////////////////////*/
+.application.sheet.daggerheart.dh-style.class .tab.settings .list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .list-items .item-line {
+  display: flex;
+  height: 42px;
+  max-width: 210px;
+  gap: 0;
+  padding: 0 8px 0 12px;
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius-s);
+  overflow: hidden;
+  position: relative;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .list-items .item-line .image {
+  position: absolute;
+  left: 0;
+  z-index: -1;
+  width: 100px;
+  height: 100%;
+  mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .list-items .item-line span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 4px;
+  display: block;
+}
+
+.application.sheet.daggerheart.dh-style.class .tab.settings .list-items .item-line .controls {
+  font-size: 12px;
+}
+
+/* ==================== 
+BEASTFORM WINDOW
+==================== */
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab {
+  padding: 0 16px;
+}
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.settings,
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.advanced {
+  padding-top: 16px;
+}
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.settings fieldset label {
+  margin-top: 12px;
+}
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.settings .two-columns.even {
+  margin-bottom: 12px;
+}
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.settings fieldset > div:first-of-type label {
+  margin-top: 0;
+}
+
+.application.sheet.daggerheart.dh-style.beastform range-picker input {
+  border: none !important;
+  background: none !important;
+}
+
+.application.sheet.daggerheart.dh-style.beastform .window-content .tab.settings .advantage-on-section label {
+  color: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: 600;
+  padding-left: 4px;
+}
+
+/* ==================== 
+ACTIVE EFFECT CONFIG
+==================== */
+
+.application.sheet.daggerheart.dh-style.active-effect-config .form-group {
+  flex-direction: row;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .window-content.standard-form {
+  gap: 0;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .window-content.standard-form .tab-form-footer.padded {
+  margin-top: 16px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .item-sheet-header,
+.application.sheet.daggerheart.dh-style.active-effect-config .item-sheet-header .profile {
+  height: 120px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config prose-mirror {
+  background: var(--sleekUI-color-background-dark);
+  border-radius: var(--sleekUI-border-radius);
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
+  padding: 8px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config prose-mirror .editor-menu {
+  padding: 0;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.scrollable {
+  width: 100%;
+  scrollbar-gutter: auto;
+  padding-top: 12px;
+}
+
+/* TABS //////////////////////////////////////////////////*/
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tabs {
+  border-top: 1px solid var(--sleekUI-color-border);
+  border-bottom: 1px solid var(--sleekUI-color-border);
+  line-height: 44px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tabs a {
+  color: var(--sleekUI-color-secondary);
+  text-shadow: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tabs a:hover {
+  color: var(--sleekUI-color-primary);
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tabs a.active {
+  color: var(--sleekUI-color-tertiary);
+}
+
+/* CHANGES */
+
+.application.sheet.daggerheart.dh-style.active-effect-config .changes {
+  padding-top: 12px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.changes header {
+  color: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: 600;
+  margin-bottom: -6px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.changes header div:not(.controls) {
+  padding-left: 4px;
+}
+
+/* ==================== 
+CHARACTER CREATOR
+==================== */
+
+/* NAVBAR //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab-navigation line-div {
+  display: none;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab-navigation nav {
+  border-top: 1px solid var(--sleekUI-color-border);
+  border-bottom: 1px solid var(--sleekUI-color-border);
+  line-height: 44px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab-navigation nav a {
+  color: var(--sleekUI-color-secondary);
+  text-shadow: none;
+  font-weight: 500;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab-navigation nav a:hover {
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab-navigation nav a.active {
+  color: var(--sleekUI-color-tertiary);
+}
+
+.daggerheart.dh-style.dialog.character-creation .window-content {
+  gap: 0;
+}
+
+.daggerheart.dh-style.dialog.character-creation .creation-action-footer {
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* SELECTION CARDS //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-outer-container {
+  flex-direction: column;
+  gap: 8px;
+  height: auto;
+  width: 100%;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container {
+  width: 100%;
+  height: 86px;
+  flex-direction: row;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container {
+  border: none;
+  background: none;
+}
+
+/* EMPTY CARD //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-container {
+  height: 100%;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container {
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container i {
+  font-size: 24px;
+  order: 2;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container .preview-empty-subtext {
+  position: unset;
+  text-align: start;
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 8px;
+}
+
+/* SELECTED CARD //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container {
+  max-width: none;
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container:hover {
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container .preview-image-container {
+  flex: 0;
+  height: 100%;
+  min-width: 120px;
+  mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 70%);
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container .preview-text-container {
+  text-align: start;
+  font-family: "Rubik";
+  font-size: 20px;
+  color: var(--sleekUI-color-primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  background: none;
+  margin-left: -16px;
+  z-index: 5;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container.class-card .card-preview-container .preview-selected-container .preview-text-container::after {
+  content: "Class";
+  font-family: var(--sleekUI-font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--sleekUI-color-tag2-text);
+  border: 1px solid var(--sleekUI-color-tag2-border);
+  background: var(--sleekUI-color-tag2-background);
+  padding: 4px 8px;
+  border-radius: var(--sleekUI-border-radius);
+  margin-right: 16px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container.subclass-card .card-preview-container .preview-selected-container .preview-text-container::after {
+  content: "Subclass";
+  font-family: var(--sleekUI-font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--sleekUI-color-tag2-text);
+  border: 1px solid var(--sleekUI-color-tag2-border);
+  background: var(--sleekUI-color-tag2-background);
+  padding: 4px 8px;
+  border-radius: var(--sleekUI-border-radius);
+  margin-right: 16px;
+}
+
+/* ANCESTRY //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-name {
+  order: 3;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-mixed-controller {
+  height: 24px;
+  margin: 8px 0;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-mixed-controller .mixed-ancestry-slider {
+  font-size: var(--sleekUI-font-size-md);
+  font-weight: 500;
+  padding: 8px 12px;
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-mixed-controller .mixed-ancestry-slider i {
+  color: var(--sleekUI-color-tertiary);
+  margin-left: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-mixed-controller .mixed-ancestry-slider i.fa-circle {
+  color: var(--sleekUI-color-background-dark);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-mixed-controller input {
+  display: none;
+}
+
+/* ANCESTRY CARD //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-preview-info-container {
+  flex-direction: row;
+  align-items: center;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-preview-info-container .ancestry-preview-label {
+  flex: 1;
+  text-align: start;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-preview-info-container .ancestry-preview-features {
+  flex-direction: row;
+  flex: 0;
+  margin-right: 16px;
+  gap: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.ancestry .ancestry-preview-info-container .ancestry-preview-features .ancestry-preview-feature {
+  white-space: nowrap;
+  font-family: var(--sleekUI-font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--sleekUI-color-tag5-text);
+  border: 1px solid var(--sleekUI-color-tag5-border);
+  background: var(--sleekUI-color-tag5-background);
+  padding: 4px 8px;
+  border-radius: var(--sleekUI-border-radius);
+}
+
+/* CHARACTER TRAITS //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container {
+  flex-direction: column;
+  padding-top: 4px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .section-inner-container {
+  margin-bottom: 24px;
+  flex-wrap: nowrap;
+  padding: 16px 8px 20px 8px;
+  order: 2;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .suggested-traits-container {
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .suggested-traits-container .suggested-trait-container {
+  width: 100%;
+  padding: 8px 16px;
+  color: var(--sleekUI-color-secondary);
+  border: none;
+  border-radius: var(--sleekUI-border-radius);
+  background: var(--sleekUI-color-background-dark);
+  font-weight: 500;
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .action-button {
+  height: 32px;
+  width: 128px;
+  bottom: -20px;
+  background: var(--sleekUI-gradient-card);
+  background-color: #1a1e2b;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  transition: none;
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .action-button:hover {
+  filter: none;
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .traits-inner-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .trait-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--sleekUI-gradient-trait);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  min-width: 0;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .trait-container span {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .trait-container select {
+  width: 100%;
+  height: 36px;
+  font-family: var(--sleekUI-font-secondary);
+  font-size: var(--sleekUI-font-size-lg);
+  font-weight: 600;
+  border-radius: var(--sleekUI-border-radius);
+  letter-spacing: 4px;
+  text-indent: 2px;
+  appearance: none;
+}
+
+/* EXPERIENCES //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab.experience .experiences-inner-container {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.experience .experiences-inner-container .experience-container {
+  flex: 1;
+  gap: 4px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.experience .experiences-inner-container .experience-container input {
+  text-overflow: ellipsis;
+  text-indent: 32px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.experience .experiences-inner-container .experience-container .experience-value {
+  border: none;
+  top: 1px;
+  left: 8px;
+  font-family: var(--sleekUI-font-secondary);
+  font-weight: 600;
+  color: var(--sleekUI-color-primary);
+}
+
+/* EQUIPMENT //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection .equipment-selection {
+  flex-direction: row;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection .equipment-selection .equipment-subsection {
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection .equipment-selection .equipment-subsection .equipment-wrapper {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  width: 100%;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-selections-container .equipment-selection .suggestion-container {
+  border: none;
+  padding: 0;
+  margin: 0;
+  order: -1;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-selections-container .equipment-selection .suggestion-container legend {
+  display: none;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-selections-container .equipment-selection .suggestion-container .suggestion-inner-container {
+  padding: 0;
+  width: 64px;
+  border-radius: var(--sleekUI-border-radius);
+  overflow: hidden;
+  border: 1px solid var(--sleekUI-color-border-equipped);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-selections-container .equipment-selection .suggestion-container .suggestion-inner-container:hover {
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border-equipped);
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-selections-container .selections-container {
+  height: 64px;
+  grid-column: 2;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple {
+  display: grid;
+  gap: 8px;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container .simple-equipment {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius-s);
+  height: 42px;
+  padding: 0 12px;
+  max-width: 210px;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: default;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container .simple-equipment.inactive {
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container .simple-equipment.inactive label {
+  cursor: pointer;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container .simple-equipment img {
+  position: absolute;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
+  z-index: -1;
+}
+
+.daggerheart.dh-style.dialog.character-creation .tab.equipment .main-equipment-selection.triple .equipment-selection .simple-equipment-container .simple-equipment label {
+  position: relative;
+  top: unset;
+  background: none;
+  border: none;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: var(--sleekUI-font-size-md);
+  color: var(--sleekUI-color-primary);
+}
+
+/* ==================== 
+LEVEL UP
+==================== */
+
+/* TABS //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.levelup .tab-navigation line-div {
+  display: none;
+}
+
+.daggerheart.dh-style.levelup .tab-navigation .levelup-navigation-container {
+  border-top: 1px solid var(--sleekUI-color-border);
+  border-bottom: 1px solid var(--sleekUI-color-border);
+  height: 44px;
+}
+
+.daggerheart.dh-style.levelup .tab-navigation .levelup-navigation-container .levelup-tab-container a {
+  font-weight: 500;
+  transition: none;
+  text-shadow: none;
+  line-height: 44px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style.levelup .tab-navigation .levelup-navigation-container .levelup-tab-container a span {
+  color: unset;
+}
+
+.daggerheart.dh-style.levelup .tab-navigation .levelup-navigation-container .levelup-tab-container a:hover {
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.levelup .tab-navigation .levelup-navigation-container .levelup-tab-container a.active {
+  color: var(--sleekUI-color-tertiary);
+}
+
+/* CHECKBOX GROUP //////////////////////////////////////////////////*/
+
+.daggerheart.dh-style.levelup {
+  width: 1060px !important;
+}
+
+.daggerheart.dh-style.levelup .tiers-container {
+  gap: 8px;
+}
+
+.daggerheart.dh-style.levelup .tiers-container .tier-container {
+  gap: 12px;
+  padding: 12px 24px 16px 24px;
+}
+
+.daggerheart.dh-style.levelup .tiers-container .tier-container .checkbox-group-container {
+  gap: 12px;
+  align-items: center;
+}
+
+.daggerheart.dh-style.levelup .tiers-container .tier-container .checkbox-group-container .checkbox-group-label {
+  line-height: 16px;
+}
+
+.daggerheart.dh-style.levelup .tiers-container .tier-container .checkbox-group-container .checkboxes-container .checkbox-grouping-coontainer.multi {
+  padding: 2px;
+}

@@ -1,122 +1,159 @@
 <div class="tabs inventory-tab">
 
   {{!-- WEAPONS --}}
-  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'weapons')}}collapsed{{/if}}" data-category-id="weapons">
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'weapons')}}collapsed{{/if}}"
+    data-category-id="weapons">
 
-  <div class="category-header" data-action="toggleCategory">
-    <h2>{{localize "DAGGERHEART.GENERAL.weapons"}}</h2>
-    <span class="create-btn">
-      <a data-action="addNewItem" data-document-class="Item" data-type="weapon" data-tooltip="Create">
-        <i class="fa-solid fa-plus icon-button" style=""></i>
-      </a>
-    </span>
-      
-    <span class="line"></span>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.weapons"}}</h2>
+      <span class="create-btn">
+        <a data-action="addNewItem" data-document-class="Item" data-type="weapon" data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button" style=""></i>
+        </a>
+      </span>
 
-  <div class="category-content">
-    {{#each weapons as |weaponData|}}
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each weapons as |weaponData|}}
       {{> "modules/daggerheart-sleek-ui/templates/components/card-weapon.hbs"
-          item=weaponData.item
-          tags=weaponData.tags
-          hopeCost=weaponData.hopeCost
-          usesData=weaponData.usesData
-          enrichedDescription=weaponData.enrichedDescription
-          ownershipLevel=@root.ownershipLevel}}
-    {{/each}}
-  </div>
+      item=weaponData.item
+      tags=weaponData.tags
+      hopeCost=weaponData.hopeCost
+      usesData=weaponData.usesData
+      enrichedDescription=weaponData.enrichedDescription
+      ownershipLevel=@root.ownershipLevel}}
+      {{/each}}
+    </div>
 
   </div>
 
   {{!-- ARMORS --}}
-  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'armors')}}collapsed{{/if}}" data-category-id="armors">
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'armors')}}collapsed{{/if}}"
+    data-category-id="armors">
 
-  <div class="category-header" data-action="toggleCategory">
-    <h2>{{localize "DAGGERHEART.GENERAL.armor"}}</h2>
-    <span class="create-btn">
-      <a data-action="addNewItem" data-document-class="Item" data-type="armor" data-tooltip="Create">
-        <i class="fa-solid fa-plus icon-button" style=""></i>
-      </a>
-    </span>
-      
-    <span class="line"></span>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.GENERAL.armor"}}</h2>
+      <span class="create-btn">
+        <a data-action="addNewItem" data-document-class="Item" data-type="armor" data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button" style=""></i>
+        </a>
+      </span>
 
-  <div class="category-content">
-    {{#each armors as |armorData|}}
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each armors as |armorData|}}
       {{> "modules/daggerheart-sleek-ui/templates/components/card-armor.hbs"
-          item=armorData.item
-          tags=armorData.tags
-          hopeCost=armorData.hopeCost
-          usesData=armorData.usesData
-          marks=armorData.marks
-          enrichedDescription=armorData.enrichedDescription
-          ownershipLevel=@root.ownershipLevel}}
-    {{/each}}
-  </div>
+      item=armorData.item
+      tags=armorData.tags
+      hopeCost=armorData.hopeCost
+      usesData=armorData.usesData
+      marks=armorData.marks
+      enrichedDescription=armorData.enrichedDescription
+      ownershipLevel=@root.ownershipLevel}}
+      {{/each}}
+    </div>
 
   </div>
 
   {{!-- CONSUMABLES --}}
-  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'consumables')}}collapsed{{/if}}" data-category-id="consumables">
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'consumables')}}collapsed{{/if}}"
+    data-category-id="consumables">
 
-  <div class="category-header" data-action="toggleCategory">
-    <h2>{{localize "DAGGERHEART.UI.ItemBrowser.folders.consumables"}}</h2>
-    <span class="create-btn">
-      <a data-action="addNewItem" data-document-class="Item" data-type="consumable" data-tooltip="Create">
-        <i class="fa-solid fa-plus icon-button" style=""></i>
-      </a>
-    </span>
-      
-    <span class="line"></span>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "DAGGERHEART.UI.ItemBrowser.folders.consumables"}}</h2>
+      <span class="create-btn">
+        <a data-action="addNewItem" data-document-class="Item" data-type="consumable" data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button" style=""></i>
+        </a>
+      </span>
 
-  <div class="category-content">
-    {{#each consumables as |consumableData|}}
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each consumables as |consumableData|}}
       {{> "modules/daggerheart-sleek-ui/templates/components/card-item.hbs"
-          item=consumableData.item
-          tags=consumableData.tags
-          hopeCost=consumableData.hopeCost
-          usesData=consumableData.usesData
-          quantity=consumableData.quantity
-          enrichedDescription=consumableData.enrichedDescription
-          ownershipLevel=@root.ownershipLevel}}
-    {{/each}}
-  </div>
+      item=consumableData.item
+      tags=consumableData.tags
+      hopeCost=consumableData.hopeCost
+      usesData=consumableData.usesData
+      quantity=consumableData.quantity
+      enrichedDescription=consumableData.enrichedDescription
+      ownershipLevel=@root.ownershipLevel}}
+      {{/each}}
+    </div>
 
   </div>
 
   {{!-- LOOT --}}
-  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'loot')}}collapsed{{/if}}" data-category-id="loot">
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'loot')}}collapsed{{/if}}"
+    data-category-id="loot">
 
-  <div class="category-header" data-action="toggleCategory">
-    <h2>{{localize "TYPES.Item.loot"}}</h2>
-    <span class="create-btn">
-      <a data-action="addNewItem" data-document-class="Item" data-type="loot" data-tooltip="Create">
-        <i class="fa-solid fa-plus icon-button" style=""></i>
-      </a>
-    </span>
-      
-    <span class="line"></span>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "TYPES.Item.loot"}}</h2>
+      <span class="create-btn">
+        <a data-action="addNewItem" data-document-class="Item" data-type="loot" data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button" style=""></i>
+        </a>
+      </span>
 
-  <div class="category-content">
-    {{#each loots as |lootData|}}
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each loots as |lootData|}}
       {{> "modules/daggerheart-sleek-ui/templates/components/card-item.hbs"
-          item=lootData.item
-          tags=lootData.tags
-          hopeCost=lootData.hopeCost
-          usesData=lootData.usesData
-          quantity=lootData.quantity
-          enrichedDescription=lootData.enrichedDescription
-          ownershipLevel=@root.ownershipLevel}}
-    {{/each}}
+      item=lootData.item
+      tags=lootData.tags
+      hopeCost=lootData.hopeCost
+      usesData=lootData.usesData
+      quantity=lootData.quantity
+      enrichedDescription=lootData.enrichedDescription
+      ownershipLevel=@root.ownershipLevel}}
+      {{/each}}
+    </div>
+
   </div>
 
-  </div>  
+  {{!-- INGREDIENTS (Hotpot) --}}
+  {{#if hotpotActive}}
+  <div class="category-wrapper {{#if (contains @root.collapsedCategories 'ingredients')}}collapsed{{/if}}"
+    data-category-id="ingredients">
+
+    <div class="category-header" data-action="toggleCategory">
+      <h2>{{localize "TYPES.Item.hotpot-daggerheart.ingredient"}}</h2>
+      <span class="create-btn">
+        <a data-action="addNewItem" data-document-class="Item" data-type="hotpot-daggerheart.ingredient"
+          data-tooltip="Create">
+          <i class="fa-solid fa-plus icon-button"></i>
+        </a>
+      </span>
+      <span class="line"></span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="category-content">
+      {{#each ingredients as |ingredientData|}}
+      {{> "modules/daggerheart-sleek-ui/templates/components/card-item.hbs"
+      item=ingredientData.item
+      tags=ingredientData.tags
+      hopeCost=ingredientData.hopeCost
+      usesData=ingredientData.usesData
+      quantity=ingredientData.quantity
+      enrichedDescription=ingredientData.enrichedDescription
+      ownershipLevel=@root.ownershipLevel}}
+      {{/each}}
+    </div>
+
+  </div>
+  {{/if}}
 
 </div>

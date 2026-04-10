@@ -56,4 +56,14 @@ export function registerSettings() {
     type: Boolean,
     default: false,
   });
+  // Theme Foundryborne
+  game.settings.register("daggerheart-sleek-ui", "theme", {
+    name: "Theme Foundryborne",
+    hint: "Enables the styling of Foundryborne's application windows to match Sleek UI's styling'",
+    requiresReload: true,
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
 }

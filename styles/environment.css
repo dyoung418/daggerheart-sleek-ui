@@ -50,6 +50,14 @@ HEADER
 }
 
 /* ==================== 
+FEATURES
+==================== */
+
+#sleek-ui-sheet .environment.features-tab .category-wrapper {
+  margin-bottom: 32px;
+}
+
+/* ==================== 
 POTENTIAL ADVERSARIES
 ==================== */
 

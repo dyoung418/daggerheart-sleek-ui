@@ -459,6 +459,17 @@ export function registerCharacterSheet() {
           damage: unarmedDamage,
         };
       }
+
+      //// HOTPOT INTEGRATION ////
+      const createIngredientData = async (item) => {
+        const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item });
+        return { item, tags: [], quantity: item.system.quantity, hopeCost: 0, usesData: null, enrichedDescription };
+      };
+
+      const ingredients = this.actor.itemTypes["hotpot-daggerheart.ingredient"]?.sort((a, b) => a.sort - b.sort) ?? [];
+      context.ingredients = await Promise.all(ingredients.map((item) => createIngredientData(item)));
+      context.hotpotActive = game.modules.get("hotpot-daggerheart")?.active ?? false;
+      //////////////////////////////
     }
 
     async _prepareEffectsData(context) {
@@ -644,6 +655,12 @@ export function registerCharacterSheet() {
           sidebar.scrollTop = this._savedSidebarScrollPosition;
         }
       }
+
+      // HOTPOT INTEGRATION //
+      if (game.modules.get("hotpot-daggerheart")?.active) {
+        this._createContextMenu(() => this._getContextMenuCommonOptions({ usable: false, toChat: true }), "[data-item-uuid][data-type='hotpot-daggerheart.ingredient']", { parentClassHooks: false, fixed: true });
+      }
+      ////////////////////////
     }
 
     _createFilterMenus(html) {}

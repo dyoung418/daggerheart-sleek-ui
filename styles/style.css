@@ -7,7 +7,8 @@
    CSS VARIABLES (Sheet-specific)
    ==================== */
 #sleek-ui-sheet,
-.floating-tabs-nav {
+.floating-tabs-nav,
+.dh-style {
   /* Fonts */
   --sleekUI-font-primary: "Montserrat", sans-serif;
   --sleekUI-font-secondary: "Rubik", sans-serif;
@@ -376,12 +377,13 @@
    ==================== */
 
 #sleek-ui-sheet input {
-  border: none;
+  border: none !important;
   outline: none;
+  transition: none;
   text-align: center;
   width: 100%;
-  border-radius: var(--sleekUI-border-radius-s);
-  background: var(--sleekUI-color-background-input);
+  border-radius: var(--sleekUI-border-radius-s) !important;
+  background: var(--sleekUI-color-background-input) !important;
   color: var(--sleekUI-color-primary) !important;
   font-family: var(--sleekUI-font-primary) !important;
   font-size: var(--sleekUI-font-size-md);
@@ -389,7 +391,7 @@
 }
 
 #sleek-ui-sheet input:hover {
-  background: var(--sleekUI-color-background-dark);
+  background: var(--sleekUI-color-background-dark) !important;
 }
 
 #sleek-ui-sheet input:focus {

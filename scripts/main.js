@@ -12,6 +12,16 @@ Hooks.once("init", () => {
   registerHelpers();
 });
 
+Hooks.on("ready", () => {
+  if (game.settings.get("daggerheart-sleek-ui", "theme")) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = "modules/daggerheart-sleek-ui/styles/general.css";
+    document.head.appendChild(link);
+  }
+});
+
 Hooks.once("ready", () => {
   registerCharacterSheet();
   registerAdversarySheet();
