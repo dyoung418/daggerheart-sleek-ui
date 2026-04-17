@@ -110,7 +110,12 @@ export function registerPartySheet() {
     }
 
     async _preparePartyMembersData() {
-      const members = [...(this.document.system.partyMembers ?? [])].sort((a, b) => a.name.localeCompare(b.name));
+      const members = [...(this.document.system.partyMembers ?? [])].sort((a, b) => {
+        const ownershipA = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : a.getUserLevel(game.user);
+        const ownershipB = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : b.getUserLevel(game.user);
+        if (ownershipB !== ownershipA) return ownershipB - ownershipA;
+        return a.name.localeCompare(b.name);
+      });
       const results = [];
 
       for (const actor of members) {

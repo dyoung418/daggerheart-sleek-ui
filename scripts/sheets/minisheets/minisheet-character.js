@@ -1,0 +1,271 @@
+import { hideMacrobar, showMacrobar, attachResourceListeners, attachToggleResourceListeners, attachHopeListeners, attachTraitRollListeners, attachFavoritesListeners, renderFavorites, attachDowntimeListeners } from "./utils-minisheet.js";
+
+export function registerCharacterMiniSheet() {
+  if (game.system.id !== "daggerheart") return;
+  if (!game.settings.get("daggerheart-sleek-ui", "enableMinisheet")) return;
+
+  class CharacterMiniSheet {
+    static currentActor = null;
+    static element = null;
+    static _tooltipPatched = false;
+    static _effectsObserver = null;
+    static _effectsOriginalParent = null;
+    static _outsideClickListener = null;
+
+    static _mountEffectsDisplay() {
+      const effectsEl = document.getElementById("effects-display");
+      if (!effectsEl) return;
+
+      const minisheet = this.element?.querySelector(".minisheet.character");
+      if (!minisheet) return;
+
+      this._effectsOriginalParent = effectsEl.parentElement;
+      minisheet.appendChild(effectsEl);
+      effectsEl.removeAttribute("hidden");
+
+      this._effectsObserver = new MutationObserver(() => effectsEl.removeAttribute("hidden"));
+      this._effectsObserver.observe(effectsEl, { attributes: true, attributeFilter: ["hidden"] });
+    }
+
+    static _unmountEffectsDisplay() {
+      const effectsEl = document.getElementById("effects-display");
+
+      if (this._effectsObserver) {
+        this._effectsObserver.disconnect();
+        this._effectsObserver = null;
+      }
+
+      if (effectsEl && this._effectsOriginalParent) {
+        this._effectsOriginalParent.appendChild(effectsEl);
+      }
+
+      this._effectsOriginalParent = null;
+    }
+
+    static _patchTooltipManager() {
+      if (this._tooltipPatched) return;
+      const mgr = game.tooltip;
+      if (!mgr) return;
+
+      const originalSetAnchor = mgr._setAnchor.bind(mgr);
+      mgr._setAnchor = function (direction) {
+        if (this.element?.closest("#sleek-ui-sheet .minisheet") && !this.element?.closest(".favorites-window")) {
+          const pad = this.constructor.TOOLTIP_MARGIN_PX;
+          const pos = this.element.getBoundingClientRect();
+          return this._setStyle({
+            textAlign: "center",
+            left: pos.left - this.tooltip.offsetWidth / 2 + pos.width / 2,
+            bottom: window.innerHeight - pos.top + pad,
+          });
+        }
+        return originalSetAnchor(direction);
+      };
+
+      this._tooltipPatched = true;
+    }
+
+    static _onControlToken(token, controlled) {
+      if (!controlled) {
+        if (!canvas.tokens?.controlled.length) CharacterMiniSheet._teardown();
+        return;
+      }
+
+      const actor = CharacterMiniSheet._resolveActor();
+
+      if (!actor) {
+        CharacterMiniSheet._teardown();
+        return;
+      }
+
+      if (actor === CharacterMiniSheet.currentActor) return;
+      if (actor.sheet?.rendered) return;
+
+      CharacterMiniSheet.currentActor = actor;
+      CharacterMiniSheet._render();
+    }
+
+    static _onUpdateActor(actor) {
+      if (actor === this.currentActor) this._render();
+    }
+
+    static _onUpdateItem(item) {
+      if (item.parent !== this.currentActor) return;
+      if (item === this.currentActor.system.armor) {
+        this._render();
+      } else {
+        this._renderFavorites();
+      }
+    }
+
+    static _resolveActor() {
+      const controlled = canvas.tokens?.controlled ?? [];
+      if (controlled.length !== 1) return null;
+
+      const token = controlled[0];
+      const actor = token.actor;
+      if (!actor || actor.type !== "character") return null;
+
+      const ownerLevel = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : actor.getUserLevel(game.user);
+      if (ownerLevel < CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) return null;
+
+      return actor;
+    }
+
+    static async _render() {
+      if (!this.currentActor) return;
+
+      const effectsEl = document.getElementById("effects-display");
+      const wasInMinisheet = effectsEl && this.element?.contains(effectsEl);
+      if (wasInMinisheet) document.body.appendChild(effectsEl);
+
+      const context = await this._prepareContext(this.currentActor);
+      if (!this.currentActor) return;
+
+      const html = await foundry.applications.handlebars.renderTemplate("modules/daggerheart-sleek-ui/templates/sheets/characters/minisheet.hbs", context);
+      if (!this.currentActor) return;
+
+      if (!this.element) {
+        this._injectContainer();
+        hideMacrobar();
+      }
+
+      this.element.innerHTML = html;
+      this._attachListeners();
+      this._patchTooltipManager();
+
+      if (wasInMinisheet) {
+        const minisheet = this.element.querySelector(".minisheet.character");
+        if (minisheet) {
+          minisheet.appendChild(effectsEl);
+          effectsEl.removeAttribute("hidden");
+        }
+      } else {
+        this._mountEffectsDisplay();
+      }
+    }
+
+    static async _renderFavorites() {
+      if (!this.currentActor || !this.element) return;
+
+      const context = await this._prepareContext(this.currentActor);
+      await renderFavorites(this.element, this.currentActor, "modules/daggerheart-sleek-ui/templates/sheets/characters/main/favorites.hbs", context);
+    }
+
+    static _teardown() {
+      this._unmountEffectsDisplay();
+
+      if (this._outsideClickListener) {
+        document.removeEventListener("click", this._outsideClickListener);
+        this._outsideClickListener = null;
+      }
+
+      this.currentActor = null;
+
+      if (this.element) {
+        this.element.remove();
+        this.element = null;
+      }
+
+      showMacrobar();
+    }
+
+    static _injectContainer() {
+      const container = document.createElement("div");
+      container.id = "sleek-ui-sheet";
+      container.style.cssText = "position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:70;";
+      document.body.appendChild(container);
+      this.element = container;
+    }
+
+    static async _prepareContext(actor) {
+      const systemContext = await actor.sheet._prepareContext({});
+
+      return {
+        document: actor,
+        source: actor,
+        actor,
+        ownershipLevel: game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : actor.getUserLevel(game.user),
+        showTooltip: true,
+        attributes: systemContext.attributes,
+        isDeath: actor.system.deathMoveViable,
+        beastformPortrait: systemContext.beastformPortrait,
+        quickAccess: systemContext.quickAccess,
+        quickAccessItems: systemContext.quickAccessItems,
+        unarmedAttack: systemContext.unarmedAttack,
+        weapons: systemContext.weapons,
+        armors: systemContext.armors,
+        loadoutCards: systemContext.loadoutCards,
+      };
+    }
+
+    static _attachListeners() {
+      if (!this.element || !this.currentActor) return;
+
+      const actor = this.currentActor;
+
+      attachHopeListeners(this.element, actor);
+      attachResourceListeners(this.element, actor);
+      attachToggleResourceListeners(this.element, actor);
+      attachTraitRollListeners(this.element, actor);
+      attachDowntimeListeners(this.element, actor);
+
+      this.element.querySelectorAll("[data-action='openSheet']").forEach((el) => {
+        el.addEventListener("click", () => actor.sheet?.render(true));
+      });
+
+      this.element.querySelectorAll("[data-action='makeDeathMove']").forEach((el) => {
+        el.addEventListener("click", async () => {
+          await new game.system.api.applications.dialogs.DeathMove(actor).render({ force: true });
+        });
+      });
+
+      attachFavoritesListeners(this.element, actor);
+
+      // Tab button toggle
+      this.element.querySelectorAll(".tab-button").forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const favWindow = this.element.querySelector(".favorites-window");
+          const isActive = favWindow?.classList.contains("active");
+          favWindow?.classList.toggle("active", !isActive);
+          btn.classList.toggle("active", !isActive);
+        });
+      });
+
+      // Close on outside click — remove previous listener before adding new one
+      if (this._outsideClickListener) {
+        document.removeEventListener("click", this._outsideClickListener);
+      }
+
+      this._outsideClickListener = (event) => {
+        if (!this.element) return;
+        const favWindow = this.element.querySelector(".favorites-window");
+        if (!favWindow?.classList.contains("active")) return;
+        if (!favWindow.contains(event.target) && !event.target.closest(".tab-button")) {
+          favWindow.classList.remove("active");
+          this.element.querySelector(".tab-button.active")?.classList.remove("active");
+        }
+      };
+
+      document.addEventListener("click", this._outsideClickListener);
+    }
+  }
+
+  Hooks.on("controlToken", CharacterMiniSheet._onControlToken.bind(CharacterMiniSheet));
+  Hooks.on("updateActor", CharacterMiniSheet._onUpdateActor.bind(CharacterMiniSheet));
+  Hooks.on("updateItem", CharacterMiniSheet._onUpdateItem.bind(CharacterMiniSheet));
+
+  Hooks.on("renderSleekCharacterSheet", (app) => {
+    if (app.actor === CharacterMiniSheet.currentActor) {
+      CharacterMiniSheet._teardown();
+    }
+  });
+
+  Hooks.on("closeSleekCharacterSheet", (app) => {
+    const actor = CharacterMiniSheet._resolveActor();
+    if (actor && app.actor === actor) {
+      CharacterMiniSheet.currentActor = actor;
+      CharacterMiniSheet._render();
+    }
+  });
+}

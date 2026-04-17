@@ -8,7 +8,8 @@
    ==================== */
 #sleek-ui-sheet,
 .floating-tabs-nav,
-.dh-style {
+.dh-style,
+.chat-message {
   /* Fonts */
   --sleekUI-font-primary: "Montserrat", sans-serif;
   --sleekUI-font-secondary: "Rubik", sans-serif;
@@ -98,6 +99,7 @@
   width: fit-content;
   min-width: 860px;
   border: none !important;
+  background: #1e1e2a99;
 }
 
 #sleek-ui-sheet.daggerheart.sheet.actor.adversary.sleek-ui {
@@ -278,14 +280,14 @@
 
 #sleek-ui-sheet .level-number {
   color: var(--sleekUI-color-primary) !important;
-  font-family: var(--sleekUI-font-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
   font-size: var(--sleekUI-font-size-xl);
   font-weight: var(--sleekUI-font-weight-bold);
 }
 
 #sleek-ui-sheet .value-number {
   color: var(--sleekUI-color-primary) !important;
-  font-family: var(--sleekUI-font-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
   font-size: var(--sleekUI-font-size-lg);
   font-weight: var(--sleekUI-font-weight-bold);
 }
@@ -300,7 +302,7 @@
 
 #sleek-ui-sheet .trait-number {
   color: var(--sleekUI-color-primary) !important;
-  font-family: var(--sleekUI-font-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
   font-size: var(--sleekUI-font-size-xl);
   font-weight: var(--sleekUI-font-weight-bold);
   line-height: var(--sleekUI-spacing-xm);

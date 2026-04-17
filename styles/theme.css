@@ -83,6 +83,236 @@ SCROLLBAR
 }
 
 /* ==================== 
+EFFECTS DISPLAY
+==================== */
+
+.daggerheart.dh-style.effects-display {
+  border: none;
+}
+
+.daggerheart.dh-style.effects-display .effects-display-container {
+  gap: var(--sleekUI-spacing-xs);
+}
+
+.daggerheart.dh-style.effects-display .effects-display-container .effect-container {
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  overflow: hidden;
+}
+
+/* ==================== 
+TOOLTIPS
+==================== */
+
+/* EFFECTS */
+
+#tooltip:where([popover]):has(.daggerheart.dh-style.tooltip),
+.locked-tooltip:where([popover]):has(.daggerheart.dh-style.tooltip) {
+  padding: 0;
+  margin: 2px;
+  background: none;
+  box-shadow: none;
+}
+
+.daggerheart.dh-style.tooltip {
+  background: var(--sleekUI-color-background-dark);
+  border: 1px solid var(--sleekUI-color-border) !important;
+  border-radius: var(--sleekUI-border-radius);
+  padding: var(--sleekUI-spacing-md);
+  text-align: center;
+  gap: 0;
+}
+
+.daggerheart.dh-style.tooltip::after {
+  display: none;
+}
+
+.daggerheart.dh-style.tooltip .tooltip-header {
+  padding: 0;
+  width: 100%;
+}
+
+.daggerheart.dh-style.tooltip .tooltip-header h2 {
+  font-family: var(--sleekUI-font-secondary) !important;
+  color: var(--sleekUI-color-primary);
+  font-size: var(--sleekUI-font-size-xl);
+  font-weight: 600;
+  font-style: normal;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.daggerheart.dh-style.tooltip .tooltip-header p {
+  margin: 0;
+  font-family: var(--sleekUI-font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--sleekUI-color-secondary);
+  font-size: var(--sleekUI-font-size-xs);
+}
+
+.daggerheart.dh-style.tooltip .description {
+  padding: 0;
+  width: 100%;
+  color: var(--sleekUI-color-secondary);
+  font-family: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-md);
+  line-height: 18px;
+}
+
+.daggerheart.dh-style.tooltip .close-hint {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  color: var(--sleekUI-color-tertiary);
+  font-size: var(--sleekUI-font-size-sm);
+}
+
+.daggerheart.dh-style.tooltip .tooltip-header::after,
+.daggerheart.dh-style.tooltip .close-hint::before {
+  content: "";
+  display: flex;
+  height: 1px;
+  background: var(--sleekUI-gradient-line-middle);
+  margin: var(--sleekUI-spacing-sm);
+}
+
+/* CARDS */
+
+#tooltip:has(div.daggerheart.dh-style.tooltip.card-style),
+aside[role="tooltip"]:has(div.daggerheart.dh-style.tooltip.card-style) {
+  outline: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+.daggerheart.dh-style.tooltip.card-style {
+  padding: 0;
+}
+
+.daggerheart.dh-style.tooltip.card-style .tooltip-image {
+  mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
+  border-radius: 8px 8px 0 0;
+}
+
+.daggerheart.dh-style.tooltip.card-style .tooltip-title {
+  margin: 0;
+  margin-top: -12px;
+  font-family: var(--sleekUI-font-secondary);
+  text-transform: uppercase;
+  color: var(--sleekUI-color-primary);
+  margin-bottom: var(--sleekUI-spacing-sm);
+}
+
+.daggerheart.dh-style.tooltip.card-style .tags {
+  padding: 0 var(--sleekUI-spacing-sm);
+  gap: var(--sleekUI-spacing-tiny);
+  margin-bottom: var(--sleekUI-spacing-sm);
+}
+
+.daggerheart.dh-style.tooltip.card-style .tags .tag {
+  font-size: var(--sleekUI-font-size-xs);
+  border-radius: var(--sleekUI-border-radius);
+  color: var(--sleekUI-color-tag3-text);
+  border: 1px solid var(--sleekUI-color-tag3-border);
+  background: var(--sleekUI-color-tag3-background);
+  height: 20px;
+  line-height: initial;
+  white-space: nowrap;
+}
+
+.daggerheart.dh-style.tooltip.card-style .tooltip-description {
+  padding: 0 var(--sleekUI-spacing-sm);
+  margin: 0;
+  font-family: var(--sleekUI-font-primary);
+  line-height: 18px;
+  color: var(--sleekUI-color-secondary);
+  margin-bottom: var(--sleekUI-spacing-sm);
+}
+
+.daggerheart.dh-style.tooltip.card-style .tooltip-description::before {
+  display: none;
+}
+
+.daggerheart.dh-style.tooltip.card-style .tooltip-hint {
+  background: none;
+  margin: 0;
+  margin-bottom: 12px;
+  padding: 0;
+  color: var(--sleekUI-color-tertiary);
+}
+
+/* DOMAIN */
+
+.daggerheart.dh-style.tooltip .item-icons-list .item-icon {
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: var(--sleekUI-color-background-dark);
+  font-size: var(--sleekUI-font-size-md);
+  gap: 2px;
+}
+
+.daggerheart.dh-style.tooltip .item-icons-list .item-icon:hover {
+  padding: 0;
+}
+
+.daggerheart.dh-style.tooltip .item-icons-list .item-icon i {
+  font-size: var(--sleekUI-font-size-xs);
+}
+
+.daggerheart.dh-style.tooltip .item-icons-list .item-icon img {
+  height: 18px;
+  width: 18px;
+}
+
+/* DEATH MOVE */
+
+#tooltip .daggerheart.dh-style.tooltip .tooltip-title-container {
+  height: 44px;
+  margin-bottom: var(--sleekUI-spacing-lg);
+}
+
+#tooltip .daggerheart.dh-style.tooltip .tooltip-title-container .tooltip-title {
+  font-family: var(--sleekUI-font-secondary);
+  font-size: var(--sleekUI-font-size-xl);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--sleekUI-color-primary);
+  z-index: 5;
+}
+
+#tooltip .daggerheart.dh-style.tooltip .tooltip-title-container .tooltip-image {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  border: 0;
+  height: 68px;
+  width: 60%;
+  object-fit: cover;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%);
+}
+
+#tooltip .daggerheart.dh-style.tooltip .tooltip-title-container .tooltip-title::after {
+  content: "";
+  position: absolute;
+  top: 68px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--sleekUI-color-border);
+}
+
+#tooltip .daggerheart.dh-style.tooltip .tooltip-description {
+  font-family: var(--sleekUI-font-primary);
+  line-height: 18px;
+  font-style: normal;
+  color: var(--sleekUI-color-secondary);
+}
+
+/* ==================== 
 WINDOW TAB NAV
 ==================== */
 
@@ -120,6 +350,12 @@ DESCRIPTION
   color: var(--sleekUI-color-secondary);
   line-height: 20px;
   padding-bottom: 0;
+}
+
+.daggerheart.dh-style:not(.sleek-ui) hr {
+  height: 1px;
+  margin: var(--sleekUI-spacing-sm);
+  background: var(--sleekUI-gradient-line-middle);
 }
 
 /* ==================== 
@@ -345,6 +581,10 @@ CARDS
 
 /* CARDS - DESCRIPTION //////////////////////////////////////////////////*/
 
+.application.daggerheart.dh-style .inventory-item .inventory-item-content {
+  background: none;
+}
+
 .application.daggerheart.dh-style .inventory-item .inventory-item-content.extensible {
   transition: none;
   padding: 0;
@@ -467,19 +707,23 @@ TRAIT ROLL
   width: unset !important;
 }
 
-.application.daggerheart .modifier-container span {
-  margin-bottom: -8px;
-  margin-top: 8px;
-}
-
 .application.daggerheart .modifier-container .advantage-chip span,
 .application.daggerheart .modifier-container .disadvantage-chip span {
   margin: 0;
 }
 
+.application.daggerheart .roll-dialog-container {
+  max-width: 450px;
+  gap: 0;
+}
+
 .application.daggerheart .roll-dialog-container .dices-section {
   padding: 1em;
   gap: 32px;
+}
+
+.application.daggerheart .roll-dialog-container .modifier-container.two-columns {
+  grid-template-columns: 2fr 1fr;
 }
 
 .application.daggerheart .roll-dialog-container .dices-section .dice-option .dice-select .label {
@@ -490,8 +734,16 @@ TRAIT ROLL
   text-transform: uppercase;
 }
 
-.application.daggerheart .roll-dialog-container .formula-label {
+.application.daggerheart .roll-dialog-container > .formula-label {
   text-align: center;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: 6px;
+  padding: var(--sleekUI-spacing-xs);
+  margin: var(--sleekUI-spacing-sm) 2px;
+}
+
+.application.daggerheart.dialog.dh-style.roll-selection {
+  min-width: 460px;
 }
 
 /* ==================== 
@@ -740,6 +992,27 @@ ACTIVE EFFECT CONFIG
 }
 
 /* ==================== 
+REST
+==================== */
+
+.application.daggerheart.dh-style.views.downtime .refreshables-container {
+  gap: var(--sleekUI-spacing-xs);
+  max-width: 280px;
+  grid-template-columns: 1fr;
+}
+
+.application.daggerheart.dh-style.views.downtime .refreshables-container .refreshable-container {
+  width: fit-content;
+  align-items: flex-start;
+  padding: var(--sleekUI-spacing-xs) var(--sleekUI-spacing-sm);
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
+}
+
+.application.daggerheart.dh-style.views.downtime .refreshables-container .refreshable-container .refreshable-name {
+  color: var(--sleekUI-color-secondary);
+}
+
+/* ==================== 
 CHARACTER CREATOR
 ==================== */
 
@@ -800,23 +1073,23 @@ CHARACTER CREATOR
 
 /* EMPTY CARD //////////////////////////////////////////////////*/
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-container {
+.application .component.dh-style.card-preview-container .preview-empty-container {
   height: 100%;
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container {
+.application .component.dh-style.card-preview-container .preview-empty-container .preview-empty-inner-container {
   align-items: center;
   justify-content: space-between;
   padding: 16px;
   gap: 8px;
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container i {
+.application .component.dh-style.card-preview-container .preview-empty-container .preview-empty-inner-container i {
   font-size: 24px;
   order: 2;
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-empty-inner-container .preview-empty-subtext {
+.application .component.dh-style.card-preview-container .preview-empty-container .preview-empty-inner-container .preview-empty-subtext {
   position: unset;
   text-align: start;
   font-size: var(--sleekUI-font-size-sm);
@@ -824,11 +1097,14 @@ CHARACTER CREATOR
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sleekUI-spacing-tiny);
 }
 
 /* SELECTED CARD //////////////////////////////////////////////////*/
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container {
+.application .component.dh-style.card-preview-container .preview-selected-container {
   max-width: none;
   background: var(--sleekUI-gradient-card);
   border: 1px solid var(--sleekUI-color-border);
@@ -838,18 +1114,18 @@ CHARACTER CREATOR
   cursor: pointer;
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container:hover {
+.application .component.dh-style.card-preview-container .preview-selected-container:hover {
   box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container .preview-image-container {
+.application .component.dh-style.card-preview-container .preview-selected-container .preview-image-container {
   flex: 0;
   height: 100%;
   min-width: 120px;
   mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 70%);
 }
 
-.daggerheart.dh-style.dialog.character-creation .main-selections-container .selections-container .card-preview-container .preview-selected-container .preview-text-container {
+.application .component.dh-style.card-preview-container .preview-selected-container .preview-text-container {
   text-align: start;
   font-family: "Rubik";
   font-size: 20px;
@@ -977,7 +1253,6 @@ CHARACTER CREATOR
   margin-bottom: 24px;
   flex-wrap: nowrap;
   padding: 16px 8px 20px 8px;
-  order: 2;
 }
 
 .daggerheart.dh-style.dialog.character-creation .tab.traits .traits-container .suggested-traits-container {
@@ -990,9 +1265,9 @@ CHARACTER CREATOR
   width: 100%;
   padding: 8px 16px;
   color: var(--sleekUI-color-secondary);
-  border: none;
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
   border-radius: var(--sleekUI-border-radius);
-  background: var(--sleekUI-color-background-dark);
+  background: none;
   font-weight: 500;
   color: var(--sleekUI-color-primary);
 }
@@ -1253,4 +1528,308 @@ LEVEL UP
 
 .daggerheart.dh-style.levelup .tiers-container .tier-container .checkbox-group-container .checkboxes-container .checkbox-grouping-coontainer.multi {
   padding: 2px;
+}
+
+/* ADVANCEMENT CHOICES //////////////////////////////////////////////////*/
+.daggerheart.levelup .tab.selections .section-container {
+  gap: 0 var(--sleekUI-spacing-xs);
+  min-height: fit-content;
+  margin: 0;
+}
+
+.daggerheart.levelup .tab.selections .section-container fieldset {
+  min-width: 30%;
+  margin-bottom: var(--sleekUI-spacing-xl);
+}
+
+/* NEW EXPERIENCE ////////////////////////////*/
+
+.daggerheart.dh-style.levelup .levelup-selections-container .achievement-experience-cards .achievement-experience-card:has(input[value=""]) {
+  background: var(--sleekUI-color-background-resourceHover);
+}
+
+.daggerheart.dh-style.levelup .levelup-selections-container .achievement-experience-cards .achievement-experience-card input {
+  width: 100%;
+}
+
+.daggerheart.dh-style.levelup .levelup-selections-container .achievement-experience-cards .achievement-experience-card span {
+  padding: 0 var(--sleekUI-spacing-xs);
+  font-family: var(--sleekUI-font-secondary);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.daggerheart.dh-style.levelup .levelup-selections-container .achievement-experience-cards .achievement-experience-card .achievement-experience-marker {
+  display: none;
+}
+
+/* CARDS //////////////////////////////////////////////////*/
+
+.daggerheart.levelup .levelup-selections-container .levelup-card-selection {
+  height: auto;
+  gap: var(--sleekUI-spacing-xs);
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section {
+  margin-bottom: var(--sleekUI-spacing-xl);
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .card-section-header h3 {
+  font-family: var(--sleekUI-font-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: var(--sleekUI-font-size-xl);
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .card-section-header side-line-div {
+  border-bottom: 1px solid var(--sleekUI-color-border);
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .card-preview-container {
+  background: none;
+  max-width: unset;
+  width: 100%;
+  max-width: 636px;
+  height: 86px;
+}
+
+/* SUBCLASS CARDS  */
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
+  border-radius: var(--sleekUI-border-radius);
+  overflow: hidden;
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container:has(.preview-selected-icon-container) {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container .preview-selected-icon-container {
+  display: none;
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container .preview-image-outer-container {
+  height: 100%;
+  min-width: 120px;
+  max-width: 120px;
+  mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 70%);
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container .preview-text-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container .preview-text-container span:first-child {
+  font-family: "Rubik";
+  font-size: 20px;
+  color: var(--sleekUI-color-primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-left: -16px;
+}
+
+.daggerheart.levelup .levelup-selections-container .card-section .subclass-cards .card-preview-container .preview-text-container span strong {
+  font-family: var(--sleekUI-font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--sleekUI-color-tag2-text);
+  border: 1px solid var(--sleekUI-color-tag2-border);
+  background: var(--sleekUI-color-tag2-background);
+  padding: 4px 8px;
+  border-radius: var(--sleekUI-border-radius);
+  margin-right: 16px;
+}
+
+/* MULTICLASS CARDS */
+
+.daggerheart.levelup .tab.selections .section-container .card-section:not(:has(.multiclass-cards), :has(.subclass-cards)) {
+  order: 2;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section:has(.multiclass-cards) {
+  order: 1;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards {
+  flex-direction: column;
+  align-items: center;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container {
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  max-width: 636px;
+  height: 64px;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container .levelup-domain-selection-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid var(--sleekUI-color-background-resourceHover);
+  border-radius: var(--sleekUI-border-radius);
+  overflow: hidden;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container .levelup-domain-selection-container:has(.levelup-domain-selected) {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container .levelup-domain-selection-container img {
+  height: 100%;
+  width: 86px;
+  object-fit: cover;
+  mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 70%);
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container .levelup-domain-selection-container .levelup-domain-label {
+  position: unset;
+  text-align: start;
+  font-family: "Rubik";
+  font-size: 20px;
+  color: var(--sleekUI-color-primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  background: none;
+  flex: 1;
+  order: 2;
+  padding: 0;
+  margin-left: -16px;
+}
+
+.daggerheart.levelup .tab.selections .section-container .card-section .multiclass-cards .levelup-domains-selection-container .levelup-domain-selection-container .levelup-domain-selected {
+  display: none;
+}
+
+/* SUMMARY //////////////////////////////////////////////////*/
+
+.daggerheart.levelup .summary-header side-line-div {
+  border-bottom: 1px solid var(--sleekUI-color-border);
+}
+
+.daggerheart.levelup .summary-header h3 {
+  font-family: var(--sleekUI-font-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container fieldset {
+  width: 280px;
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .level-achievements-container > div,
+.daggerheart.dh-style.levelup .levelup-summary-container .level-advancements-container > div {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sleekUI-spacing-sm);
+  background: var(--sleekUI-color-background-dark);
+  border-radius: var(--sleekUI-border-radius-s);
+  gap: var(--sleekUI-spacing-tiny);
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container h5.summary-section {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .level-achievements-container > div:has(.summary-section) .increase-container,
+.daggerheart.dh-style.levelup .levelup-summary-container .level-advancements-container > div:has(.summary-section) .increase-container {
+  padding-left: 8px;
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .increase-container {
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .increase-container i {
+  font-size: var(--sleekUI-font-size-xs);
+  padding: 0 var(--sleekUI-spacing-tiny);
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .summary-selection-container {
+  flex-wrap: wrap;
+}
+
+.daggerheart.dh-style.levelup .levelup-summary-container .summary-selection-container .summary-selection {
+  color: var(--sleekUI-color-tag3-text);
+  border: 1px solid var(--sleekUI-color-tag3-border);
+  background: var(--sleekUI-color-tag3-background);
+  border-radius: var(--sleekUI-border-radius);
+  padding: var(--sleekUI-spacing-tiny) var(--sleekUI-spacing-xs);
+}
+
+/* ==================== 
+COMPENDIUM
+==================== */
+
+.application.daggerheart.dh-style.compendium-browser .window-content .compendium-sidebar > .folder-list {
+  gap: var(--sleekUI-spacing-tiny);
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .expanded + .extensible {
+  margin-top: var(--sleekUI-spacing-md);
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list {
+  gap: var(--sleekUI-spacing-tiny);
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container {
+  background: var(--sleekUI-gradient-card);
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius-s);
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container .item-info {
+  height: 46px;
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container img {
+  border-radius: 0;
+  height: 100%;
+  width: 60px;
+  object-fit: cover;
+  mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list-header .item-list-name,
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list-header div[data-sort-key="system.domains"],
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-info span[data-item-key="system.domains"],
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container .item-list-name {
+  min-width: 180px;
+  max-width: 180px;
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container .item-desc.extensible {
+  margin: 0;
+  border-top: 1px solid var(--sleekUI-color-border);
+  transition: none;
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container:has(.expanded) .item-desc .wrapper {
+  padding: var(--sleekUI-spacing-md);
+  padding-left: 72px;
+}
+
+.application.daggerheart.dh-style.compendium-browser .window-content .item-list .item-container .item-desc.extensible .wrapper .item-tags {
+  justify-content: flex-start;
+}
+
+.daggerheart.dh-style .item-description-outer-container .item-description-container .item-links {
+  flex-wrap: wrap;
 }

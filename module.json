@@ -1,7 +1,7 @@
 {
   "id": "daggerheart-sleek-ui",
   "title": "Daggerheart: Sleek UI",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13.351"
@@ -43,6 +43,9 @@
     },
     {
       "src": "styles/environment.css"
+    },
+    {
+      "src": "styles/minisheets.css"
     }
   ],
   "authors": [

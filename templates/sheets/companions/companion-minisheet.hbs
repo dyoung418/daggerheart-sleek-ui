@@ -1,0 +1,76 @@
+<div class="minisheet companion">
+
+    {{!-- {{#if partner}}
+    <div class="portrait partner">
+        <img src="{{partner.img}}" alt="{{partner.name}}" data-action="openPartnerSheet" />
+    </div>
+    {{/if}} --}}
+
+    <div class="portrait">
+        <img src="{{document.img}}" alt="{{document.name}}" data-action="openSheet" />
+    </div>
+
+    <div class="character-information">
+        <div class="header-details">
+
+            <div class="values-row">
+
+                {{!-- EVASION --}}
+                <div class="values-container evasion">
+                    <h3>{{localize "DAGGERHEART.GENERAL.evasion"}}</h3>
+                    <span class="value-number">{{document.system.evasion}}</span>
+                </div>
+
+                <span class="separator"></span>
+
+                {{!-- ACTION ROLL --}}
+                <div class="values-container action" data-action="actionRoll">
+                    <h3>{{localize "DAGGERHEART.GENERAL.Roll.action"}}</h3>
+                </div>
+
+            </div>
+
+
+            <div class="resources-row">
+
+                {{!-- STRESS --}}
+                {{#if document.system.resources.stress}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.resources.stress.max}}
+                        <div class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.resources.stress.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <span class="resource-number">{{document.system.resources.stress.value}} /
+                            {{document.system.resources.stress.max}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+
+            </div>
+
+            <div class="values-row attack">
+
+                {{!-- ATTACK --}}
+                {{> "modules/daggerheart-sleek-ui/templates/components/card-actor-attack.hbs"}}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

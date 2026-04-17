@@ -1,0 +1,209 @@
+<div class="minisheet character">
+
+    <div class="portrait {{#if isDeath}}deathroll{{/if}}">
+        {{#if beastformPortrait}}
+        <img src="{{beastformPortrait}}" alt="{{document.name}} (Beastform)" class="beastform-portrait" data-action="openSheet" />
+        {{else}}
+        <img src="{{document.img}}" alt="{{document.name}}" data-action="openSheet" />
+        {{/if}}
+        {{#if isDeath}}
+        <a class="deathroll-btn" data-tooltip="DAGGERHEART.UI.Tooltip.makeDeathMove" data-action="makeDeathMove">
+            <i class="fa-solid fa-skull death-save"></i>
+        </a>
+        {{/if}}
+    </div>
+
+    <div class="character-information">
+        <div class="header-details">
+            <div class="hope-row">
+
+                {{!-- HOPE --}}
+                <div class="hope-container">
+                    <h3>{{localize "DAGGERHEART.GENERAL.hope"}}</h3>
+                    <span class="hope-bar">
+                        {{#times document.system.resources.hope.max}}
+                        <span class='hope-value' data-action='toggleHope' data-value="{{add this 1}}">
+                            {{#if (gte ../document.system.resources.hope.value (add this 1))}}
+                            <div class="hope-icon-full"></div>
+                            {{else}}
+                            <div class="hope-icon-empty"></div>
+                            {{/if}}
+                        </span>
+                        {{/times}}
+                    </span>
+                </div>
+
+                <div class="tab-button-container">
+
+                    {{!-- REST --}}
+                    <div class="btn-container">
+                        <button type="button" data-action="useDowntime" data-type="shortRest" data-tooltip="DAGGERHEART.APPLICATIONS.Downtime.shortRest.title">
+                            <i class="fa-solid fa-utensils"></i>
+                        </button>
+                        <button type="button" data-action="useDowntime" data-type="longRest" data-tooltip="DAGGERHEART.APPLICATIONS.Downtime.longRest.title">
+                            <i class="fa-solid fa-bed"></i>
+                        </button>
+                        <span class="separator"></span>
+                    </div>
+
+                    {{#if quickAccess}}
+                    <div class="tab-button">
+                        <h3>Quick Access</h3>
+                    </div>
+                    {{else}}
+                    <div class="tab-button">
+                        <h3>{{localize "DAGGERHEART.GENERAL.Tabs.equipment"}} & {{localize "DAGGERHEART.GENERAL.Tabs.loadout"}}</h3>
+                    </div>
+                    {{/if}}
+
+                </div>
+
+            </div>
+
+
+            <div class="values-row">
+
+                {{!-- EVASION --}}
+                <div class="values-container evasion">
+                    <h3>{{localize "DAGGERHEART.GENERAL.evasion"}}</h3>
+                    <span class="value-number">{{document.system.evasion}}</span>
+                </div>
+
+                {{!-- THRESHOLDS --}}
+                <div class="values-container thresholds">
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.minor"}}</h3>
+                    <span class="value-number">{{document.system.damageThresholds.major}}</span>
+
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="2">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.major"}}</h3>
+                    <span class="value-number">{{document.system.damageThresholds.severe}}</span>
+
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="3">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.severe"}}</h3>
+                </div>
+
+                {{!-- PROFICIENCY --}}
+                <div class="values-container proficiency">
+                    <h3>{{localize "DAGGERHEART.GENERAL.proficiency"}}</h3>
+                    <span class="value-number">{{document.system.proficiency}}</span>
+                </div>
+
+            </div>
+
+
+            <div class="resources-row">
+                {{!-- HIT POINTS --}}
+                {{#if document.system.resources.hitPoints.max}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">
+                        <i class="fa-solid fa-heart-crack"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.resources.hitPoints.max}}
+                        <div class="resource-pip pip-hitpoints {{#if (lt this @root.document.system.resources.hitPoints.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.resources.hitPoints.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">
+                        <span class="resource-number">{{document.system.resources.hitPoints.value}} /
+                            {{document.system.resources.hitPoints.max}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+
+                {{!-- STRESS --}}
+                {{#if document.system.resources.stress.max}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.resources.stress.max}}
+                        <div class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.resources.stress.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <span class="resource-number">{{document.system.resources.stress.value}} /
+                            {{document.system.resources.stress.max}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+
+                {{!-- ARMOR --}}
+                {{#if document.system.armor.system.marks}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.armor.system.marks.value" data-amount="1">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.armorScore}}
+                        <div class="resource-pip pip-armor {{#if (lt this @root.document.system.armor.system.marks.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.armor.system.marks.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.armor.system.marks.value" data-amount="1">
+                        <span class="resource-number">{{document.system.armor.system.marks.value}} /
+                            {{document.system.armorScore}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+            </div>
+
+            {{!-- TRAITS --}}
+            <div class="traits-row">
+                {{#each attributes as |attribute key|}}
+                <div class="trait-container {{#if (eq key @root.document.system.class.subclass.system.spellcastingTrait)}}spellcast-trait{{/if}}"
+                    {{#if (gte @root.ownershipLevel 3)}}data-action="rollAttribute" {{/if}} data-attribute="{{key}}"
+                    data-value="{{attribute.value}}">
+                    <span class="trait-name">{{localize (concat 'DAGGERHEART.CONFIG.Traits.' key '.short') }}</span>
+                    <span class="trait-number">
+                        {{#if (gt attribute.value 0)}}
+                        <span>+{{attribute.value}}</span>
+                        {{else}}
+                        <span>{{attribute.value}}</span>
+                        {{/if}}
+                    </span>
+                </div>
+                {{/each}}
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div class="favorites-window-container">
+        <div class="favorites-window">
+            {{> "modules/daggerheart-sleek-ui/templates/sheets/characters/main/favorites.hbs"}}
+        </div>
+    </div>
+
+</div>

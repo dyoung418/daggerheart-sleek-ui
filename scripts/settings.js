@@ -1,4 +1,6 @@
 export function registerSettings() {
+  // CLIENT SCOPE
+
   // Tabs Position
   game.settings.register("daggerheart-sleek-ui", "tabsPosition", {
     name: "Tabs Position",
@@ -24,7 +26,18 @@ export function registerSettings() {
     scope: "client",
     config: true,
     type: Boolean,
-    default: false,
+    default: true,
+  });
+
+  // Minisheets
+  game.settings.register("daggerheart-sleek-ui", "enableMinisheet", {
+    name: "Enable Mini Sheets",
+    hint: "Enables the mini sheet displayed at the bottom of the screen while a token is selected",
+    requiresReload: true,
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: true,
   });
 
   // Tooltips
@@ -36,6 +49,8 @@ export function registerSettings() {
     type: Boolean,
     default: true,
   });
+
+  // WORLD SCOPE
 
   // Beastform Portrait
   game.settings.register("daggerheart-sleek-ui", "beastformPortrait", {
@@ -56,6 +71,7 @@ export function registerSettings() {
     type: Boolean,
     default: false,
   });
+
   // Theme Foundryborne
   game.settings.register("daggerheart-sleek-ui", "theme", {
     name: "Theme Foundryborne",

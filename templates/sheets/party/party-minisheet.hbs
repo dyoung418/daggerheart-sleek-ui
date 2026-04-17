@@ -1,0 +1,72 @@
+<div class="minisheet party">
+
+    <div class="portrait">
+        <img src="{{source.img}}" data-action="openSheet" />
+    </div>
+
+    <div class="character-information">
+        {{#each partyMembersData as |memberData|}}
+        <div class="character" data-actor-uuid="{{memberData.actorUuid}}">
+
+            <div class="hope-row">
+                {{#if (gte memberData.ownershipLevel 2)}}
+                <div class="hope-container">
+                    {{#times memberData.hopeMax}}
+                    <span class="hope-value">
+                        {{#if (lt this memberData.hopeValue)}}
+                        <div class="hope-icon-full"></div>
+                        {{else}}
+                        <div class="hope-icon-empty"></div>
+                        {{/if}}
+                    </span>
+                    {{/times}}
+                </div>
+                {{/if}}
+            </div>
+
+            <div class="member-portrait {{#if memberData.actor.system.deathMoveViable}}deathroll{{/if}}">
+                {{#if memberData.actor.system.beastformPortrait}}
+                <img src="{{memberData.actor.system.beastformPortrait}}" alt="{{memberData.actor.name}}" class="beastform-portrait" data-action="openMemberSheet" />
+                {{else}}
+                <img src="{{memberData.actor.img}}" alt="{{memberData.actor.name}}" data-action="openMemberSheet" />
+                {{/if}}
+            </div>
+
+            {{#if (gte memberData.ownershipLevel 2)}}
+            <div class="resources-row">
+
+                {{!-- HIT POINTS --}}
+                {{#if memberData.hitPointsMax}}
+                <div class="resource-bar">
+                    {{#times memberData.hitPointsMax}}
+                    <div class="resource-pip pip-hitpoints {{#if (lt this memberData.hitPointsValue)}}filled{{else}}empty{{/if}}"></div>
+                    {{/times}}
+                </div>
+                {{/if}}
+
+                {{!-- STRESS --}}
+                {{#if memberData.stressMax}}
+                <div class="resource-bar">
+                    {{#times memberData.stressMax}}
+                    <div class="resource-pip pip-stress {{#if (lt this memberData.stressValue)}}filled{{else}}empty{{/if}}"></div>
+                    {{/times}}
+                </div>
+                {{/if}}
+
+                {{!-- ARMOR --}}
+                {{#if memberData.armorMax}}
+                <div class="resource-bar">
+                    {{#times memberData.armorMax}}
+                    <div class="resource-pip pip-armor {{#if (lt this memberData.armorValue)}}filled{{else}}empty{{/if}}"></div>
+                    {{/times}}
+                </div>
+                {{/if}}
+
+            </div>
+            {{/if}}
+
+        </div>
+        {{/each}}
+    </div>
+
+</div>

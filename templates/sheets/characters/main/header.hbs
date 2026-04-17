@@ -77,7 +77,7 @@
   </div>
 
   <div class="header-details">
-    <div class="hope-domains-rest-row">
+    <div class="hope-row">
       {{!-- HOPE --}}
       <div class="hope-container">
         <h3>{{localize "DAGGERHEART.GENERAL.hope"}}</h3>
@@ -93,9 +93,9 @@
           {{/times}}
         </span>
       </div>
-      <span class="separator"></span>
       {{!-- DOMAINS --}}
       {{#if document.system.class.value}}
+      <span class="separator"></span>
       <div class="domains-container">
         {{#each document.system.domainData as |data|}}
         <div class="domain">
@@ -106,10 +106,12 @@
       {{/if}}
       {{!-- REST --}}
       <div class="btn-container">
+        {{#if inParty}}
         <button type="button" data-action="viewParty" data-tooltip="DAGGERHEART.ACTORS.Character.viewParty">
           <i class="fa-solid fa-fw fa-users"></i>
         </button>
         <span class="separator"></span>
+        {{/if}}
         <button type="button" data-action="useDowntime" data-type="shortRest" data-tooltip="{{localize "DAGGERHEART.APPLICATIONS.Downtime.shortRest.title"}}">
           <i class="fa-solid fa-utensils"></i>
         </button>

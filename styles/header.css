@@ -88,7 +88,7 @@
    HOPE
    ==================== */
 
-#sleek-ui-sheet .hope-domains-rest-row {
+#sleek-ui-sheet .hope-row {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -132,11 +132,7 @@
   height: 14px;
   border-radius: 2px;
   transform: rotate(45deg);
-  background: linear-gradient(
-    135deg,
-    rgba(228, 149, 80, 1) 0%,
-    rgba(243, 194, 103, 1) 100%
-  );
+  background: linear-gradient(135deg, rgba(228, 149, 80, 1) 0%, rgba(243, 194, 103, 1) 100%);
   box-shadow:
     inset 1px 1px 1px 0px #ffdb9e,
     0px 0px 16px 0px rgba(243, 194, 103, 0.5);
@@ -182,8 +178,7 @@
 #sleek-ui-sheet .domains-container .domain img {
   width: 26px;
   height: 26px;
-  filter: invert(100%) sepia(5%) saturate(5777%) hue-rotate(307deg)
-    brightness(101%) contrast(90%);
+  filter: invert(100%) sepia(5%) saturate(5777%) hue-rotate(307deg) brightness(101%) contrast(90%);
 }
 
 /* ==================== 
@@ -194,8 +189,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--sleekUI-spacing-xs);
   height: 100%;
+  flex: 1;
 }
 
 #sleek-ui-sheet .btn-container button {
@@ -208,6 +205,8 @@
   border: 1px solid var(--sleekUI-color-border);
   background: var(--sleekUI-gradient-card);
   color: var(--sleekUI-color-primary);
+  outline: none;
+  box-shadow: none;
   transition: none;
 }
 
@@ -223,6 +222,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: var(--sleekUI-spacing-xs);
   height: 32px;
 }
@@ -237,6 +237,7 @@
   padding: 0 var(--sleekUI-spacing-md);
   border: 1px solid var(--sleekUI-color-border);
   border-radius: var(--sleekUI-border-radius);
+  white-space: nowrap;
 }
 
 #sleek-ui-sheet .values-row .values-container.thresholds {
@@ -245,9 +246,7 @@
   padding: 0;
 }
 
-#sleek-ui-sheet
-  .values-row
-  .values-container.thresholds:has(.threshold-damage:hover) {
+#sleek-ui-sheet .values-row .values-container.thresholds:has(.threshold-damage:hover) {
   box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
 }
 
@@ -257,10 +256,7 @@
   cursor: pointer;
 }
 
-#sleek-ui-sheet
-  .values-row
-  .values-container.thresholds
-  .threshold-damage:hover {
+#sleek-ui-sheet .values-row .values-container.thresholds .threshold-damage:hover {
   color: var(--sleekUI-color-tertiary) !important;
 }
 

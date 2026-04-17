@@ -124,6 +124,8 @@ FEATURES
 
 #sleek-ui-sheet .actor-attack .card-container.header .card-resource .actor-attack-roll {
   cursor: pointer;
+  font-family: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-md);
 }
 
 #sleek-ui-sheet .adversary .card-container.header .card-icon {

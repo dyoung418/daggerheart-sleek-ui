@@ -63,6 +63,7 @@ PARTNER
   height: 100%;
   padding: 0 var(--sleekUI-spacing-xs);
   border-left: 1px solid var(--sleekUI-color-border);
+  cursor: pointer;
 }
 
 #sleek-ui-sheet .card-text:has(.no-partner) {
@@ -100,6 +101,7 @@ ACTIONS
 
 #sleek-ui-sheet .companion .card-container.header .card-icon {
   width: 56px;
+  cursor: pointer;
 }
 
 #sleek-ui-sheet .companion .card-container.header .card-icon .dice-roll {

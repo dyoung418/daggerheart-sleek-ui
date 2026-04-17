@@ -1,0 +1,143 @@
+<div class="minisheet adversary">
+
+    <div
+        class="portrait {{#if (and source.system.resources.hitPoints.max (gte source.system.resources.hitPoints.value source.system.resources.hitPoints.max))}}deathroll{{/if}}">
+        <img src="{{document.img}}" alt="{{document.name}}" data-action="openSheet" />
+        {{#if (and source.system.resources.hitPoints.max (gte source.system.resources.hitPoints.value
+        source.system.resources.hitPoints.max))}}
+        <div class="dead"><i class="fa-solid fa-skull"></i></div>
+        {{/if}}
+    </div>
+
+    <div class="character-information">
+        <div class="header-details">
+
+            <div class="values-row">
+
+                {{!-- DIFFICULTY --}}
+                <div class="values-container difficulty">
+                    <h3>{{localize 'DAGGERHEART.ACTORS.Adversary.FIELDS.difficulty.label'}}</h3>
+                    <span class="value-number">{{document.system.difficulty}}</span>
+                </div>
+
+                {{!-- THRESHOLDS --}}
+                <div class="values-container thresholds">
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.minor"}}</h3>
+                    <span class="value-number">{{document.system.damageThresholds.major}}</span>
+
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="2">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.major"}}</h3>
+                    <span class="value-number">{{document.system.damageThresholds.severe}}</span>
+
+                    <h3 class="threshold-damage" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="3">{{localize
+                        "DAGGERHEART.GENERAL.DamageThresholds.severe"}}</h3>
+                </div>
+                
+                <span class="separator"></span>
+
+                {{!-- FEATURES BUTTON --}}
+                <div class="tab-button-container">
+                    
+                    <div class="tab-button">
+                        <h3>{{localize "DAGGERHEART.GENERAL.Tabs.features"}}</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="resources-row">
+                {{!-- HIT POINTS --}}
+                {{#if document.system.resources.hitPoints.max}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">
+                        <i class="fa-solid fa-heart-crack"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.resources.hitPoints.max}}
+                        <div class="resource-pip pip-hitpoints {{#if (lt this @root.document.system.resources.hitPoints.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.resources.hitPoints.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.hitPoints.value" data-amount="1">
+                        <span class="resource-number">{{document.system.resources.hitPoints.value}} /
+                            {{document.system.resources.hitPoints.max}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+
+                {{!-- STRESS --}}
+                {{#if document.system.resources.stress.max}}
+                <div class="resource-container">
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <div class="resource-bar">
+                        {{#times document.system.resources.stress.max}}
+                        <div class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
+                            data-action="toggleResource" data-resource="system.resources.stress.value"
+                            data-value="{{add this 1}}">
+                        </div>
+                        {{/times}}
+                    </div>
+
+                    <div class="resource-header" data-action="modifyResource"
+                        data-resource="system.resources.stress.value" data-amount="1">
+                        <span class="resource-number">{{document.system.resources.stress.value}} /
+                            {{document.system.resources.stress.max}}</span>
+                    </div>
+
+                </div>
+                {{/if}}
+
+            </div>
+
+            <div class="values-row attack">
+
+                {{!-- ATTACK --}}
+                <div class="values-container attack-bonus">
+                    <span class="value-number">+{{document.system.attackBonus}}</span>
+                </div>
+                
+                {{> "modules/daggerheart-sleek-ui/templates/components/card-actor-attack.hbs"}}
+                
+                <span class="separator"></span>
+
+                {{!-- REACTION ROLL --}}
+                <div class="values-container reaction" data-action="reactionRoll">
+                    <h3>{{localize "DAGGERHEART.GENERAL.reactionRoll"}}</h3>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="favorites-window-container">
+        <div class="favorites-window">
+            <div class="features-container">
+                {{#each adversaryFeatures as |featureData|}}
+                {{> "modules/daggerheart-sleek-ui/templates/components/card-npc-features.hbs"}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+</div>

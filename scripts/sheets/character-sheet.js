@@ -76,6 +76,7 @@ export function registerCharacterSheet() {
       context.showTooltip = game.settings.get("daggerheart-sleek-ui", "showTooltip");
       context.currencyLabel = game.settings.get("daggerheart-sleek-ui", "currencyLabel");
       context.ownershipLevel = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : this.actor.getUserLevel(game.user);
+      context.inParty = this.actor.parties.size > 0;
 
       if (Object.keys(this.tabs).length === 0) {
         this.tabs = {
@@ -778,31 +779,16 @@ export function registerCharacterSheet() {
     }
 
     _attachResourceListeners(htmlElement) {
-      const resourceHeaders = htmlElement.querySelectorAll(".resource-header");
-      resourceHeaders.forEach((element) => {
-        element.addEventListener("click", (event) => {
-          this.constructor._onModifyResource.call(this, event, element);
-        });
+      htmlElement.querySelectorAll('[data-action="modifyResource"]').forEach((element) => {
         element.addEventListener("contextmenu", (event) => {
           this.constructor._onModifyResource.call(this, event, element);
         });
       });
 
-      const resourcePips = htmlElement.querySelectorAll('[data-action="toggleResource"]');
-      resourcePips.forEach((element) => {
-        element.addEventListener("click", (event) => {
-          this.constructor._onToggleResource.call(this, event, element);
-        });
+      htmlElement.querySelectorAll('[data-action="toggleResource"]').forEach((element) => {
         element.addEventListener("contextmenu", (event) => {
           event.preventDefault();
           this.constructor._onToggleResource.call(this, event, element);
-        });
-      });
-
-      const resourceModifiers = htmlElement.querySelectorAll('[data-action="modifyResource"]');
-      resourceModifiers.forEach((element) => {
-        element.addEventListener("contextmenu", (event) => {
-          this.constructor._onModifyResource.call(this, event, element);
         });
       });
     }
