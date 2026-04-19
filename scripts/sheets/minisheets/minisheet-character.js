@@ -1,4 +1,21 @@
-import { hideMacrobar, showMacrobar, attachResourceListeners, attachToggleResourceListeners, attachHopeListeners, attachTraitRollListeners, attachFavoritesListeners, renderFavorites, attachDowntimeListeners } from "./utils-minisheet.js";
+import {
+  hideMacrobar,
+  collapseMinisheet,
+  injectReopenButton,
+  removeReopenButton,
+  isMinisheetCollapsed,
+  setMinisheetCollapsed,
+  showMacrobar,
+  attachResourceListeners,
+  attachToggleResourceListeners,
+  attachHopeListeners,
+  attachTraitRollListeners,
+  attachFavoritesListeners,
+  renderFavorites,
+  attachDowntimeListeners,
+} from "./utils-minisheet.js";
+
+import { applyMinisheetScale } from "../../settings.js";
 
 export function registerCharacterMiniSheet() {
   if (game.system.id !== "daggerheart") return;
@@ -130,16 +147,77 @@ export function registerCharacterMiniSheet() {
       }
 
       this.element.innerHTML = html;
-      this._attachListeners();
-      this._patchTooltipManager();
 
-      if (wasInMinisheet) {
-        const minisheet = this.element.querySelector(".minisheet.character");
-        if (minisheet) {
-          minisheet.appendChild(effectsEl);
+      const collapsed = isMinisheetCollapsed();
+
+      // Inject close button into the minisheet
+      const minisheet = this.element.querySelector(".minisheet");
+      if (minisheet) {
+        const closeBtn = document.createElement("button");
+        closeBtn.classList.add("toggle-minisheet", "close");
+        closeBtn.dataset.tooltip = "Close Mini Sheet";
+        closeBtn.innerHTML = `<i class="fa-solid fa-chevron-down"></i>`;
+        minisheet.appendChild(closeBtn);
+
+        closeBtn.addEventListener("click", () => {
+          setMinisheetCollapsed(true);
+          collapseMinisheet(this.element, () => {
+            this._unmountEffectsDisplay();
+            injectReopenButton(() => {
+              hideMacrobar();
+              this.element.style.transition = "transform 0.3s ease";
+              this.element.style.transform = this.element.style.transform.replace(/\s*translateY\([^)]*\)/, "").trim();
+              this._mountEffectsDisplay();
+              setTimeout(() => applyMinisheetScale(), 310);
+            });
+
+            // Animate macrobar up
+            const hotbar = document.getElementById("hotbar");
+            if (hotbar) {
+              hotbar.style.transition = "none";
+              hotbar.style.transform = `translateY(100%)`;
+              hotbar.style.display = "";
+              // Force reflow so the initial transform is applied before animating
+              hotbar.offsetHeight;
+              hotbar.style.transition = "transform 0.3s ease";
+              hotbar.style.transform = `translateY(0)`;
+            }
+          });
+        });
+      }
+
+      this._attachListeners();
+      this._patchTooltipManager(); // skip in party minisheet, it doesn't have this
+
+      if (collapsed) {
+        // Start already collapsed, no animation
+        const height = this.element.offsetHeight;
+        this.element.style.transition = "none";
+        this.element.style.transform = `translateX(-50%) translateY(${height}px)`;
+        showMacrobar();
+        injectReopenButton(() => {
+          hideMacrobar();
+          this.element.style.transition = "transform 0.3s ease";
+          this.element.style.transform = `translateX(-50%)`;
+          this._mountEffectsDisplay();
+          setTimeout(() => applyMinisheetScale(), 310);
+        });
+        // Effects stay unmounted while collapsed
+      } else {
+        this.element.style.transition = "";
+        this.element.style.transform = `translateX(-50%)`;
+        applyMinisheetScale();
+        // Effects mount handled below
+      }
+
+      // Effects display — only mount if not collapsed
+      if (wasInMinisheet && !collapsed) {
+        const ms = this.element.querySelector(".minisheet");
+        if (ms) {
+          ms.appendChild(effectsEl);
           effectsEl.removeAttribute("hidden");
         }
-      } else {
+      } else if (!collapsed) {
         this._mountEffectsDisplay();
       }
     }
@@ -153,6 +231,7 @@ export function registerCharacterMiniSheet() {
 
     static _teardown() {
       this._unmountEffectsDisplay();
+      removeReopenButton();
 
       if (this._outsideClickListener) {
         document.removeEventListener("click", this._outsideClickListener);

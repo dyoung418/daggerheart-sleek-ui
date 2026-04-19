@@ -3,11 +3,15 @@
 export function hideMacrobar() {
   const hotbar = document.getElementById("hotbar");
   if (hotbar) hotbar.style.display = "none";
+  removeReopenButton();
 }
 
 export function showMacrobar() {
   const hotbar = document.getElementById("hotbar");
-  if (hotbar) hotbar.style.display = "";
+  if (!hotbar) return;
+  hotbar.style.transition = "";
+  hotbar.style.transform = "";
+  hotbar.style.display = "";
 }
 
 // ─── MINISHEET RESOURCE LISTENERS ────────────────────────────────────────────
@@ -102,6 +106,54 @@ export function attachReactionRollListeners(element, actor) {
       actor.diceRoll(config);
     });
   });
+}
+
+// ─── MINISHEET COLLAPSE STATE ─────────────────────────────────────────────────
+
+export function isMinisheetCollapsed() {
+  return game.user.getFlag("daggerheart-sleek-ui", "minisheetCollapsed") ?? false;
+}
+
+export function setMinisheetCollapsed(value) {
+  game.user.setFlag("daggerheart-sleek-ui", "minisheetCollapsed", value);
+}
+
+// ─── MINISHEET COLLAPSE ANIMATION ────────────────────────────────────────────
+
+export function collapseMinisheet(element, onCollapsed) {
+  const height = element.offsetHeight;
+  const current = element.style.transform.replace(/\s*translateY\([^)]*\)/, "").trim();
+  element.style.transition = "transform 0.3s ease";
+  element.style.transform = `${current} translateY(${height + 58}px)`;
+
+  setTimeout(() => {
+    if (onCollapsed) onCollapsed();
+  }, 300);
+}
+
+// ─── REOPEN BUTTON ───────────────────────────────────────────────────────────
+
+export function injectReopenButton(onReopen) {
+  removeReopenButton(); // always clean up before injecting
+  const hotbar = document.getElementById("hotbar");
+  if (!hotbar) return;
+
+  const btn = document.createElement("button");
+  btn.id = "minisheet-reopen-btn";
+  btn.classList.add("toggle-minisheet");
+  btn.dataset.tooltip = "Open Mini Sheet";
+  btn.innerHTML = `<i class="fa-solid fa-chevron-up"></i>`;
+  hotbar.appendChild(btn); // inside #hotbar
+
+  btn.addEventListener("click", () => {
+    setMinisheetCollapsed(false);
+    removeReopenButton();
+    onReopen();
+  });
+}
+
+export function removeReopenButton() {
+  document.getElementById("minisheet-reopen-btn")?.remove();
 }
 
 // ─── MINISHEET RESOURCE HANDLERS ─────────────────────────────────────────────

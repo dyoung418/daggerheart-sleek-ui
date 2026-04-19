@@ -1,5 +1,5 @@
 import { preloadHandlebarsTemplates, registerHelpers } from "./helpers.js";
-import { registerSettings } from "./settings.js";
+import { registerSettings, applyMinisheetScale, applyTheme } from "./settings.js";
 
 import { registerCharacterSheet } from "./sheets/character-sheet.js";
 import { registerCompanionSheet } from "./sheets/companion-sheet.js";
@@ -20,18 +20,8 @@ Hooks.once("init", () => {
 });
 
 Hooks.on("ready", () => {
-  if (game.settings.get("daggerheart-sleek-ui", "theme")) {
-    const addStyle = (href) => {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.type = "text/css";
-      link.href = href;
-      document.head.appendChild(link);
-    };
-
-    addStyle("modules/daggerheart-sleek-ui/styles/theme.css");
-    addStyle("modules/daggerheart-sleek-ui/styles/theme-chat.css");
-  }
+  applyMinisheetScale();
+  applyTheme();
 });
 
 Hooks.once("ready", () => {

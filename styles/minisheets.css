@@ -16,9 +16,9 @@ GENERAL
   background: var(--sleekUI-color-background-primary);
   backdrop-filter: blur(8px);
   border-radius: var(--sleekUI-border-radius) var(--sleekUI-border-radius) 0 0;
-  /* border: 1px solid var(--sleekUI-color-border); */
   border-bottom: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transform-origin: bottom;
 }
 
 #sleek-ui-sheet .minisheet::before {
@@ -465,4 +465,40 @@ PARTY MINISHEET
   /* background: rgba(0, 0, 0, 0.2); */
   backdrop-filter: blur(4px);
   border: 1px solid var(--sleekUI-color-background-resourceHover);
+}
+
+/* //////////////////////////////
+TOGGLE BUTTON
+////////////////////////////// */
+
+.toggle-minisheet {
+  position: absolute;
+  bottom: 8px;
+  left: -40px;
+  width: 32px;
+  height: 32px;
+  background: rgba(26, 30, 43, 0.75);
+  border-radius: 8px;
+  border: 1px solid #4f5989;
+  color: #efe6d8;
+  outline: none;
+  transition: none;
+  opacity: 0.5;
+}
+
+.toggle-minisheet:hover {
+  box-shadow: 0px 0px 9px -1px #4f5989;
+  opacity: 1;
+}
+
+#hotbar {
+  position: relative;
+}
+
+#hotbar .toggle-minisheet {
+  left: -44px;
+  top: 0;
+  bottom: 0;
+  align-self: center;
+  opacity: 1;
 }

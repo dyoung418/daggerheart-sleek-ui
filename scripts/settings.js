@@ -1,5 +1,5 @@
 export function registerSettings() {
-  // CLIENT SCOPE
+  // CLIENT SCOPE //
 
   // Tabs Position
   game.settings.register("daggerheart-sleek-ui", "tabsPosition", {
@@ -40,6 +40,22 @@ export function registerSettings() {
     default: true,
   });
 
+  //Minisheet Scaling
+  game.settings.register("daggerheart-sleek-ui", "minisheetScale", {
+    name: "Minisheet Scale",
+    hint: "Adjusts the scale of the mini sheets to better accomodate smaller or larger screens",
+    scope: "client",
+    config: true,
+    type: Number,
+    range: {
+      min: 0.8,
+      max: 1.2,
+      step: 0.05,
+    },
+    default: 1,
+    onChange: (value) => applyMinisheetScale(value),
+  });
+
   // Tooltips
   game.settings.register("daggerheart-sleek-ui", "showTooltip", {
     name: "Show Card Tooltips",
@@ -50,7 +66,7 @@ export function registerSettings() {
     default: true,
   });
 
-  // WORLD SCOPE
+  // WORLD SCOPE //
 
   // Beastform Portrait
   game.settings.register("daggerheart-sleek-ui", "beastformPortrait", {
@@ -82,4 +98,28 @@ export function registerSettings() {
     type: Boolean,
     default: true,
   });
+}
+
+export function applyMinisheetScale() {
+  const value = game.settings.get("daggerheart-sleek-ui", "minisheetScale");
+  const sheet = document.getElementById("sleek-ui-sheet");
+  if (sheet) {
+    sheet.style.transform = `translateX(-50%) scale(${value})`;
+    sheet.style.transformOrigin = "bottom center";
+  }
+}
+
+export function applyTheme() {
+  if (!game.settings.get("daggerheart-sleek-ui", "theme")) return;
+
+  const addStyle = (href) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = href;
+    document.head.appendChild(link);
+  };
+
+  addStyle("modules/daggerheart-sleek-ui/styles/theme.css");
+  addStyle("modules/daggerheart-sleek-ui/styles/theme-chat.css");
 }
