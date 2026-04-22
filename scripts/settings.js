@@ -91,7 +91,18 @@ export function registerSettings() {
   // Theme Foundryborne
   game.settings.register("daggerheart-sleek-ui", "theme", {
     name: "Theme Foundryborne",
-    hint: "Enables the styling of Foundryborne's application windows to match Sleek UI's styling'",
+    hint: "Enables the styling of Foundryborne's application windows to match Sleek UI's styling",
+    requiresReload: true,
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
+  // Theme Chat Cards
+  game.settings.register("daggerheart-sleek-ui", "themeChat", {
+    name: "Theme Chat Cards",
+    hint: "Enables the styling of chat cards to match Sleek UI's styling",
     requiresReload: true,
     scope: "world",
     config: true,
@@ -102,10 +113,10 @@ export function registerSettings() {
 
 export function applyMinisheetScale() {
   const value = game.settings.get("daggerheart-sleek-ui", "minisheetScale");
-  const sheet = document.getElementById("sleek-ui-sheet");
-  if (sheet) {
-    sheet.style.transform = `translateX(-50%) scale(${value})`;
-    sheet.style.transformOrigin = "bottom center";
+  const wrapper = document.querySelector("#sleek-ui-sheet .minisheet-scale-wrapper");
+  if (wrapper) {
+    wrapper.style.transform = `scale(${value})`;
+    wrapper.style.transformOrigin = "bottom center";
   }
 }
 
@@ -121,5 +132,18 @@ export function applyTheme() {
   };
 
   addStyle("modules/daggerheart-sleek-ui/styles/theme.css");
+}
+
+export function applyThemeChat() {
+  if (!game.settings.get("daggerheart-sleek-ui", "themeChat")) return;
+
+  const addStyle = (href) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = href;
+    document.head.appendChild(link);
+  };
+
   addStyle("modules/daggerheart-sleek-ui/styles/theme-chat.css");
 }

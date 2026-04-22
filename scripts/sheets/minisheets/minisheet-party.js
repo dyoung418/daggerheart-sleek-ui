@@ -73,7 +73,8 @@ export function registerPartyMiniSheet() {
         hideMacrobar();
       }
 
-      this.element.innerHTML = html;
+      const scaleWrapper = this.element.querySelector(".minisheet-scale-wrapper");
+      scaleWrapper.innerHTML = html;
 
       const collapsed = isMinisheetCollapsed();
 
@@ -91,7 +92,8 @@ export function registerPartyMiniSheet() {
             injectReopenButton(() => {
               hideMacrobar();
               this.element.style.transition = "transform 0.3s ease";
-              this.element.style.transform = this.element.style.transform.replace(/\s*translateY\([^)]*\)/, "").trim();
+              this.element.style.transform = `translateX(-50%)`;
+              this._mountEffectsDisplay();
               setTimeout(() => applyMinisheetScale(), 310);
             });
 
@@ -113,12 +115,13 @@ export function registerPartyMiniSheet() {
       if (collapsed) {
         const height = this.element.offsetHeight;
         this.element.style.transition = "none";
-        this.element.style.transform = `translateX(-50%) translateY(${height}px)`;
+        this.element.style.transform = `translateX(-50%) translateY(${height + 58}px)`;
         showMacrobar();
         injectReopenButton(() => {
           hideMacrobar();
           this.element.style.transition = "transform 0.3s ease";
           this.element.style.transform = `translateX(-50%)`;
+          this._mountEffectsDisplay();
           setTimeout(() => applyMinisheetScale(), 310);
         });
       } else {
@@ -145,6 +148,15 @@ export function registerPartyMiniSheet() {
       const container = document.createElement("div");
       container.id = "sleek-ui-sheet";
       container.style.cssText = "position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:70;";
+
+      const scaleWrapper = document.createElement("div");
+      scaleWrapper.classList.add("minisheet-scale-wrapper");
+      scaleWrapper.style.transformOrigin = "bottom center";
+
+      const value = game.settings.get("daggerheart-sleek-ui", "minisheetScale");
+      scaleWrapper.style.transform = `scale(${value})`;
+
+      container.appendChild(scaleWrapper);
       document.body.appendChild(container);
       this.element = container;
     }

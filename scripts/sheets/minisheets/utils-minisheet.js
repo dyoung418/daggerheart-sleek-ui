@@ -122,9 +122,8 @@ export function setMinisheetCollapsed(value) {
 
 export function collapseMinisheet(element, onCollapsed) {
   const height = element.offsetHeight;
-  const current = element.style.transform.replace(/\s*translateY\([^)]*\)/, "").trim();
   element.style.transition = "transform 0.3s ease";
-  element.style.transform = `${current} translateY(${height + 58}px)`;
+  element.style.transform = `translateX(-50%) translateY(${height + 58}px)`;
 
   setTimeout(() => {
     if (onCollapsed) onCollapsed();

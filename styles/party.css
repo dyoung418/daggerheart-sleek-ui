@@ -34,6 +34,10 @@ HEADER
   gap: var(--sleekUI-spacing-tiny);
 }
 
+#sleek-ui-sheet .party .party-header-container .btn-container {
+  justify-content: flex-start;
+}
+
 #sleek-ui-sheet .party .party-header-container .btn-container .party-roll {
   width: unset;
   gap: var(--sleekUI-spacing-xs);

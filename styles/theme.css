@@ -18,6 +18,7 @@ WINDOW HEADER
 .application.daggerheart.action-config {
   border: 1px solid var(--sleekUI-color-border) !important;
   background: var(--sleekUI-color-background-primary) !important;
+  backdrop-filter: blur(8px);
 }
 
 .application.sheet.daggerheart.dh-style .item-sheet-header .profile {
@@ -747,6 +748,26 @@ TRAIT ROLL
 }
 
 /* ==================== 
+TRAIT CONFIGURATION
+==================== */
+
+.application.daggerheart.dh-style.dialog .tab.details .traits-inner-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  row-gap: 16px;
+}
+
+.application.daggerheart.dh-style.dialog .tab.details .traits-inner-container .trait-container {
+  background: none;
+  gap: 8px;
+}
+
+.application.daggerheart.dh-style.dialog .tab.details .traits-inner-container .trait-container input {
+  width: 52px;
+}
+
+/* ==================== 
 CLASS WINDOW
 ==================== */
 
@@ -1010,6 +1031,10 @@ REST
 
 .application.daggerheart.dh-style.views.downtime .refreshables-container .refreshable-container .refreshable-name {
   color: var(--sleekUI-color-secondary);
+}
+
+.application.daggerheart.dh-style.views.downtime .activity-container .activity-inner-container .activity-marker {
+  display: none;
 }
 
 /* ==================== 
@@ -1832,4 +1857,207 @@ COMPENDIUM
 
 .daggerheart.dh-style .item-description-outer-container .item-description-container .item-links {
   flex-wrap: wrap;
+}
+
+/* ==================== 
+DAMAGE REDUCTION
+==================== */
+
+.application.daggerheart.damage-reduction {
+  background: var(--sleekUI-color-background-dark);
+  border-color: var(--sleekUI-color-background-resourceHover);
+  width: 320px !important;
+}
+
+.application.daggerheart.damage-reduction .window-header {
+  background: none;
+  border-color: var(--sleekUI-color-background-resourceHover);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container {
+  gap: 0;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .rules-button {
+  width: 32px;
+  height: 32px;
+  top: 8px;
+  right: 8px;
+  border: 1px solid var(--sleekUI-color-border);
+  color: var(--sleekUI-color-primary);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .rules-button.inactive ::after {
+  left: 8px;
+  top: 3px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .rules-button:hover {
+  background: var(--sleekUI-color-border);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container.padded {
+  align-items: flex-start;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container.padded .resources-container {
+  width: 260px;
+  display: grid;
+  grid-template-columns: 150px 105px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .resource-container {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .resource-container .armor-title {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .resource-container .markers-subtitle {
+  color: var(--sleekUI-color-primary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-sm);
+  font-weight: var(--sleekUI-font-weight-bold);
+  letter-spacing: 2px;
+  transform: translateY(-1px);
+  margin: 0;
+}
+
+/* MARKERS */
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container:has(.mark-selection) {
+  padding: 12px;
+  border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .markers-subtitle {
+  color: var(--sleekUI-color-secondary) !important;
+  font-family: var(--sleekUI-font-primary) !important;
+  font-size: var(--sleekUI-font-size-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-variant: normal;
+  margin: 0;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection {
+  height: fit-content;
+  padding: 12px 0;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection::before,
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection::after {
+  display: none;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner {
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 12px;
+  max-width: 240px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container {
+  border: none;
+  font-size: 32px;
+  color: var(--sleekUI-color-border);
+  opacity: 0.6;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container:hover {
+  opacity: 1;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container.selected {
+  color: var(--sleekUI-color-primary);
+  opacity: 1;
+}
+
+/* OTHER REDUCTIONS */
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container:has(.chip-container) {
+  padding: 12px;
+  gap: 12px;
+  border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
+  margin-bottom: 12px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container::before,
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container::after {
+  display: none;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container {
+  gap: 12px;
+  padding: 12px;
+  height: 32px;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius);
+  background: var(--sleekUI-gradient-card);
+  font-family: var(--sleekUI-font-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container:hover {
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container:not(.active):hover {
+  box-shadow: none;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container.selected {
+  background: linear-gradient(90deg, rgba(79, 89, 137, 0.5) 0%, rgba(79, 89, 137, 0.8) 100%);
+  cursor: pointer;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container i {
+  font-size: 12px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container .stress-reduction-cost {
+  gap: 2px;
+  font-weight: 700;
+  color: var(--sleekUI-color-secondary);
+}
+
+/* BUTTON */
+
+.application.daggerheart.damage-reduction .damage-reduction-container footer {
+  padding: 0 12px 4px 12px;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container footer button {
+  height: 32px;
+  border-radius: var(--sleekUI-border-radius);
+  border: 1px solid var(--sleekUI-color-border);
+  font-family: var(--sleekUI-font-primary);
+  color: var(--sleekUI-color-primary);
+  outline: none;
+  transition: none;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container footer button:hover,
+.application.daggerheart.damage-reduction .damage-reduction-container footer button:focus {
+  background: var(--sleekUI-color-background-resourceHover);
+  box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
 }

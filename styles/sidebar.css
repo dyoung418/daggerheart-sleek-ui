@@ -156,6 +156,10 @@
   background: var(--sleekUI-gradient-line-right);
 }
 
+#sleek-ui-sheet .favorites-header .add-divider i {
+  transform: translateY(-3px);
+}
+
 #sleek-ui-sheet .favorites-list {
   display: flex;
   flex-direction: column;

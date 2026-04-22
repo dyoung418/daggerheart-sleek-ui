@@ -1,5 +1,5 @@
 import { preloadHandlebarsTemplates, registerHelpers } from "./helpers.js";
-import { registerSettings, applyMinisheetScale, applyTheme } from "./settings.js";
+import { registerSettings, applyMinisheetScale, applyTheme, applyThemeChat } from "./settings.js";
 
 import { registerCharacterSheet } from "./sheets/character-sheet.js";
 import { registerCompanionSheet } from "./sheets/companion-sheet.js";
@@ -22,6 +22,7 @@ Hooks.once("init", () => {
 Hooks.on("ready", () => {
   applyMinisheetScale();
   applyTheme();
+  applyThemeChat();
 });
 
 Hooks.once("ready", () => {
