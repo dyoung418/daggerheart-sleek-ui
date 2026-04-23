@@ -113,6 +113,7 @@ TOOLTIPS
   margin: 2px;
   background: none;
   box-shadow: none;
+  border: none;
 }
 
 .daggerheart.dh-style.tooltip {
@@ -161,12 +162,76 @@ TOOLTIPS
   line-height: 18px;
 }
 
+.daggerheart.dh-style.tooltip .duration-container {
+  background: var(--sleekUI-color-background-resourceHover);
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius-s);
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.tooltip .duration-container::before,
+.daggerheart.dh-style.tooltip .duration-container::after {
+  display: none;
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container {
+  gap: 8px;
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container .effect-stacks-title {
+  font-family: var(--sleekUI-font-secondary);
+  font-size: var(--sleekUI-font-size-md);
+  text-transform: uppercase;
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container .effect-stacks-container {
+  gap: 8px;
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container .effect-stacks-container .effect-stacks-inner-container {
+  flex: 1;
+  padding: 8px 8px 12px;
+  gap: 8px;
+  border: 1px solid var(--sleekUI-color-border);
+  border-radius: var(--sleekUI-border-radius-s);
+  background: var(--sleekUI-color-background-resourceHover);
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container .effect-stacks-container .effect-stacks-inner-container .effect-stack-title {
+  font-family: var(--sleekUI-font-primary);
+  font-weight: 400;
+  font-size: var(--sleekUI-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--sleekUI-color-secondary);
+}
+
+.daggerheart.dh-style.tooltip .effect-stacks-outer-container .effect-stacks-container .effect-stacks-inner-container span {
+  font-family: var(--sleekUI-font-primary);
+  font-size: var(--sleekUI-font-size-lg);
+  font-weight: 600;
+  color: var(--sleekUI-color-primary);
+}
+
+.daggerheart.dh-style.tooltip .close-hints {
+  width: 100%;
+  gap: 12px;
+}
+
 .daggerheart.dh-style.tooltip .close-hint {
   padding: 0;
   margin: 0;
   width: 100%;
   color: var(--sleekUI-color-tertiary);
   font-size: var(--sleekUI-font-size-sm);
+  background: none;
+}
+
+.daggerheart.dh-style.tooltip .close-hint:nth-child(2)::before {
+  display: none;
 }
 
 .daggerheart.dh-style.tooltip .tooltip-header::after,
@@ -383,10 +448,13 @@ FIELDSETS
   display: flex;
   gap: 12px;
   background: none;
-  white-space: nowrap;
 }
 
-.dh-style .form-group {
+.dh-style legend i {
+  align-self: center;
+}
+
+.dh-style:not(.setting) .form-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -2060,4 +2128,18 @@ DAMAGE REDUCTION
 .application.daggerheart.damage-reduction .damage-reduction-container footer button:focus {
   background: var(--sleekUI-color-background-resourceHover);
   box-shadow: 0px 0px 9px -1px var(--sleekUI-color-border);
+}
+
+/* ==================== 
+GM TOOLS
+==================== */
+
+.dh-style.daggerheartMenu-sidebar {
+  border: none;
+}
+
+.dh-style.daggerheartMenu-sidebar h2 {
+  font-family: var(--sleekUI-font-secondary);
+  text-transform: uppercase;
+  color: var(--sleekUI-color-primary);
 }

@@ -260,6 +260,11 @@ CHAT ROLL
   margin-bottom: 12px;
 }
 
+.chat-message .message-content .description-section button {
+  padding: 12px;
+  display: inline-flex;
+}
+
 .chat-message .message-content .roll-part-header {
   display: flex;
   justify-content: center;
