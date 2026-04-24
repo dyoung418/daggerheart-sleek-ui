@@ -111,17 +111,14 @@
 #sleek-ui-sheet.daggerheart.sheet.actor.companion.sleek-ui {
   min-width: 370px;
   max-width: 370px;
-  min-height: 700px;
 }
 
 #sleek-ui-sheet.daggerheart.sheet.actor.party.sleek-ui {
   min-width: 650px;
-  min-height: 700px;
 }
 
 #sleek-ui-sheet.daggerheart.sheet.actor.environment.sleek-ui {
   min-width: 540px;
-  min-height: 900px;
 }
 
 #sleek-ui-sheet.minimized {
