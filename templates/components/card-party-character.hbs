@@ -191,7 +191,7 @@
         </div>
         {{/if}}
         {{!-- ARMOR --}}
-        {{#if armorSlots.itemUuid}}
+        {{#if armorSlots.max}}
         <div class="resource-container">
           <div class="resource-header" data-action="modifyResource" data-actor-uuid="{{actorUuid}}"
             data-resource="armorSlots" data-amount="1">
@@ -201,7 +201,9 @@
           <div class="resource-bar">
             {{#times armorSlots.max}}
             <div class="resource-pip pip-armor {{#if (gte ../armorSlots.value (add this 1))}}filled{{else}}empty{{/if}}"
-              data-action="toggleArmorSlot" data-item-uuid="{{../armorSlots.itemUuid}}" data-value="{{add this 1}}">
+              data-action="toggleArmorSlot"
+              {{#if ../armorSlots.itemUuid}}data-item-uuid="{{../armorSlots.itemUuid}}"{{else}}data-actor-uuid="{{../actorUuid}}"{{/if}}
+              data-value="{{add this 1}}">
             </div>
             {{/times}}
           </div>

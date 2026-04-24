@@ -44,8 +44,8 @@
         {{/if}}
 
         <div class="resource-bar">
-          {{#times item.system.baseScore}}
-              <div class="resource-pip pip-armor {{#if (lt this ../item.system.marks.value)}}filled{{else}}empty{{/if}}"></div>
+          {{#times item.system.armor.max}}
+              <div class="resource-pip pip-armor {{#if (lt this ../item.system.armor.current)}}filled{{else}}empty{{/if}}"></div>
           {{/times}}
         </div>
 

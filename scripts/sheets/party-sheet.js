@@ -49,7 +49,12 @@ export function registerPartySheet() {
       mainSheet: {
         template: "modules/daggerheart-sleek-ui/templates/sheets/party/party-sheet-main.hbs",
       },
+      partyMembers: {
+        template: "modules/daggerheart-sleek-ui/templates/sheets/party/tabs/party-members.hbs",
+      },
     };
+
+    // ─── Context Preparation ──────────────────────────────────────────────────
 
     async _prepareContext(options) {
       if (!options.isFirstRender && this.element) {
@@ -60,7 +65,6 @@ export function registerPartySheet() {
       const context = await super._prepareContext(options);
 
       context.partySize = this.document.system.partyMembers?.length ?? 0;
-
       context.tabsPosition = game.settings.get("daggerheart-sleek-ui", "tabsPosition");
       context.showTooltip = game.settings.get("daggerheart-sleek-ui", "showTooltip");
 
@@ -109,6 +113,14 @@ export function registerPartySheet() {
       return context;
     }
 
+    async _preparePartContext(partId, context) {
+      context = await super._preparePartContext(partId, context);
+      if (partId === "partyMembers") {
+        context.partyMembersData = await this._preparePartyMembersData();
+      }
+      return context;
+    }
+
     async _preparePartyMembersData() {
       const members = [...(this.document.system.partyMembers ?? [])].sort((a, b) => {
         const ownershipA = game.user.isGM ? CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER : a.getUserLevel(game.user);
@@ -138,11 +150,9 @@ export function registerPartySheet() {
           max: sys.resources?.stress?.max ?? 0,
         };
 
-        const armorItem = sys.armor ?? null;
         const armorSlots = {
-          value: armorItem?.system?.marks?.value ?? 0,
-          max: sys.armorScore ?? 0,
-          itemUuid: armorItem?.uuid ?? null,
+          value: sys.armorScore?.value ?? 0,
+          max: sys.armorScore?.max ?? 0,
         };
 
         const evasion = sys.evasion ?? 0;
@@ -198,17 +208,28 @@ export function registerPartySheet() {
       const createWeaponData = async (item) => {
         const base = await createBaseData(item);
         const attack = item.system.attack;
+
+        // v2: damage.parts is a keyed object, not an array
         let damage = "";
-        if (attack?.damage?.parts?.length) {
-          damage = attack.damage.parts
+        const damageParts = attack?.damage?.parts;
+        if (damageParts && !foundry.utils.isEmpty(damageParts)) {
+          damage = Object.values(damageParts)
             .map((part) => {
-              const dice = part.value?.dice ? `${part.value.dice}` : "";
-              const bonus = part.value?.bonus ? ` + ${part.value.bonus}` : "";
+              const value = part.value;
+              let formula = "";
+              if (value?.custom?.enabled) {
+                formula = value.custom.formula ?? game.i18n.localize("DAGGERHEART.GENERAL.custom");
+              } else {
+                const dice = value?.dice ? `${value.dice}` : "";
+                const bonus = value?.bonus ? ` ${value.bonus.signedString()}` : "";
+                formula = `${dice}${bonus}`;
+              }
               const typeIcons = part.type ? [...part.type].map((t) => (t === "magical" ? '<i class="fa-solid fa-wand-sparkles"></i>' : '<i class="fa-solid fa-hand-fist"></i>')).join(" ") : "";
-              return `${dice}${bonus}&nbsp;&nbsp;${typeIcons}`;
+              return `${formula}&nbsp;&nbsp;${typeIcons}`;
             })
             .join(", ");
         }
+
         const features = (item.system.weaponFeatures || []).map((wf) => {
           const config = CONFIG.DH.ITEM.weaponFeatures[wf.value];
           return { name: game.i18n.localize(config.label), description: game.i18n.localize(config.description) };
@@ -230,10 +251,10 @@ export function registerPartySheet() {
           return { name: game.i18n.localize(config.label), description: game.i18n.localize(config.description) };
         });
         const tags = [
-          { label: `${game.i18n.localize("DAGGERHEART.ITEMS.Armor.baseScore")}: ${item.system.baseScore}`, tagClass: "tag-blue" },
+          { label: `${game.i18n.localize("DAGGERHEART.ITEMS.Armor.baseScore")}: ${item.system.armor.max}`, tagClass: "tag-blue" },
           { label: `${game.i18n.localize("DAGGERHEART.ITEMS.Armor.baseThresholds.base")}: ${item.system.baseThresholds.major} / ${item.system.baseThresholds.severe}`, tagClass: "tag-blue" },
         ];
-        return { item, tags, marks: item.system.marks, features, ...base };
+        return { item, tags, marks: item.system.armor, features, ...base };
       };
 
       const createConsumableData = async (item) => {
@@ -258,61 +279,16 @@ export function registerPartySheet() {
       context.loots = await Promise.all(loots.map((item) => createLootData(item)));
     }
 
-    static async _onToggleCategory(event, target) {
-      const wrapper = target.closest(".category-wrapper");
-      if (!wrapper) return;
+    // ─── Filter Menus ─────────────────────────────────────────────────────────
 
-      wrapper.classList.toggle("collapsed");
+    _createFilterMenus() {}
 
-      const categoryId = wrapper.dataset.categoryId;
-      if (!categoryId) return;
+    // ─── Rendering ───────────────────────────────────────────────────────────
 
-      const isCollapsed = wrapper.classList.contains("collapsed");
+    async _onRender(context, options) {
+      await super._onRender(context, options);
 
-      if (isCollapsed) {
-        if (!this.collapsedCategories.includes(categoryId)) this.collapsedCategories.push(categoryId);
-      } else {
-        const index = this.collapsedCategories.indexOf(categoryId);
-        if (index > -1) this.collapsedCategories.splice(index, 1);
-      }
-
-      this.document.setFlag("daggerheart-sleek-ui", "collapsedCategories", [...this.collapsedCategories]);
-    }
-
-    static async _onModifyMemberResource(event, target) {
-      event.preventDefault();
-      const uuid = target.dataset.actorUuid;
-      const resource = target.dataset.resource;
-      let amount = parseInt(target.dataset.amount);
-
-      if (event.type === "contextmenu") amount = -amount;
-      if (!uuid || !resource) return;
-
-      if (resource === "armorSlots") {
-        const actor = await fromUuid(uuid);
-        if (!actor) return;
-        const armorItem = actor.system.armor;
-        if (!armorItem) return;
-        const current = armorItem.system.marks.value;
-        const max = actor.system.armorScore;
-        const newValue = Math.max(0, Math.min(max, current + amount));
-        await armorItem.update({ "system.marks.value": newValue });
-        return;
-      }
-
-      const actor = await fromUuid(uuid);
-      if (!actor) return;
-
-      const fullPath = `system.resources.${resource}`;
-      const maxPath = fullPath.replace(".value", ".max");
-      const currentValue = foundry.utils.getProperty(actor, fullPath);
-      const maxValue = foundry.utils.getProperty(actor, maxPath);
-      const newValue = Math.max(0, Math.min(maxValue, currentValue + amount));
-
-      await actor.update({ [fullPath]: newValue });
-    }
-
-    _onRender(context, options) {
+      // Set after super so drag-drop binding (which may touch the element) runs first.
       this.element.id = "sleek-ui-sheet";
 
       this.element.addEventListener("mousemove", (e) => {
@@ -367,6 +343,8 @@ export function registerPartySheet() {
         }
       });
     }
+
+    // ─── Part Listeners ───────────────────────────────────────────────────────
 
     _attachPartListeners(partId, htmlElement, options) {
       super._attachPartListeners?.(partId, htmlElement, options);
@@ -454,12 +432,16 @@ export function registerPartySheet() {
           async (event) => {
             event.preventDefault();
             event.stopImmediatePropagation();
-            const itemUuid = pip.dataset.itemUuid;
+            const actorUuid = pip.dataset.actorUuid;
             const pipValue = parseInt(pip.dataset.value);
-            if (!itemUuid || isNaN(pipValue)) return;
-            const armorItem = await fromUuid(itemUuid);
-            if (!armorItem) return;
-            await armorItem.update({ "system.marks.value": Math.max(0, pipValue - 1) });
+            if (!actorUuid || isNaN(pipValue)) return;
+            const actor = await fromUuid(actorUuid);
+            if (!actor) return;
+            const currentValue = actor.system.armorScore?.value ?? 0;
+            const newValue = Math.max(0, pipValue - 1);
+            const delta = newValue - currentValue;
+            await actor.system.updateArmorValue({ value: delta });
+            this.render(false, { parts: ["partyMembers"] });
           },
           true,
         );
@@ -481,10 +463,8 @@ export function registerPartySheet() {
             if (!actor) return;
 
             if (resource === "armorSlots") {
-              const armorItem = actor.system.armor;
-              if (!armorItem) return;
-              const current = armorItem.system.marks.value;
-              await armorItem.update({ "system.marks.value": Math.max(0, current - amount) });
+              await actor.system.updateArmorValue({ value: -amount });
+              this.render(false, { parts: ["partyMembers"] });
               return;
             }
 
@@ -503,12 +483,12 @@ export function registerPartySheet() {
           async (event) => {
             event.preventDefault();
             event.stopImmediatePropagation();
-            const itemUuid = element.dataset.itemUuid;
-            if (!itemUuid) return;
-            const armorItem = await fromUuid(itemUuid);
-            if (!armorItem) return;
-            const current = armorItem.system.marks.value;
-            await armorItem.update({ "system.marks.value": Math.max(0, current - 1) });
+            const actorUuid = element.dataset.actorUuid;
+            if (!actorUuid) return;
+            const actor = await fromUuid(actorUuid);
+            if (!actor) return;
+            await actor.system.updateArmorValue({ value: -1 });
+            this.render(false, { parts: ["partyMembers"] });
           },
           true,
         );
@@ -646,107 +626,56 @@ export function registerPartySheet() {
       });
     }
 
-    _onDragStart(event) {
-      const card = event.target.closest("[data-item-uuid]");
-      if (!card) return;
+    // ─── Actions ──────────────────────────────────────────────────────────────
 
-      const itemUuid = card.dataset.itemUuid;
-      const item = fromUuidSync(itemUuid);
-      if (!item) return;
+    static async _onToggleCategory(event, target) {
+      const wrapper = target.closest(".category-wrapper");
+      if (!wrapper) return;
 
-      if (item.parent === this.document) {
-        SleekPartySheet.draggedItem = {
-          itemId: item.id,
-          actorId: this.document.id,
-          itemName: item.name,
-        };
-      }
+      wrapper.classList.toggle("collapsed");
 
-      const dragData = { type: "Item", uuid: item.uuid };
-      if (item.parent) {
-        dragData.actorId = item.parent.id;
-        dragData.data = item.toObject();
-      }
+      const categoryId = wrapper.dataset.categoryId;
+      if (!categoryId) return;
 
-      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
-    }
+      const isCollapsed = wrapper.classList.contains("collapsed");
 
-    async _onDrop(event) {
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
-
-      if (!data || data.type !== "Item") {
-        return super._onDrop?.(event);
-      }
-
-      const item = await fromUuid(data.uuid);
-      if (!item) return;
-
-      // Item dragged from a character sheet onto the party sheet — transfer it.
-      if (item.parent && item.parent.type === "character") {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const sourceActor = item.parent;
-        const itemData = item.toObject();
-        const createdItems = await this.document.createEmbeddedDocuments("Item", [itemData]);
-
-        if (createdItems && createdItems.length > 0) {
-          await sourceActor.deleteEmbeddedDocuments("Item", [item.id]);
-          ui.notifications.info(`Transferred ${item.name} to ${this.document.name}`);
-        }
-
-        return false;
-      }
-
-      // Item dragged within the party sheet — reorder.
-      if (item.parent === this.document) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const dropTarget = event.target.closest(".card-wrapper");
-        if (!dropTarget) return;
-
-        const targetUuid = dropTarget.dataset.itemUuid;
-        const targetItem = await fromUuid(targetUuid);
-        if (!targetItem || targetItem === item) return;
-        if (item.type !== targetItem.type) return;
-
-        const siblings = this.document.items.filter((i) => i.type === item.type).sort((a, b) => a.sort - b.sort);
-
-        const draggedIndex = siblings.indexOf(item);
-        const targetIndex = siblings.indexOf(targetItem);
-
-        siblings.splice(draggedIndex, 1);
-        siblings.splice(targetIndex, 0, item);
-
-        const updateData = siblings.map((sibling, index) => ({
-          _id: sibling.id,
-          sort: (index + 1) * 100000,
-        }));
-
-        await this.document.updateEmbeddedDocuments("Item", updateData);
-        return false;
-      }
-
-      return super._onDrop?.(event);
-    }
-
-    async _onDropActor(event, document) {
-      const ALLOWED = ["character", "companion", "adversary"];
-
-      if (document && ALLOWED.includes(document.type)) {
-        const currentUuids = this.document.system.partyMembers.map((x) => x.uuid);
-        if (currentUuids.includes(document.uuid)) {
-          return ui.notifications.warn(game.i18n.localize("DAGGERHEART.UI.Notifications.duplicateCharacter"));
-        }
-        await this.document.update({
-          "system.partyMembers": [...currentUuids, document.uuid],
-        });
+      if (isCollapsed) {
+        if (!this.collapsedCategories.includes(categoryId)) this.collapsedCategories.push(categoryId);
       } else {
-        ui.notifications.warn(game.i18n.localize("DAGGERHEART.UI.Notifications.onlyCharactersInPartySheet"));
+        const index = this.collapsedCategories.indexOf(categoryId);
+        if (index > -1) this.collapsedCategories.splice(index, 1);
       }
 
-      return null;
+      this.document.setFlag("daggerheart-sleek-ui", "collapsedCategories", [...this.collapsedCategories]);
+    }
+
+    static async _onModifyMemberResource(event, target) {
+      event.preventDefault();
+      const uuid = target.dataset.actorUuid;
+      const resource = target.dataset.resource;
+      let amount = parseInt(target.dataset.amount);
+
+      if (event.type === "contextmenu") amount = -amount;
+      if (!uuid || !resource) return;
+
+      if (resource === "armorSlots") {
+        const actor = await fromUuid(uuid);
+        if (!actor) return;
+        await actor.system.updateArmorValue({ value: amount });
+        this.render(false, { parts: ["partyMembers"] });
+        return;
+      }
+
+      const actor = await fromUuid(uuid);
+      if (!actor) return;
+
+      const fullPath = `system.resources.${resource}`;
+      const maxPath = fullPath.replace(".value", ".max");
+      const currentValue = foundry.utils.getProperty(actor, fullPath);
+      const maxValue = foundry.utils.getProperty(actor, maxPath);
+      const newValue = Math.max(0, Math.min(maxValue, currentValue + amount));
+
+      await actor.update({ [fullPath]: newValue });
     }
 
     static async _onOpenMemberSheet(event, target) {
@@ -833,17 +762,116 @@ export function registerPartySheet() {
     }
 
     static async _onToggleMemberArmorSlot(event, target) {
-      const itemUuid = target.dataset.itemUuid;
+      const uuid = target.dataset.actorUuid;
       const pipValue = parseInt(target.dataset.value);
-      if (!itemUuid || isNaN(pipValue)) return;
+      if (!uuid || isNaN(pipValue)) return;
 
-      const armorItem = await fromUuid(itemUuid);
-      if (!armorItem) return;
+      const actor = await fromUuid(uuid);
+      if (!actor) return;
 
-      const current = armorItem.system.marks.value;
-      const newValue = pipValue === current ? current - 1 : pipValue;
-      await armorItem.update({ "system.marks.value": Math.max(0, newValue) });
+      const currentValue = actor.system.armorScore?.value ?? 0;
+      const newValue = Math.max(0, pipValue === currentValue ? currentValue - 1 : pipValue);
+      const delta = newValue - currentValue;
+      await actor.system.updateArmorValue({ value: delta });
+      this.render(false, { parts: ["partyMembers"] });
     }
+
+    // ─── Drag & Drop ──────────────────────────────────────────────────────────
+
+    _onDragStart(event) {
+      const card = event.target.closest("[data-item-uuid]");
+      if (!card) return;
+
+      const itemUuid = card.dataset.itemUuid;
+      const item = fromUuidSync(itemUuid);
+      if (!item) return;
+
+      if (item.parent === this.document) {
+        SleekPartySheet.draggedItem = {
+          itemId: item.id,
+          actorId: this.document.id,
+          itemName: item.name,
+        };
+      }
+
+      const dragData = { type: "Item", uuid: item.uuid };
+      if (item.parent) {
+        dragData.actorId = item.parent.id;
+        dragData.data = item.toObject();
+      }
+
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
+
+    async _onDrop(event) {
+      const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+      if (!data) return;
+
+      if (data.type === "Item") {
+        const item = await fromUuid(data.uuid);
+        if (!item) return;
+
+        // Transfer from a character sheet onto the party sheet
+        if (item.parent && item.parent.type === "character") {
+          event.preventDefault();
+          event.stopPropagation();
+          const createdItems = await this.document.createEmbeddedDocuments("Item", [item.toObject()]);
+          if (createdItems?.length > 0) {
+            await item.parent.deleteEmbeddedDocuments("Item", [item.id]);
+            ui.notifications.info(`Transferred ${item.name} to ${this.document.name}`);
+          }
+          return false;
+        }
+
+        // Reorder within the party sheet
+        if (item.parent === this.document) {
+          event.preventDefault();
+          event.stopPropagation();
+          const dropTarget = event.target.closest(".card-wrapper");
+          if (!dropTarget) return;
+          const targetItem = await fromUuid(dropTarget.dataset.itemUuid);
+          if (!targetItem || targetItem === item || item.type !== targetItem.type) return;
+          const siblings = this.document.items.filter((i) => i.type === item.type).sort((a, b) => a.sort - b.sort);
+          siblings.splice(siblings.indexOf(item), 1);
+          siblings.splice(siblings.indexOf(targetItem), 0, item);
+          await this.document.updateEmbeddedDocuments(
+            "Item",
+            siblings.map((s, i) => ({ _id: s.id, sort: (i + 1) * 100000 })),
+          );
+          return false;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        await this.document.createEmbeddedDocuments("Item", [item.toObject()]);
+        return false;
+      }
+
+      if (data.type === "Actor") {
+        const actor = data.uuid ? await fromUuid(data.uuid) : game.actors.get(data.id);
+        if (actor) return this._onDropActor(event, actor);
+      }
+    }
+
+    async _onDropActor(event, document) {
+      const ALLOWED = ["character", "companion", "adversary"];
+
+      if (document && ALLOWED.includes(document.type)) {
+        const currentUuids = this.document.system.partyMembers.map((x) => x.uuid);
+        if (currentUuids.includes(document.uuid)) {
+          return ui.notifications.warn(game.i18n.localize("DAGGERHEART.UI.Notifications.duplicateCharacter"));
+        }
+        await this.document.update({
+          "system.partyMembers": [...currentUuids, document.uuid],
+        });
+      } else {
+        ui.notifications.warn(game.i18n.localize("DAGGERHEART.UI.Notifications.onlyCharactersInPartySheet"));
+      }
+
+      return null;
+    }
+
+    // ─── Lifecycle ────────────────────────────────────────────────────────────
 
     async close(options = {}) {
       if (this.floatingTabs) {
@@ -853,6 +881,8 @@ export function registerPartySheet() {
       return super.close(options);
     }
   }
+
+  // ─── Registration ─────────────────────────────────────────────────────────
 
   foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, "daggerheart", SleekPartySheet, {
     types: ["party"],
@@ -888,21 +918,29 @@ export function registerPartySheet() {
   });
 
   Hooks.on("updateActor", (actor) => {
-    for (const app of Object.values(ui.windows)) {
+    for (const app of foundry.applications.instances.values()) {
       if (!(app instanceof SleekPartySheet)) continue;
       const isMember = app.document.system.partyMembers?.some((m) => m?.id === actor.id);
-      if (isMember) app.render(false);
+      if (isMember) app.render(false, { parts: ["partyMembers"] });
     }
   });
 
   Hooks.on("updateItem", (item) => {
     if (!item.parent) return;
-    const changedActorId = item.parent.id;
-
-    for (const app of Object.values(ui.windows)) {
+    for (const app of foundry.applications.instances.values()) {
       if (!(app instanceof SleekPartySheet)) continue;
-      const isMember = app.document.system.partyMembers?.some((m) => m?.id === changedActorId);
-      if (isMember) app.render(false);
+      const isMember = app.document.system.partyMembers?.some((m) => m?.id === item.parent.id);
+      if (isMember) app.render(false, { parts: ["partyMembers"] });
+    }
+  });
+
+  Hooks.on("updateActiveEffect", (effect) => {
+    const parentActor = effect.parent?.parent ?? effect.parent;
+    if (!parentActor) return;
+    for (const app of foundry.applications.instances.values()) {
+      if (!(app instanceof SleekPartySheet)) continue;
+      const isMember = app.document.system.partyMembers?.some((m) => m?.id === parentActor.id);
+      if (isMember) queueMicrotask(() => app.render(false, { parts: ["partyMembers"] }));
     }
   });
 }

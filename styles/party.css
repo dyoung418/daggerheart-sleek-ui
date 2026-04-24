@@ -50,6 +50,11 @@ PARTY MEMBERS
 
 #sleek-ui-sheet .tabs.members-tab {
   gap: var(--sleekUI-spacing-xs);
+  display: none;
+}
+
+#sleek-ui-sheet .tab-pane.active .tabs.members-tab {
+  display: flex;
 }
 
 #sleek-ui-sheet .card-container.header.party-character-header {

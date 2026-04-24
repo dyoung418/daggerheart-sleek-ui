@@ -190,19 +190,19 @@
       </div>
       {{/if}}
       {{!-- ARMOR --}}
-      {{#if document.system.armor.system.marks}}
+      {{#if document.system.armorScore.max}}
       <div class="resource-container">
-        <div class="resource-header" data-action="modifyResource" data-resource="system.armor.system.marks.value"
+        <div class="resource-header" data-action="modifyResource" data-resource="system.armorScore.value"
           data-amount="1">
           <h3>{{localize "DAGGERHEART.GENERAL.armorSlots"}}</h3>
-          <span class="resource-number">{{document.system.armor.system.marks.value}} /
-            {{document.system.armorScore}}</span>
+          <span class="resource-number">{{document.system.armorScore.value}} /
+            {{document.system.armorScore.max}}</span>
         </div>
         <div class="resource-bar">
-          {{#times document.system.armorScore}}
+          {{#times document.system.armorScore.max}}
           <div
-            class="resource-pip pip-armor {{#if (lt this @root.document.system.armor.system.marks.value)}}filled{{else}}empty{{/if}}"
-            data-action="toggleResource" data-resource="system.armor.system.marks.value" data-value="{{add this 1}}">
+            class="resource-pip pip-armor {{#if (lt this @root.document.system.armorScore.value)}}filled{{else}}empty{{/if}}"
+            data-action="toggleResource" data-resource="system.armorScore.value" data-value="{{add this 1}}">
           </div>
           {{/times}}
         </div>

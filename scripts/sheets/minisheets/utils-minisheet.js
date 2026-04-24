@@ -171,13 +171,16 @@ async function _onModifyResource(event, target) {
 
   if (event.type === "contextmenu") amount = -amount;
 
-  if (resource === "system.armor.system.marks.value") {
+  if (resource === "system.armorScore.value") {
+    await this.actor.system.updateArmorValue({ value: amount });
+  } else if (resource === "system.armor.system.armor.current") {
+    // backwards-compat branch
     const armorItem = this.actor.items.get(this.actor.system.armor._id);
     if (!armorItem) return;
-    const currentValue = armorItem.system.marks.value;
+    const currentValue = armorItem.system.armor.current;
     const maxValue = this.actor.system.armorScore;
     const newValue = Math.max(0, Math.min(maxValue, currentValue + amount));
-    await armorItem.update({ "system.marks.value": newValue });
+    await armorItem.update({ "system.armor.current": newValue });
   } else {
     const currentValue = foundry.utils.getProperty(this.actor, resource);
     const maxPath = resource.replace(".value", ".max");
@@ -191,12 +194,18 @@ async function _onToggleResource(event, target) {
   const resource = target.dataset.resource;
   const clickedValue = parseInt(target.dataset.value);
 
-  if (resource === "system.armor.system.marks.value") {
+  if (resource === "system.armorScore.value") {
+    const currentValue = foundry.utils.getProperty(this.actor, "system.armorScore.value");
+    const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
+    const delta = newValue - currentValue;
+    await this.actor.system.updateArmorValue({ value: delta });
+  } else if (resource === "system.armor.system.armor.current") {
+    // backwards-compat branch
     const armorItem = this.actor.items.get(this.actor.system.armor._id);
     if (!armorItem) return;
-    const currentValue = armorItem.system.marks.value;
+    const currentValue = armorItem.system.armor.current;
     const newValue = Math.max(0, clickedValue === currentValue ? currentValue - 1 : clickedValue);
-    await armorItem.update({ "system.marks.value": newValue });
+    await armorItem.update({ "system.armor.current": newValue });
   } else {
     const currentValue = foundry.utils.getProperty(this.actor, resource);
     const newValue = Math.max(0, clickedValue === currentValue ? currentValue - 1 : clickedValue);

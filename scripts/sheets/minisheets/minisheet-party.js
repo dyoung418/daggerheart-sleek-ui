@@ -32,7 +32,6 @@ export function registerPartyMiniSheet() {
     }
 
     static _onUpdateActor(actor) {
-      // Re-render if the party actor itself updated, or if any member updated
       if (actor === this.currentActor) {
         this._render();
         return;
@@ -93,7 +92,6 @@ export function registerPartyMiniSheet() {
               hideMacrobar();
               this.element.style.transition = "transform 0.3s ease";
               this.element.style.transform = `translateX(-50%)`;
-              this._mountEffectsDisplay();
               setTimeout(() => applyMinisheetScale(), 310);
             });
 
@@ -121,7 +119,6 @@ export function registerPartyMiniSheet() {
           hideMacrobar();
           this.element.style.transition = "transform 0.3s ease";
           this.element.style.transform = `translateX(-50%)`;
-          this._mountEffectsDisplay();
           setTimeout(() => applyMinisheetScale(), 310);
         });
       } else {
@@ -189,8 +186,8 @@ export function registerPartyMiniSheet() {
           hitPointsMax: sys.resources?.hitPoints?.max ?? 0,
           stressValue: sys.resources?.stress?.value ?? 0,
           stressMax: sys.resources?.stress?.max ?? 0,
-          armorValue: sys.armor?.system?.marks?.value ?? 0,
-          armorMax: sys.armorScore ?? 0,
+          armorValue: sys.armorScore?.value ?? 0,
+          armorMax: sys.armorScore?.max ?? 0,
         });
       }
 
@@ -243,6 +240,19 @@ export function registerPartyMiniSheet() {
 
   Hooks.on("controlToken", PartyMiniSheet._onControlToken.bind(PartyMiniSheet));
   Hooks.on("updateActor", PartyMiniSheet._onUpdateActor.bind(PartyMiniSheet));
+
+  Hooks.on("updateItem", (item) => {
+    if (!item.parent) return;
+    const isMemberItem = PartyMiniSheet.currentActor?.system.partyMembers?.some((m) => m === item.parent);
+    if (isMemberItem) PartyMiniSheet._render();
+  });
+
+  Hooks.on("updateActiveEffect", (effect) => {
+    const parentActor = effect.parent?.parent ?? effect.parent;
+    if (!parentActor) return;
+    const isMember = PartyMiniSheet.currentActor?.system.partyMembers?.some((m) => m === parentActor);
+    if (isMember) queueMicrotask(() => PartyMiniSheet._render());
+  });
 
   Hooks.on("renderSleekPartySheet", (app) => {
     if (app.actor === PartyMiniSheet.currentActor) PartyMiniSheet._teardown();

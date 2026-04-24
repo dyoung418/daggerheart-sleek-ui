@@ -328,13 +328,21 @@ export function registerCharacterSheet() {
         const attack = item.system.attack;
 
         let damage = "";
-        if (attack?.damage?.parts?.length) {
-          damage = attack.damage.parts
+        const damageParts = attack?.damage?.parts;
+        if (damageParts && !foundry.utils.isEmpty(damageParts)) {
+          damage = Object.values(damageParts)
             .map((part) => {
-              const dice = part.value?.dice ? `${proficiency}${part.value.dice}` : "";
-              const bonus = part.value?.bonus ? ` + ${part.value.bonus}` : "";
+              const value = part.value;
+              let formula = "";
+              if (value?.custom?.enabled) {
+                formula = value.custom.formula ?? game.i18n.localize("DAGGERHEART.GENERAL.custom");
+              } else {
+                const dice = value?.dice ? `${proficiency}${value.dice}` : "";
+                const bonus = value?.bonus ? ` ${value.bonus.signedString()}` : "";
+                formula = `${dice}${bonus}`;
+              }
               const typeIcons = part.type ? [...part.type].map((t) => (t === "magical" ? '<i class="fa-solid fa-wand-sparkles"></i>' : '<i class="fa-solid fa-hand-fist"></i>')).join(" ") : "";
-              return `${dice}${bonus}&nbsp;&nbsp;${typeIcons}`;
+              return `${formula}&nbsp;&nbsp;${typeIcons}`;
             })
             .join(", ");
         }
@@ -349,7 +357,7 @@ export function registerCharacterSheet() {
 
         const tags = [
           {
-            label: item.system.secondary ? game.i18n.localize("DAGGERHEART.ITEMS.Weapon.secondaryWeapon") : game.i18n.localize("DAGGERHEART.ITEMS.Weapon.primaryWeapon"),
+            label: item.system.secondary ? game.i18n.localize("DAGGERHEART.ITEMS.Weapon.secondaryWeapon.full") : game.i18n.localize("DAGGERHEART.ITEMS.Weapon.primaryWeapon.full"),
             tagClass: "tag-green",
           },
           {
@@ -386,7 +394,7 @@ export function registerCharacterSheet() {
 
         const tags = [
           {
-            label: `${game.i18n.localize("DAGGERHEART.ITEMS.Armor.baseScore")}: ${item.system.baseScore}`,
+            label: `${game.i18n.localize("DAGGERHEART.ITEMS.Armor.baseScore")}: ${item.system.armor.max}`,
             tagClass: "tag-blue",
           },
           {
@@ -395,7 +403,7 @@ export function registerCharacterSheet() {
           },
         ];
 
-        return { item, tags, marks: item.system.marks, features, ...base };
+        return { item, tags, marks: item.system.armor, features, ...base };
       };
 
       const createConsumableData = async (item) => {
@@ -423,8 +431,8 @@ export function registerCharacterSheet() {
         const proficiency = this.actor.system.proficiency;
         let unarmedDamage = "";
 
-        if (unarmed.damage?.parts && unarmed.damage.parts.length > 0) {
-          unarmedDamage = unarmed.damage.parts
+        if (unarmed.damage?.parts && !foundry.utils.isEmpty(unarmed.damage.parts)) {
+          unarmedDamage = Object.values(unarmed.damage.parts)
             .map((part) => {
               let dice = "";
               if (part.value?.custom?.enabled && part.value?.custom?.formula) {
@@ -436,7 +444,7 @@ export function registerCharacterSheet() {
               } else if (part.value?.dice) {
                 dice = `${proficiency}${part.value.dice}`;
               }
-              const bonus = part.value?.bonus ? ` + ${part.value.bonus}` : "";
+              const bonus = part.value?.bonus ? ` ${part.value.bonus.signedString()}` : "";
               const typeIcons = part.type ? [...part.type].map((t) => (t === "magical" ? '<i class="fa-solid fa-wand-sparkles"></i>' : '<i class="fa-solid fa-hand-fist"></i>')).join(" ") : "";
               return `${dice}${bonus}&nbsp;&nbsp;${typeIcons}`;
             })
@@ -1093,12 +1101,14 @@ export function registerCharacterSheet() {
 
       const currentValue = foundry.utils.getProperty(this.actor, resource);
       const maxPath = resource.replace(".value", ".max");
-      const maxValue = resource === "system.armor.system.marks.value" ? this.actor.system.armorScore : foundry.utils.getProperty(this.actor, maxPath);
+      const maxValue = resource === "system.armor.system.armor.current" ? this.actor.system.armorScore : foundry.utils.getProperty(this.actor, maxPath);
 
       const newValue = Math.max(0, Math.min(maxValue, currentValue + amount));
 
-      if (resource === "system.armor.system.marks.value") {
-        await this.actor.items.get(this.actor.system.armor._id).update({ "system.marks.value": newValue });
+      if (resource === "system.armorScore.value") {
+        await this.actor.system.updateArmorValue({ value: amount });
+      } else if (resource === "system.armor.system.armor.current") {
+        await this.actor.items.get(this.actor.system.armor._id).update({ "system.armor.current": newValue });
       } else {
         await this.actor.update({ [resource]: newValue });
       }
@@ -1107,14 +1117,21 @@ export function registerCharacterSheet() {
     static async _onToggleResource(event, target) {
       const resource = target.dataset.resource;
       const clickedValue = parseInt(target.dataset.value);
-      const currentValue = foundry.utils.getProperty(this.actor, resource);
-      const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
 
-      if (resource === "system.armor.system.marks.value") {
+      if (resource === "system.armorScore.value") {
+        const currentValue = foundry.utils.getProperty(this.actor, "system.armorScore.value");
+        const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
+        const delta = newValue - currentValue;
+        await this.actor.system.updateArmorValue({ value: delta });
+      } else if (resource === "system.armor.system.armor.current") {
+        const currentValue = foundry.utils.getProperty(this.actor, resource);
+        const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
         await this.actor.items.get(this.actor.system.armor._id).update({
-          "system.marks.value": Math.max(0, newValue),
+          "system.armor.current": Math.max(0, newValue),
         });
       } else {
+        const currentValue = foundry.utils.getProperty(this.actor, resource);
+        const newValue = clickedValue === currentValue ? currentValue - 1 : clickedValue;
         await this.actor.update({ [resource]: Math.max(0, newValue) });
       }
     }

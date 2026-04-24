@@ -17,13 +17,8 @@ Alternative actor sheets with UI/UX improvements for Foundryborne's Daggerheart 
 
 - Adversary, Environment, Companion and Party Sheets with similar style, layout and usability.
 
-- Changes to Foundryborne's default styling
+- Mini Sheets for Characters, Adversaries, Parties and Companions at the bottom of the screen when their token is selected, with easily reachable resources, actions and features
 
-![](https://github.com/user-attachments/assets/8a7165b3-89fd-4fa1-ab94-6904d990fedc)
-
-# Planned features
-
-- Actor mini-sheets at the botom of the screen when hovering or selecting actors in the canvas
-- V14 compatibility
+- Changes to Foundryborne's default styling and chat cards
 
 ![](https://github.com/user-attachments/assets/e3dbcf73-d216-4437-9136-af520d9c857a)

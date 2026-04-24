@@ -335,11 +335,18 @@ export function registerCharacterMiniSheet() {
 
       document.addEventListener("click", this._outsideClickListener);
     }
+    static _onUpdateActiveEffect(effect, _changed, _options, _userId) {
+      // Effects can be embedded on the actor directly, or on an item owned by the actor.
+      // Either way, check whether they ultimately belong to the current actor.
+      const parentActor = effect.parent?.parent ?? effect.parent;
+      if (parentActor === this.currentActor) this._render();
+    }
   }
 
   Hooks.on("controlToken", CharacterMiniSheet._onControlToken.bind(CharacterMiniSheet));
   Hooks.on("updateActor", CharacterMiniSheet._onUpdateActor.bind(CharacterMiniSheet));
   Hooks.on("updateItem", CharacterMiniSheet._onUpdateItem.bind(CharacterMiniSheet));
+  Hooks.on("updateActiveEffect", CharacterMiniSheet._onUpdateActiveEffect.bind(CharacterMiniSheet));
 
   Hooks.on("renderSleekCharacterSheet", (app) => {
     if (app.actor === CharacterMiniSheet.currentActor) {

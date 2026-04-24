@@ -148,6 +148,7 @@ EFFECTS DISPLAY
   justify-content: center;
   width: 100%;
   border: none !important;
+  z-index: -1;
 }
 
 #sleek-ui-sheet .minisheet .effects-display .effects-display-container {

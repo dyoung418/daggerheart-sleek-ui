@@ -101,6 +101,13 @@ EFFECTS DISPLAY
   overflow: hidden;
 }
 
+.daggerheart.dh-style.effects-display .effects-display-container .effect-container .stacking-value {
+  border: none;
+  border-radius: var(--sleekUI-border-radius-s);
+  padding: 0 2px;
+  color: var(--sleekUI-color-secondary);
+}
+
 /* ==================== 
 TOOLTIPS
 ==================== */
@@ -1038,12 +1045,31 @@ ACTIVE EFFECT CONFIG
   padding-top: 12px;
 }
 
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.changes header div {
+  text-align: left;
+}
+
+.active-effect-config .tab.changes header,
+.active-effect-config .tab.changes ol {
+  margin-top: 8px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.changes .armor-change-container .damage-thresholds-container .damage-threshold-title {
+  margin-top: 12px;
+}
+
+.application.sheet.daggerheart.dh-style.active-effect-config .tab.changes .armor-change-container .damage-thresholds-container .flexrow {
+  flex-direction: column;
+  gap: 4px;
+}
+
 /* TABS //////////////////////////////////////////////////*/
 
 .application.sheet.daggerheart.dh-style.active-effect-config .tabs {
   border-top: 1px solid var(--sleekUI-color-border);
   border-bottom: 1px solid var(--sleekUI-color-border);
   line-height: 44px;
+  margin: 0;
 }
 
 .application.sheet.daggerheart.dh-style.active-effect-config .tabs a {
@@ -1965,27 +1991,27 @@ DAMAGE REDUCTION
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .section-container.padded {
+  width: 100%;
   align-items: flex-start;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .section-container.padded .resources-container {
-  width: 260px;
-  display: grid;
-  grid-template-columns: 150px 105px;
+  width: fit-content;
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .section-container .resource-container {
   flex-direction: row;
   justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
   padding: 8px;
   border: 1px solid var(--sleekUI-color-border);
   border-radius: var(--sleekUI-border-radius);
 }
 
-.application.daggerheart.damage-reduction .damage-reduction-container .resource-container .armor-title {
+.application.daggerheart.damage-reduction .damage-reduction-container .resource-container .armor-title,
+.application.daggerheart.damage-reduction .damage-reduction-container .divider {
   color: var(--sleekUI-color-secondary) !important;
   font-family: var(--sleekUI-font-primary) !important;
   font-size: var(--sleekUI-font-size-xs);
@@ -2007,9 +2033,6 @@ DAMAGE REDUCTION
 /* MARKERS */
 
 .application.daggerheart.damage-reduction .damage-reduction-container .section-container:has(.mark-selection) {
-  padding: 12px;
-  border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
-  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -2026,20 +2049,23 @@ DAMAGE REDUCTION
 
 .application.daggerheart.damage-reduction .damage-reduction-container .mark-selection {
   height: fit-content;
-  padding: 12px 0;
+  padding: 12px 0 16px;
+  gap: 16px;
+  border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
 }
 
-.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection::before,
-.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection::after {
+.application.daggerheart.damage-reduction .damage-reduction-container .divider::before,
+.application.daggerheart.damage-reduction .damage-reduction-container .divider::after {
   display: none;
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner {
-  gap: 4px;
   flex-wrap: wrap;
   justify-content: center;
-  row-gap: 12px;
-  max-width: 240px;
+  width: 100%;
+  gap: 4px;
+  row-gap: 16px;
+  padding: 0 16px;
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container {
@@ -2051,11 +2077,18 @@ DAMAGE REDUCTION
 
 .application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container:hover {
   opacity: 1;
+  text-shadow: 0 0 8px var(--sleekUI-color-border);
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container.selected {
   color: var(--sleekUI-color-primary);
   opacity: 1;
+}
+
+.application.daggerheart.damage-reduction .damage-reduction-container .mark-selection .mark-selection-inner .mark-container i::after {
+  font-size: 2.6rem;
+  left: 8px;
+  top: -6px;
 }
 
 /* OTHER REDUCTIONS */
@@ -2065,17 +2098,19 @@ DAMAGE REDUCTION
   gap: 12px;
   border-bottom: 1px solid var(--sleekUI-color-background-resourceHover);
   margin-bottom: 12px;
+  width: 100%;
 }
 
-.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container::before,
-.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container::after {
-  display: none;
+.application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container {
+  display: flex;
+  justify-content: center;
 }
 
 .application.daggerheart.damage-reduction .damage-reduction-container .section-container .chip-container .chip-inner-container {
   gap: 12px;
   padding: 12px;
   height: 32px;
+  max-width: fit-content;
   border: 1px solid var(--sleekUI-color-border);
   border-radius: var(--sleekUI-border-radius);
   background: var(--sleekUI-gradient-card);
@@ -2142,4 +2177,13 @@ GM TOOLS
   font-family: var(--sleekUI-font-secondary);
   text-transform: uppercase;
   color: var(--sleekUI-color-primary);
+}
+
+/* ==================== 
+TAG TEAM ROLL
+==================== */
+
+.daggerheart.dialog.dh-style.views.tag-team-dialog .roll-selection {
+  margin-bottom: 4px;
+  top: -10px;
 }
