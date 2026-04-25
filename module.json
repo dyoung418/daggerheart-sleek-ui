@@ -1,10 +1,10 @@
 {
   "id": "daggerheart-sleek-ui",
   "title": "Daggerheart: Sleek UI",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.359"
+    "verified": "14"
   },
   "relationships": {
     "systems": [
