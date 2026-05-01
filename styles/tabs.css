@@ -347,7 +347,23 @@
   min-height: 200px;
 }
 
-/* ==================== 
+/* ====================
+   FEATURES TAB COMPRESSION
+   ==================== */
+
+#sleek-ui-sheet .tabs.features-tab {
+  gap: var(--sleekUI-spacing-sm);
+}
+
+#sleek-ui-sheet .features-tab .category-wrapper {
+  gap: var(--sleekUI-spacing-tiny);
+}
+
+#sleek-ui-sheet .features-tab .category-content {
+  gap: 2px;
+}
+
+/* ====================
 NOTES
 ==================== */
 

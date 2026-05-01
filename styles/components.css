@@ -779,3 +779,26 @@ QUICK ACCESS
 #sleek-ui-sheet .compact.armor:not(.quick-access) {
   border: 1px solid var(--sleekUI-color-border);
 }
+
+/* ====================
+   FEATURES TAB COMPRESSION
+   ==================== */
+
+#sleek-ui-sheet .features-tab .card-container.header {
+  max-height: 40px;
+}
+
+#sleek-ui-sheet .features-tab .card-container.header .card-icon {
+  width: 68px;
+  height: 40px;
+}
+
+#sleek-ui-sheet .features-tab .card-container.header .card-icon .dice-roll {
+  height: 26px;
+  top: 7px;
+  left: 26px;
+}
+
+#sleek-ui-sheet .features-tab .card-container.header .card-icon[data-action]:hover .dice-roll {
+  transform: translateX(-8px);
+}
