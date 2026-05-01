@@ -642,6 +642,8 @@ export function registerCharacterSheet() {
       this.element.id = "sleek-ui-sheet";
       this._element = this.element;
 
+      this.element.classList.toggle("compact-cards", game.settings.get("daggerheart-sleek-ui", "compactCards"));
+
       // Only remove tooltips when hovering nothing
       this.element.addEventListener("mousemove", (e) => {
         const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
