@@ -689,7 +689,7 @@ export function registerCharacterSheet() {
     _createFilterMenus(html) {}
 
     _restoreCardStates() {
-      const mainSheet = this.element.querySelector(".tab-content");
+      const mainSheet = this.element;
       if (!mainSheet) return;
 
       this.openCards.forEach((uuid) => {
@@ -969,6 +969,8 @@ export function registerCharacterSheet() {
           }
           const cardWrapper = nameContainer.closest(".card-wrapper");
           if (!cardWrapper) return;
+          const inSidebar = nameContainer.closest(".favorites");
+          if (inSidebar && !game.settings.get("daggerheart-sleek-ui", "sidebarExpand")) return;
           const description = cardWrapper.querySelector(".card-container.description");
           const itemUuid = nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
           if (description && itemUuid) {
@@ -1370,6 +1372,10 @@ export function registerCharacterSheet() {
 
     static async _onNavigateToCard(event, target) {
       if (event.target.closest(".hover-area, .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource")) {
+        return;
+      }
+
+      if (target.closest(".favorites") && game.settings.get("daggerheart-sleek-ui", "sidebarExpand")) {
         return;
       }
 
