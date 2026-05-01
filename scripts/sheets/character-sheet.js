@@ -168,6 +168,7 @@ export function registerCharacterSheet() {
 
       const createFeatureData = async (item, tags) => {
         let hopeCost = 0;
+        let stressCost = 0;
         let usesData = null;
 
         if (item.system.actions) {
@@ -176,6 +177,9 @@ export function registerCharacterSheet() {
               for (const cost of action.cost) {
                 if (cost.key === "hope") {
                   hopeCost = Math.max(hopeCost, cost.value);
+                }
+                if (cost.key === "stress") {
+                  stressCost = Math.max(stressCost, cost.value);
                 }
               }
             }
@@ -195,7 +199,7 @@ export function registerCharacterSheet() {
 
         const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item, rollData: this.actor.getRollData() });
 
-        return { item, tags, hopeCost, usesData, enrichedDescription };
+        return { item, tags, hopeCost, stressCost, usesData, enrichedDescription };
       };
 
       const createTag = (label, uuid, tagClass) => ({ label, uuid, tagClass });
@@ -234,6 +238,7 @@ export function registerCharacterSheet() {
 
       const createDomainData = async (item) => {
         let hopeCost = 0;
+        let stressCost = 0;
         let usesData = null;
 
         if (item.system.actions) {
@@ -242,6 +247,9 @@ export function registerCharacterSheet() {
               for (const cost of action.cost) {
                 if (cost.key === "hope") {
                   hopeCost = Math.max(hopeCost, cost.value);
+                }
+                if (cost.key === "stress") {
+                  stressCost = Math.max(stressCost, cost.value);
                 }
               }
             }
@@ -280,7 +288,7 @@ export function registerCharacterSheet() {
 
         const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, { relativeTo: item });
 
-        return { item, tags, hopeCost, usesData, enrichedDescription };
+        return { item, tags, hopeCost, stressCost, usesData, enrichedDescription };
       };
 
       const sortedLoadout = (domainCards?.loadout || []).sort((a, b) => a.sort - b.sort);
@@ -691,7 +699,7 @@ export function registerCharacterSheet() {
     _createFilterMenus(html) {}
 
     _restoreCardStates() {
-      const mainSheet = this.element.querySelector(".tab-content");
+      const mainSheet = this.element;
       if (!mainSheet) return;
 
       this.openCards.forEach((uuid) => {
@@ -971,6 +979,8 @@ export function registerCharacterSheet() {
           }
           const cardWrapper = nameContainer.closest(".card-wrapper");
           if (!cardWrapper) return;
+          const inSidebar = nameContainer.closest(".favorites");
+          if (inSidebar && !game.settings.get("daggerheart-sleek-ui", "sidebarExpand")) return;
           const description = cardWrapper.querySelector(".card-container.description");
           const itemUuid = nameContainer.closest("[data-item-uuid]")?.dataset.itemUuid;
           if (description && itemUuid) {
@@ -1372,6 +1382,10 @@ export function registerCharacterSheet() {
 
     static async _onNavigateToCard(event, target) {
       if (event.target.closest(".hover-area, .uses-resource, .simple-resource, .die-resource, .dice-resource, .recall-resource, .roll-damage, .quantity-resource")) {
+        return;
+      }
+
+      if (target.closest(".favorites") && game.settings.get("daggerheart-sleek-ui", "sidebarExpand")) {
         return;
       }
 

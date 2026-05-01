@@ -475,7 +475,21 @@ RESOURCE - DICE
   height: 10px;
 }
 
-/* ==================== 
+/* ====================
+   RESOURCE - STRESS
+   ==================== */
+
+#sleek-ui-sheet .resource.stress-resource {
+  gap: var(--sleekUI-spacing-xs);
+  background: none;
+}
+
+#sleek-ui-sheet .resource.stress-resource .stress-value i {
+  font-size: 10px;
+  color: #f08030;
+}
+
+/* ====================
 RESOURCE - RECALL
 ==================== */
 

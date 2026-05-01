@@ -184,6 +184,7 @@
           <div
             class="resource-pip pip-stress {{#if (lt this @root.document.system.resources.stress.value)}}filled{{else}}empty{{/if}}"
             data-action="toggleResource" data-resource="system.resources.stress.value" data-value="{{add this 1}}">
+            {{#if (lt this @root.document.system.resources.stress.value)}}<i class="fa-solid fa-bolt stress-pip-icon"></i>{{/if}}
           </div>
           {{/times}}
         </div>

@@ -60,6 +60,10 @@ export function registerSettings() {
   game.settings.register("daggerheart-sleek-ui", "compactCards", {
     name: "Compact Card View",
     hint: "Reduces card height on the features tab and sidebar for a denser layout",
+  // Sidebar Expand
+  game.settings.register("daggerheart-sleek-ui", "sidebarExpand", {
+    name: "Sidebar Expand in Place",
+    hint: "Clicking on a sidebar card expands it in place instead of navigating to its tab",
     scope: "client",
     config: true,
     type: Boolean,

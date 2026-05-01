@@ -68,6 +68,7 @@ export async function preloadHandlebarsTemplates() {
     "modules/daggerheart-sleek-ui/templates/components/res-dice.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-die.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-hope.hbs",
+    "modules/daggerheart-sleek-ui/templates/components/res-stress.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-recall.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-simple.hbs",
     "modules/daggerheart-sleek-ui/templates/components/res-uses.hbs",

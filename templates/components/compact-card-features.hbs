@@ -21,6 +21,11 @@
         hopeCost=hopeCost
         actorHope=@root.document.system.resources.hope.value}}
         {{/if}}
+
+        {{#if stressCost}}
+        {{> "modules/daggerheart-sleek-ui/templates/components/res-stress.hbs"
+        stressCost=stressCost}}
+        {{/if}}
       </div>
 
       <div class="hover-area">
