@@ -781,24 +781,51 @@ QUICK ACCESS
 }
 
 /* ====================
-   FEATURES TAB COMPRESSION
+   COMPACT CARD VIEW
    ==================== */
 
-#sleek-ui-sheet .features-tab .card-container.header {
+#sleek-ui-sheet.compact-cards .features-tab .card-container.header {
   max-height: 40px;
 }
 
-#sleek-ui-sheet .features-tab .card-container.header .card-icon {
+#sleek-ui-sheet.compact-cards .features-tab .card-container.header .card-icon {
   width: 68px;
   height: 40px;
 }
 
-#sleek-ui-sheet .features-tab .card-container.header .card-icon .dice-roll {
+#sleek-ui-sheet.compact-cards .features-tab .card-container.header .card-icon .dice-roll {
   height: 26px;
   top: 7px;
   left: 26px;
 }
 
-#sleek-ui-sheet .features-tab .card-container.header .card-icon[data-action]:hover .dice-roll {
+#sleek-ui-sheet.compact-cards .features-tab .card-container.header .card-icon[data-action]:hover .dice-roll {
   transform: translateX(-8px);
+}
+
+#sleek-ui-sheet.compact-cards .favorites .compact.card-wrapper:not(.weapon) .card-container.header {
+  max-height: 40px;
+}
+
+#sleek-ui-sheet.compact-cards .favorites .compact.card-wrapper:not(.weapon) .card-icon {
+  width: 44px;
+  height: 40px;
+}
+
+#sleek-ui-sheet.compact-cards .favorites .compact.card-wrapper:not(.weapon) .card-container.header .card-icon .dice-roll {
+  height: 26px;
+  top: 7px;
+  left: 16px;
+}
+
+#sleek-ui-sheet.compact-cards .favorites .compact.card-wrapper:not(.weapon) .card-container.header .card-icon[data-action]:hover .dice-roll {
+  transform: translateX(-8px);
+}
+
+#sleek-ui-sheet.compact-cards .favorites-list {
+  gap: 2px;
+}
+
+#sleek-ui-sheet.compact-cards .favorites-container {
+  gap: 2px;
 }

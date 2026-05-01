@@ -56,6 +56,22 @@ export function registerSettings() {
     onChange: (value) => applyMinisheetScale(value),
   });
 
+  // Compact Cards
+  game.settings.register("daggerheart-sleek-ui", "compactCards", {
+    name: "Compact Card View",
+    hint: "Reduces card height on the features tab and sidebar for a denser layout",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: () => {
+      Object.values(ui.windows).forEach((app) => {
+        if (app.render) app.render();
+      });
+    },
+  });
+
+
   // Tooltips
   game.settings.register("daggerheart-sleek-ui", "showTooltip", {
     name: "Show Card Tooltips",

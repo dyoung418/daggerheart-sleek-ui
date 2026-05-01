@@ -351,15 +351,15 @@
    FEATURES TAB COMPRESSION
    ==================== */
 
-#sleek-ui-sheet .tabs.features-tab {
+#sleek-ui-sheet.compact-cards .tabs.features-tab {
   gap: var(--sleekUI-spacing-sm);
 }
 
-#sleek-ui-sheet .features-tab .category-wrapper {
+#sleek-ui-sheet.compact-cards .features-tab .category-wrapper {
   gap: var(--sleekUI-spacing-tiny);
 }
 
-#sleek-ui-sheet .features-tab .category-content {
+#sleek-ui-sheet.compact-cards .features-tab .category-content {
   gap: 2px;
 }
 
