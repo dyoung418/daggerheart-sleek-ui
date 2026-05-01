@@ -56,6 +56,16 @@ export function registerSettings() {
     onChange: (value) => applyMinisheetScale(value),
   });
 
+  // Sidebar Expand
+  game.settings.register("daggerheart-sleek-ui", "sidebarExpand", {
+    name: "Sidebar Expand in Place",
+    hint: "Clicking on a sidebar card expands it in place instead of navigating to its tab",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
   // Tooltips
   game.settings.register("daggerheart-sleek-ui", "showTooltip", {
     name: "Show Card Tooltips",

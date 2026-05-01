@@ -64,4 +64,24 @@
 
   </div>
 
+  {{#if enrichedDescription}}
+  <div class="card-container description" style="display:none;">
+    <span class="separator-line"></span>
+    <div class="card-description">{{{enrichedDescription}}}</div>
+    <div class="card-bottom">
+      <div class="card-tags">
+        {{#each tags as |tag|}}
+        <span class="tag {{tag.tagClass}}" data-item-uuid="{{tag.uuid}}">{{tag.label}}</span>
+        {{/each}}
+      </div>
+      <div class="card-actions">
+        {{#each item.system.actions as |action|}}
+        <button class="card-button" data-action="useAction" data-item-uuid="{{../item.uuid}}"
+          data-action-id="{{action._id}}">{{localize action.name}}</button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
 </div>

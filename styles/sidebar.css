@@ -180,3 +180,15 @@
 #sleek-ui-sheet .favorites-list .drag-area h3 {
   color: var(--sleekUI-color-border) !important;
 }
+
+#sleek-ui-sheet .compact .card-container.description {
+  padding: var(--sleekUI-spacing-xs) var(--sleekUI-spacing-sm);
+  gap: var(--sleekUI-spacing-xs);
+  font-size: var(--sleekUI-font-size-sm);
+}
+
+#sleek-ui-sheet .compact .card-container.description .card-description {
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.4;
+}

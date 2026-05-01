@@ -78,4 +78,22 @@
 
   </div>
 
+  <div class="card-container description" style="display:none;">
+    <span class="separator-line"></span>
+    {{#if enrichedDescription}}<div class="card-description">{{{enrichedDescription}}}</div>{{/if}}
+    {{#each features as |feature|}}
+    <div class="card-description feature-box">
+      <strong>{{feature.name}}</strong>
+      <p>{{{feature.description}}}</p>
+    </div>
+    {{/each}}
+    <div class="card-bottom">
+      <div class="card-tags">
+        {{#each tags as |tag|}}
+        <span class="tag {{tag.tagClass}}" data-item-uuid="{{tag.uuid}}">{{{tag.label}}}</span>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
 </div>
