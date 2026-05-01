@@ -1,5 +1,6 @@
 <div class="tabs features-tab">
-  {{!-- EXPERIENCES --}}
+  {{!-- EXPERIENCES (only shown here when Quick Access is ON; otherwise shown in sidebar) --}}
+  {{#if quickAccess}}
   <div class="category-wrapper {{#if (contains @root.collapsedCategories 'experiences')}}collapsed{{/if}}"
     data-category-id="experiences">
 
@@ -8,7 +9,7 @@
       <span class="line"></span>
       <i class="fa-solid fa-chevron-down"></i>
     </div>
-    
+
     <div class="category-content experiences">
       {{#each document.system.experiences as |experience id|}}
       <div class="experience-container" data-action="sendExpToChat" data-type="experience" data-id="{{id}}">
@@ -19,6 +20,7 @@
     </div>
 
   </div>
+  {{/if}}
 
   {{!-- HERITAGE --}}
   <div class="category-wrapper {{#if (contains @root.collapsedCategories 'heritage')}}collapsed{{/if}}"

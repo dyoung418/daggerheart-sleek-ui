@@ -157,5 +157,19 @@
       </ul>
     </div>
 
+    <div class="favorites-container">
+      <div class="favorites-header">
+        <h3>{{localize "DAGGERHEART.GENERAL.experience.plural"}}</h3>
+      </div>
+      <div class="category-content experiences sidebar-experiences">
+        {{#each document.system.experiences as |experience id|}}
+        <div class="experience-container" data-action="sendExpToChat" data-type="experience" data-id="{{id}}">
+          <div class="experience-number">+{{experience.value}}</div>
+          <span>{{experience.name}}</span>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
   </div>
   {{/if}}
